@@ -1,15 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Automation</title>
-    <script src="script.js"></script>
+    <title>LOGIN AND REGISTRATION PAGE</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Hello world1</h1>
-    chal bhai
-    Nai hota
-    rh
+    <div class="nav">
+        <div class="nav-logo">
+            <p>G160</p>
+        </div>
+        <div class="nav-items">
+            <ul>
+                <li><a class="link" href="#">Home</a></li>
+                <li><a class="link" href="#">About</a></li>
+                <li><a class="link" href="#">Services</a></li>
+                <li><a class="link" href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="nav-sign">
+            <button class="btn whitebtn" id="loginbtn" onclick="login()">Sign-in</button>
+            <button class="btn" id="registerbtn" onclick="register()">Sign-up</button>
+        </div>
+    </div>
+
+    <div class="form-box">
+        <div class="login-cont" id="login">
+            <div class="top">
+                <span>Don't have an account?<a href="#" onclick="register()">Sign-up</a></span>
+                <header>Login</header>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-fied" placeholder="Username or Email">
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-fied" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" value="Sign-in">
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="login-check">
+                    <label for="login-check">Remember me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Forgot Password</a></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="registration-cont" id="registration1">
+            <div class="top">
+                <span>Have an account?<a href="#" onclick="login()">Login</a></span>
+                <header>Sign-up</header>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-fied" placeholder="Firstname">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-fied" placeholder="Lastname">
+                    <i class="bx bx-user"></i>
+                </div>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-fied" placeholder="Email">
+                <i class="bx bx-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-fied" placeholder="Password">
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" value="Register">
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="register-check">
+                    <label for="register-check">Remember me</label>
+                </div>
+                <div class="two">
+                    <label><a href="#">Terms & Conditions</a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>

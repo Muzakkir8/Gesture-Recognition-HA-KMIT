@@ -3,7 +3,7 @@ import React from 'react'
 function Home() {
   return (
     <div>
-      github hai ye bhai !!!!
+      github hai ye bhai !
     </div>
   )
 }

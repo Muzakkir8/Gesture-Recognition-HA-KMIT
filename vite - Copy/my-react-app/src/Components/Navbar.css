@@ -1,141 +1,215 @@
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 11;
+  cursor: pointer;
+}
 .side-nav {
-    height: 100%;
-    width: 60px;
-    top: 0;
-    left: 0;
-    position: fixed;
-    padding: 30px 15px;
-    box-shadow: rgba(0, 0, 0, 0.15) 3.55px 1.95px 5.9px;
-    background-color: #785bf8;
-    border-top-right-radius: 35px;
-    z-index: 10;
-    transition: width 0.6s, padding 0.6s;
-  }
-  
-  .side-nav img {
-    width: 35px;
-    fill: azure;
-    margin-right: 17px;
-    margin-left: 30px;
-    transition: margin-left 0.6s;
-  }
-  
-  .logo img {
-    width: 35px;
-    fill: azure;
-    margin-right: 17px;
-    margin-left: 1px;
-    transition: all 0.6s;
-  }
-  
-  .user {
-    display: flex;
-    align-items: center;
-    font-size: 23px;
-    font-weight: bold;
-    color: aliceblue;
-  }
-  
-  .user h1 {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s; /* Faster opacity transition */
-  }
-  
-  .list {
-    cursor: pointer;
-    padding-top: 50px;
-    position: relative;
-    left: -20px;
-    transition: left 0.6s;
-  }
-  
-  .list li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    padding-right: 25px;
-    color: aliceblue;
-    height: 55px;
-    margin-top: 5px;
-    /* No transition for background color */
-    transition: width 0.6s ease, padding-right 0.6s ease, margin-right 0.6s ease;
-  }
-  
-  .list li h2 {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s; /* Faster opacity transition */
-  }
-  
-  .list li:hover {
-    background-color: indigo; /* Background color changes instantly */
-    border-radius: 5px;
-  }
-  
-  .list li i {
-    width: 25px;
-    margin-right: 30px;
-    transition: margin-right 0.6s;
-  }
-  
-  .log {
-    position: absolute;
-    bottom: 45px;
-    z-index: 10;
-    left: -16px;
-    display: flex;
-    color: aliceblue;
-    transition: left 0.6s;
-  }
-  
-  .log h2 {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s; /* Faster opacity transition */
-  }
-  
-  .log img {
-    width: 25px;
-  }
-  
-  .nav-active li {
-    background-color: indigo;
-    border-radius: 5px;
-  }
-  
-  .side-nav:hover {
-    width: 250px;
-    transition: width 0.6s ease;
-  }
-  
-  .side-nav:hover .log h2,
-  .side-nav:hover .list li h2,
-  .side-nav:hover .user h1 {
+  height: 100%;
+  width: 60px;
+  top: 0;
+  left: 0;
+  position: fixed;
+  padding: 30px 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 3.55px 1.95px 5.9px;
+  background-color: #785bf8;
+  border-top-right-radius: 35px;
+  z-index: 10;
+  transition: width 0.6s, padding 0.6s;
+}
+
+.side-nav img {
+  width: 35px;
+  fill: azure;
+  margin-right: 17px;
+  margin-left: 30px;
+  transition: margin-left 0.6s;
+}
+
+.logo img {
+  width: 35px;
+  fill: azure;
+  margin-right: 17px;
+  margin-left: 1px;
+  transition: all 0.6s;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  font-size: 23px;
+  font-weight: bold;
+  color: aliceblue;
+}
+
+.user h1 {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s; /* Faster opacity transition */
+}
+
+.list {
+  cursor: pointer;
+  padding-top: 50px;
+  position: relative;
+  left: -20px;
+  transition: left 0.6s;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  padding-right: 25px;
+  color: aliceblue;
+  height: 55px;
+  margin-top: 5px;
+  /* No transition for background color */
+  transition: width 0.6s ease, padding-right 0.6s ease, margin-right 0.6s ease;
+}
+
+.list li h2 {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s; /* Faster opacity transition */
+}
+
+.list li:hover {
+  background-color: indigo; /* Background color changes instantly */
+  border-radius: 5px;
+}
+
+.list li i {
+  width: 25px;
+  margin-right: 30px;
+  transition: margin-right 0.6s;
+}
+
+.log {
+  position: absolute;
+  bottom: 45px;
+  z-index: 10;
+  left: -16px;
+  display: flex;
+  color: aliceblue;
+  transition: left 0.6s;
+}
+
+.log h2 {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s; /* Faster opacity transition */
+}
+
+.log img {
+  width: 25px;
+}
+
+.nav-active li {
+  background-color: indigo;
+  border-radius: 5px;
+}
+
+.side-nav:hover {
+  width: 250px;
+  transition: width 0.6s ease;
+}
+
+.side-nav:hover .log h2,
+.side-nav:hover .list li h2,
+.side-nav:hover .user h1 {
+  display: block;
+  opacity: 1;
+}
+
+.side-nav:hover .list li {
+  width: 200px;
+  justify-content: start;
+  padding-right: 0;
+  overflow: hidden;
+  text-wrap: nowrap;
+}
+
+.side-nav:hover .list li i {
+  margin-right: 45px;
+}
+
+.side-nav:hover .logo img {
+  margin-left: 33px;
+}
+
+.side-nav:hover .log {
+  left: -5px;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
     display: block;
-    opacity: 1;
+   
   }
-  
-  .side-nav:hover .list li {
+  .ham{
+    z-index: -1;
+    position: relative; 
+    bottom: 15px;
+ 
+  }
+
+  .side-nav.open {
+    left: 0px;
+    transition: left 0.6s ease;
+    z-index: 101; /* Smooth transition when sidebar opens */
+  }
+  .side-nav.close1 {
+    left: -250px;
+    transition: left 0.5s ease; /* Smooth transition when sidebar opens */
+  }
+
+
+  .side-nav {
+    left: -250px;
+    width: 250px;
+    transition: left 0.6s ease, width 0.6s ease; /* Smooth transition for the sidebar */
+  }
+
+  .side-nav .log h2,
+  .side-nav .list li h2,
+  .side-nav .user h1 {
+    display: block;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out; /* Smooth transition for text opacity */
+  }
+
+  .side-nav.open .log h2,
+  .side-nav.open .list li h2,
+  .side-nav.open .user h1 {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out; /* Smooth transition for text opacity when open */
+  }
+
+  .side-nav .list li {
     width: 200px;
     justify-content: start;
     padding-right: 0;
     overflow: hidden;
     text-wrap: nowrap;
+    transition: width 0.6s ease; /* Smooth transition for list item width */
   }
-  
-  .side-nav:hover .list li i {
+
+  .side-nav .list li i {
     margin-right: 45px;
+    transition: margin-right 0.3s ease; /* Smooth transition for icon margin */
   }
-  
-  .side-nav:hover .logo img {
+
+  .side-nav .logo img {
     margin-left: 33px;
+    transition: margin-left 0.3s ease; /* Smooth transition for logo margin */
   }
-  
-  .side-nav:hover .log {
+
+  .side-nav .log {
     left: -5px;
+    transition: left 0.6s ease; /* Smooth transition for log */
   }
-  
-
-
+}

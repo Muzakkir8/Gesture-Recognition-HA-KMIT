@@ -1,6 +1,15 @@
-*{
+html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+    height: 100%;
+}
+
+
+.header{
+    background-color:#B39DFF;
+    top: 0;
+    position: sticky;
+    height: 48px;
+   
 }

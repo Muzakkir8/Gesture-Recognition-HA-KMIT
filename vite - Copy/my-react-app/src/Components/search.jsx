@@ -72,13 +72,13 @@ const SearchWithSuggestions = () => {
                             />
                         </svg>
                     </div>
-                    <input
+                    <input 
                         type="search"
                         id="default-search"
                         value={searchQuery}
                         onChange={handleInputChange}
-                        className="block w-full p-3 pl-10 text-md text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:border-grey-100 dark:placeholder-gray-400 dark:text-black focus:outline-none focus:ring-0 dark:focus:border-cyan-500 no-underline"
-                        placeholder="Search Devices, Sensors..."
+                        className="block w-full px-5 p-3 pl-10 text-md text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:border-grey-100 dark:placeholder-gray-400 dark:text-black focus:outline-none focus:ring-0 dark:focus:border-cyan-500 no-underline"
+                        placeholder="      Search Devices, Sensors..."
                         required
                     />
                     <button

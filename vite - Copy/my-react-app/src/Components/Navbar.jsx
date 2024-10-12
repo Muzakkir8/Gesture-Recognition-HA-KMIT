@@ -37,11 +37,11 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={`side-nav ${isOpen ? 'open' : 'close1'}`} ref={sidebarRef}>
+      <div className={`side-nav dark:bg-slate-800 ${isOpen ? 'open' : 'close1'}`} ref={sidebarRef}>
         {!isOpen && ( // Show hamburger only when the sidebar is closed
           <div className="hamburger" onClick={toggleSidebar}>
             <div className="ham">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="indigo">
+              <svg className='dark:fill-white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="indigo">
                 <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" />
               </svg>
             </div>
@@ -90,7 +90,7 @@ const Navbar = () => {
           </NavLink>
         </ul>
         <hr className="border-t-2 border-azure w-50 my-24" />
-        <div className="log">
+        <div className="log overflow-hidden">
           <img src={log} alt="" className="us" />
           <div>
             <h2>Username <br /><p>abcd123@gmail.com</p></h2>

@@ -11,5 +11,12 @@ html, body {
     top: 0;
     position: sticky;
     height: 48px;
+   z-index: 2;
+}
+.dark .header{
+    background-color:#334155;
+    top: 0;
+    position: sticky;
+    height: 48px;
    
 }

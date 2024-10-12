@@ -42,6 +42,7 @@
   font-size: 23px;
   font-weight: bold;
   color: aliceblue;
+
 }
 
 .user h1 {
@@ -81,6 +82,11 @@
   background-color: indigo; /* Background color changes instantly */
   border-radius: 5px;
 }
+.dark .list li:hover {
+  background-color: #334155; /* Background color changes instantly */
+  border-radius: 5px;
+}
+
 
 .list li i {
   width: 25px;
@@ -110,6 +116,10 @@
 
 .nav-active li {
   background-color: indigo;
+  border-radius: 5px;
+}
+.dark .nav-active li {
+  background-color: #334155;
   border-radius: 5px;
 }
 
@@ -145,7 +155,7 @@
   left: -5px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 820px) {
   .hamburger {
     display: block;
    

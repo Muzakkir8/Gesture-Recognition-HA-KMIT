@@ -29,7 +29,7 @@
 }
 
 .logo img {
-  width: 35px;
+  width: 30px;
   fill: azure;
   margin-right: 17px;
   margin-left: 1px;
@@ -112,8 +112,8 @@
 
 .log img {
   width: 25px;
+  
 }
-
 .nav-active li {
   background-color: indigo;
   border-radius: 5px;

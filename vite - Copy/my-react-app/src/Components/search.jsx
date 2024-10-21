@@ -49,7 +49,7 @@ const SearchWithSuggestions = () => {
 
     return (
         <>
-            <div className="font-bold opacity-90 p-1 mt-4 -mb-1 text-center">Add Manually</div>
+            <div className="font-bold opacity-90 p-1 mt-4 -mb-1 text-center dark:text-sky-50">Add Manually</div>
             <form method="post"
                 className="min-w-md ml-5 lg:ml-20 md:ml-20 lg:w-[500px] md:w-[500px] mr-5 mt-3"
                 onSubmit={handleSearch}
@@ -127,7 +127,7 @@ const SearchWithSuggestions = () => {
                     </p>
                 )}
             </form>
-            <div className="mt-10"><hr /></div>
+            <div className="mt-10  dark:bg-white opacity-20"><hr /></div>
         </>
     );
 };

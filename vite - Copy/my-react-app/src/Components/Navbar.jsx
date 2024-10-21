@@ -37,7 +37,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={`side-nav dark:bg-slate-800 ${isOpen ? 'open' : 'close1'}`} ref={sidebarRef}>
+      <div className={`side-nav dark:bg-slate-800 hover:dark:border-r-[1px] hover:dark:border-slate-600  ${isOpen ? 'open ' : 'close1'}`} ref={sidebarRef}>
         {!isOpen && ( // Show hamburger only when the sidebar is closed
           <div className="hamburger" onClick={toggleSidebar}>
             <div className="ham">
@@ -72,8 +72,8 @@ const Navbar = () => {
           </NavLink>
           <NavLink to="/reports" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>
             <li>
-              <i><img src={reports} alt="" /></i>
-              <h2>Reports</h2>
+              <i><img className="mx-10 " src={reports} alt="" /></i>
+              <h2>Robot</h2>
             </li>
           </NavLink>
           <NavLink to="/settings" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>

@@ -4,11 +4,11 @@ import Search from './search.jsx';
 
 const device = () => {
   return (
-    <>
+    <div className='h-screen'>
     <Search/>
    
 
-    </>
+    </div>
   );
 }
 

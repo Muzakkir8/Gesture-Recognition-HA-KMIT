@@ -7,12 +7,14 @@ import person_icon from '../assets/person.png';
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 
-const Signup = ({ setIsAuthenticated, setUsername }) => {
+const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,7 +28,7 @@ const Signup = ({ setIsAuthenticated, setUsername }) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/signup`, 
+        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
         formData,
         { headers: { 'Content-Type': 'application/json' } }
       );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './search.css'; // Make sure the path is correct
 
 const items = [
     { id: 1, name: "Temperature Sensor" },
@@ -49,15 +50,15 @@ const SearchWithSuggestions = () => {
 
     return (
         <>
-            <div className="font-bold opacity-90 p-1 mt-4 -mb-1 text-center dark:text-sky-50">Add Manually</div>
-            <form method="post"
-                className="min-w-md ml-5 lg:ml-20 md:ml-20 lg:w-[500px] md:w-[500px] mr-5 mt-3"
+            <div className="search-container">Add Manually</div>
+            <form 
+                className="search-form"
                 onSubmit={handleSearch}
             >
-                <div className="relative">
-                    <div className="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
+                <div className="relative-container">
+                    <div className="icon-container">
                         <svg
-                            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                            className="icon"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -74,19 +75,18 @@ const SearchWithSuggestions = () => {
                     </div>
                     <input 
                         type="search"
-                        id="default-search"
                         value={searchQuery}
                         onChange={handleInputChange}
-                        className="block w-full px-5 p-3 pl-10 text-md text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:border-grey-100 dark:placeholder-gray-400 dark:text-black focus:outline-none focus:ring-0 dark:focus:border-cyan-500 no-underline"
-                        placeholder="      Search Devices, Sensors..."
+                        className="search-input"
+                        placeholder="Search Devices, Sensors..."
                         required
                     />
                     <button
                         type="submit" 
-                        className="text-white absolute right-1.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-6 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="search-button"
                     >
                         <svg
-                            className="w-4 h-4 text-white dark:text-white"
+                            className="icon"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -105,11 +105,11 @@ const SearchWithSuggestions = () => {
 
                 {/* Show suggestions while typing */}
                 {filteredSuggestions.length > 0 && (
-                    <ul className="absolute min-w-md max-h-80 overflow-hidden lg:ml-20 md:ml-20 lg:w-[500px] md:w-[500px] mr-5 mt-3 bg-slate-100 border-black-950 rounded-lg">
+                    <ul className="suggestions-list">
                         {filteredSuggestions.map((item) => (
                             <li
                                 key={item.id}
-                                className="p-2 cursor-pointer hover:bg-gray-200"
+                                className="suggestion-item"
                                 onClick={() => {
                                     setSearchQuery(item.name); // Set the search input to the selected suggestion
                                     setFilteredSuggestions([]); // Hide suggestions
@@ -122,12 +122,12 @@ const SearchWithSuggestions = () => {
                 )}
 
                 {notFound && (
-                    <p className="mt-4">
+                    <p className="not-found-message">
                         <strong>{finalSearchQuery}</strong> Not found
                     </p>
                 )}
             </form>
-            <div className="mt-10  dark:bg-white opacity-20"><hr /></div>
+            <div className="divider"><hr /></div>
         </>
     );
 };

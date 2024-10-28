@@ -12,15 +12,13 @@ import log from '../assets/log.svg';
 import logout from '../assets/logout.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import person_icon from '../assets/person.png';
-import email_icon from '../assets/email.png';
-import password_icon from '../assets/password.png'; // Make sure to import your password icon
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [isSignup, setIsSignup] = useState(false); // Declare isSignup state
+  const [isSignup, setIsSignup] = useState(false); 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -106,7 +104,7 @@ const Navbar = () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username); // Ensure username comes from the response
       localStorage.setItem('email', formData.email);
-      setUsername(data.username); // Set username from the response
+      setUsername(data.username); 
       setEmail(formData.email);
       toast.success('Logged in successfully!');
       setTimeout(() => {

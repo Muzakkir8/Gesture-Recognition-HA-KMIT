@@ -50,7 +50,7 @@ const SearchWithSuggestions = () => {
         <>
             <div className="search-container">Add Manually</div>
             <form 
-                className="search-form"
+                className="search-form lg:ml-8 "
                 onSubmit={handleSearch}
             >
                 <div className="relative-container">

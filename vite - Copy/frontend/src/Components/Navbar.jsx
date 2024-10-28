@@ -176,7 +176,7 @@ const Navbar = () => {
         <div className="log overflow-hidden">
           <img src={log} alt="Log Icon" className="us" />
           <div>
-            <h2>{username || 'User Name'} <br /><p>{email || 'email@example.com'}</p></h2>
+            <h2 className='dark:text-slate-400 -ml-1'>{username || 'User Name'} <br /><p>{email || 'email@example.com'}</p></h2>
           </div>
         </div>
         

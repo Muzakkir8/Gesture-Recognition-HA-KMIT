@@ -107,6 +107,9 @@
 .log h2 {
   display: none;
   opacity: 0;
+  margin-bottom: 10px;
+  font-size: smaller;
+  text-overflow: ellipsis;
   transition: opacity 0.3s; /* Faster opacity transition */
 }
 

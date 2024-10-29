@@ -29,26 +29,26 @@ function contact() {
         }
       };
   return (
-    <section className='section'>
-        <form onSubmit={onSubmit} className='box'>
+    <section className='section h-screen dark:bg-slate-900'>
+        <form onSubmit={onSubmit} className='box dark:bg-slate-800 dark:text-white'>
             <h2>Contact us</h2>
-            <div className='inputbox'> 
+            <div className='inputbox '> 
                 <label >First Name</label>
-                <input type="text" className='field' name="name" placeholder='Enter your name' required/>
+                <input type="text" className='field dark:text-white' name="name" placeholder='Enter your name' required/>
                 
             </div>
             <div className='inputbox'> 
                 <label >Email address</label>
-                <input type="email" className='field' name="email" placeholder='Enter your email' required/>
+                <input type="email" className='field dark:text-white' name="email" placeholder='Enter your email' required/>
                 
             </div>
             <div className='box2'> 
               
-                <textarea  className='fieldQuery' name='Query' placeholder='Enter your Query' required/>
+                <textarea  className='fieldQuery border dark:bg-slate-700 w-72 p-2' name='Query' placeholder='Enter your Query' required/>
                 
             </div>
                 <div className="field">
-            <button type='sumit'>sent</button>
+            <button type='submit' className='dark:bg-indigo-400  border-solid'>Send</button>
             </div>
         </form>
     </section>

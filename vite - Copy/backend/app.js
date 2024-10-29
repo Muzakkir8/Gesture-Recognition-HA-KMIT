@@ -19,5 +19,5 @@ app.use('/api/auth', require('./routes/auth'));
 
 
 app.listen(PORT,'0.0.0.0',()=>{
-    console.log(`App listening on PORT http://172.168.0.174:${PORT}`);
+    console.log(`App listening on PORT http://192.168.97.145:${PORT}`);
 })

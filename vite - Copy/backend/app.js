@@ -4,7 +4,7 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 
 const app = express();
-PORT=8000;
+PORT= 8080;
 
 
 connectDB()

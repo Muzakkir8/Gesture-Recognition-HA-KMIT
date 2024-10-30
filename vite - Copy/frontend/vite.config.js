@@ -6,7 +6,7 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.js',
     server: {
-      port:8000,
+      port:8080,
       historyApiFallback: true,},  // This points to your PostCSS config
   }
 })

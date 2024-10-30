@@ -1,18 +1,38 @@
 const mongoose = require('mongoose');
 
-const connectDB = async () => {
+const connectUserDB = async () => {
     try {
-        const mongoURI = process.env.MONGO_URI || 'mongodb+srv://akifali:Iotauth1@cluster0.lbilm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Ensure the correct URI is used
-        await mongoose.connect(mongoURI, {
+        const mongoUserURI = process.env.MONGO_USER_URI || 'mongodb+srv://zeeshan:Zeeshan123%402023@cluster0.knc0r.mongodb.net/User?retryWrites=true&w=majority&appName=Cluster0'
+        await mongoose.connect(mongoUserURI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             serverSelectionTimeoutMS: 5000, // Adjust timeouts as needed
             socketTimeoutMS: 45000,
         });
-        console.log('MongoDB connected');
+        console.log('UserDB connected');
     } catch (err) {
-        console.error('MongoDB connection error:', err.message); // More detailed error handling
+        console.error('UserDB connection error:', err.message); // More detailed error handling
     }
 };
 
-module.exports = connectDB;
+const connectDevicesDB = async () => {
+        const mongoDeviceURI = process.env.MONGO_DEVICE_URI || 'mongodb+srv://zeeshan:Zeeshan123%402023@cluster0.knc0r.mongodb.net/Devices?retryWrites=true&w=majority&appName=Cluster0'
+        const devicesConnection=mongoose.createConnection(mongoDeviceURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 5000, // Adjust timeouts as needed
+            socketTimeoutMS: 45000,
+        });
+        devicesConnection.on('connected', () => {
+            console.log('DevicesDB connected');
+        });
+    
+        devicesConnection.on('error', (err) => {
+            console.error('DevicesDB connection error:', err.message);
+        });
+    
+        return devicesConnection; // Return the separate connection instance
+};
+
+
+module.exports = {connectUserDB,connectDevicesDB};

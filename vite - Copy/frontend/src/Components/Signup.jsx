@@ -53,13 +53,14 @@ const Signup = () => {
   };
 
   return (
-    <div className="container">
+    <div className="body fixed top-0 dark:bg-slate-950 bg-purple-900 h-screen w-screen flex justify-center items-center">
+    <div className="container lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed">
       <ToastContainer />
-      <div className="header">
-        <div className="text">Sign Up</div>
-        <div className="underline"></div>
+      <div className="header bg-purple-600 rounded-2xl lg:w-[500px]">
+        <div className="text text-violet-100  dark:text-white">Sign Up</div>
+        <div className="underline rounded-lg"></div>
       </div>
-      <form onSubmit={handleSignupSubmit}>
+      <form className='dark:bg-slate-400' onSubmit={handleSignupSubmit}>
         <div className="inputs">
           <div className="input">
             <img src={person_icon} alt="person icon" />
@@ -99,7 +100,7 @@ const Signup = () => {
           <button type="submit" className="submit">Sign Up</button>
         </div>
       </form>
-    </div>
+    </div></div>
   );
 };
 

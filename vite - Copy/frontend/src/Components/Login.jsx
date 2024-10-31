@@ -49,13 +49,14 @@ const Login = ({ setUsername, setIsAuthenticated }) => {
     };
 
     return (
-        <div className='container'>
+        <div className="body fixed top-0 dark:bg-slate-900 bg-purple-800 h-screen w-screen flex justify-center items-center">
+        <div className='container lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed'>
             <ToastContainer />
-            <div className="header">
-                <div className="text">Login</div>
+            <div className="header  bg-purple-600 rounded-2xl lg:w-[500px]">
+                <div className="text  text-violet-100  dark:text-white">Login</div>
                 <div className="underline"></div>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form className='dark:bg-slate-400' onSubmit={handleSubmit}>
                 <div className="inputs">
                     <div className="input">
                         <img src={email_icon} alt="email icon" />
@@ -84,7 +85,7 @@ const Login = ({ setUsername, setIsAuthenticated }) => {
                     <button type="submit" className="submit">Login</button>
                 </div>
             </form>
-        </div>
+        </div></div>
     );
 };
 

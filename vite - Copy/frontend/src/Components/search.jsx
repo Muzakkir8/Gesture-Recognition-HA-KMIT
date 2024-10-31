@@ -8,10 +8,8 @@ const items = [
     { id: 4, name: "Light Sensor" },
     { id: 5, name: "Gas Sensor" },
     { id: 6, name: "Capacitive Sensor" },
-    { id: 7, name: "Light Sensor" },
-    { id: 8, name: "Lighting" },
-    { id: 9, name: "Fan" },
-    { id: 100, name: "" },
+    { id: 7, name: "Lighting" },
+    { id: 8, name: "Fan" },
 ];
 
 const SearchWithSuggestions = () => {
@@ -113,6 +111,7 @@ const SearchWithSuggestions = () => {
                                 onClick={() => {
                                     setSearchQuery(item.name); // Set the search input to the selected suggestion
                                     setFilteredSuggestions([]); // Hide suggestions
+                                    setNotFound(false); // Reset not found state
                                 }}
                             >
                                 {item.name}

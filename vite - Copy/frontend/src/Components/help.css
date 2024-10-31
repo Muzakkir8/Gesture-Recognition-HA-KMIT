@@ -1,0 +1,37 @@
+body{
+    display: flex;
+         background-color: #624ec6;
+         justify-content: center;
+         align-items: center;
+     
+ }
+ .glass{
+     background-color: rgba(253, 253, 253, 0.418);
+     backdrop-filter: blur(10px);
+     border: 1px solid #fff;
+     height: 90vh
+ }
+ .text{
+     text-align:center ;
+ }
+ .underline{
+     text-decoration: underline;
+ }
+ .text2{
+ font-size:large;
+     text-align: center;
+     list-style: none;
+     color: #fff;
+ }
+ .text3{
+  list-style: none;
+ }
+ .button{
+     background-color: #fff;
+     transition: 0.3s;
+     cursor: pointer;
+ }
+ .button:hover{
+    padding-top: 1px;
+     padding: 4px;
+ }

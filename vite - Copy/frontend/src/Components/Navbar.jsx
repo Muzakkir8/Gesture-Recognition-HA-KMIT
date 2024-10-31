@@ -174,9 +174,9 @@ const Navbar = () => {
         </ul>
         <hr className="border-t-2 border-azure w-50 my-24" />
         <div className="log overflow-hidden">
-          <img src={log} alt="Log Icon" className="us" />
+          <img src={log} alt="Log Icon" className="us " />
           <div>
-            <h2 className='dark:text-slate-400 -ml-1'>{username || 'User Name'} <br /><p>{email || 'email@example.com'}</p></h2>
+            <h2 className='dark:text-slate-400  -ml-1'>{username || 'User Name'} <br />{email || 'email@example.com'}</h2>
           </div>
         </div>
         

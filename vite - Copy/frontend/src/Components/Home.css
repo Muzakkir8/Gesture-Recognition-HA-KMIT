@@ -1,31 +1,66 @@
 /* Home.css */
+
+*{
+    color: black;
+}
 .home-container {
+    border-radius: 30px;
+    margin: 60px;
+    background-color:#e2daff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #f0f4f8;
+    /* min-height: 100vh; */
+    /* background-color: #f0f4f8; */
     padding: 20px;
     text-align: center;
+    height: 30vw;
+}
+.canbody{
+    display: flex;
+    flex-direction: row;
+    /* margin-top: 30px; */
+}
+.containeright{
+    border-color: black;
+    background-image: url('src/assets/image1.jpg');
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+    height: 45vh;
+    width: 55vw;
+    text-overflow: ellipsis;
+    font-size: large;
+
+
+}
+.image1{
+    height: 20px;
+}
+.containerleft{
+    margin-top: 80px;
+    font-size: 20px;
 }
 
 .home-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #333;
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
 .home-text {
     font-size: 1.2rem;
-    color: #666;
+    /* color: #666; */
     margin-bottom: 20px;
 }
 
 .home-buttons {
     display: flex;
     gap: 15px;
+    
 }
 
 .home-button {
@@ -33,13 +68,262 @@
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
-    background-color: #007bff;
+    background-color:#5c45ae;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 5px;
 }
 
 .home-button:hover {
-    background-color: #0056b3;
+    background-color:purple;
+}
+.top{
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    background-color: #e2daff;
+}
+.right {
+    display: flex;
+    flex-direction: row;
+}
+.middle{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+.middle ul{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-weight:700;
+    /* position:; */
+}
+.left{
+
+    color: black;
+    /* background-color: gold; */
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 2px;
+    margin: 5px;
+}
+.second{
+    background-image: url('src/assets/background1.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    padding-top: 100px;
+    font-weight: 500;
+    
+}
+.homelogo{
+    width: 50px;
+    height: 60px;
+}
+main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* align-items: center; */
+}
+
+.third{
+    display: flex;
+    flex-direction: column;
+     background-image: url('src\assets\background1.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; 
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    padding-top: 30px;
+    font-weight: 500;
+    margin: 10px;
+    margin-top: 90px;
+    /* background-color: beige; */
+    /* background-color: #0056b3; */
+}
+.body3{
+    display: flex;
+    flex-direction: row;
+    background-color:#f0eef8;
+    margin: 30px;
+    border-radius: 30px;
+    padding: 70px;
+}
+.left3{
+    background-color: #e2daff;
+    margin: 10px;
+    width: 30vw;
+    height: 70vh;
+    font-size: large;
+
+}
+.right3{
+    margin-left: 30px;
+    margin-top: 90px;
+    font-size: large;
+}
+.H1{
+    font-size: larger;
+}
+.H2{
+    font-size: 40px;
+    margin-top: 30px;
+}
+.fourth{
+    background-color: #bbaaf9;
+    /* height: 50vh; */
+    margin: 60px;
+    border-radius: 30px;
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    padding: 40px;
+}
+.body4{
+    display: flex;
+    flex-direction: row;
+}
+.right4{
+    background-color: #fff;
+    height: 40vh;
+    margin: 40px;
+}
+.pop{
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    bottom: 60px;
+    right: 60px;
+    padding: 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    background-color:#ebbefa
+}
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 35px;
+}
+.item1{
+    background-color: #cbc1f2;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    /* height: 50vh; */
+    border-radius: 30px;
+    transition: o.3s;
+    
+}
+.item:hover{
+    padding: 4px;
+    padding-top: 10px;
+}
+.item2{
+    background-color: #f0eef8;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    /* height: 50vh; */
+    border-radius: 30px;
+}
+.item3{
+    background-color: #cbc1f2;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    /* height: 50vh; */
+    border-radius: 30px;
+    
+}
+
+.btn1{
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color:#5c45ae;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+    
+}
+.btn2{
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color:#aa99ed;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+    margin-bottom: 30px;
+
+}
+.top4{
+    font-size: 50px;
+    margin-bottom: 30px;
+    /* margin-top: 20px; */
+}
+.itemhead{
+    font-size: 30px;
+    font-weight: 500;
+    margin: 20px;
+}
+.img1{
+    background-image: url('src/assets/applinaces_image.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 250px;
+    width: 300px;
+}
+.item:hover{
+    transform: scale(4px);
+}
+.itembody{
+    margin: 40px;
+    font-weight: 700;
+    position: relative;
+    /* right: 70px; */
+}
+.img2{
+    background-image: url('src/assets/track.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 250px;
+    width: 300px;
+}
+.img3{
+    background-image: url('src/assets/temp.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 290px;
+    width: 300px;
 }

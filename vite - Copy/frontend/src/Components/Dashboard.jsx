@@ -30,21 +30,21 @@ const Dashboard = () => {
       <div className="flex flex-col min-h-screen lg:ml-14">
         {/* Header with Background Image */}
         <div className=" h-[100px] rounded-lg shadow-sm w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[1410px] lg:ml-[80px] md:max-w-[800px]"> {/*1487*/}
-          <div className=" bg-blue-100 dark:bg-slate-500 opacity-90 bg-cover bg-bottom h-[100px] rounded-lg p-6 filter brightness-90 contrast-125 saturate-200  hue-rotate-[14deg] w-full max-w-[90vw] mx-auto lg:max-w-[1410px] md:max-w-[800px]">
-            <div className="flex justify-between lg:justify-around items-center gap-4 lg:gap-[800px] dark:text-white ">
-              <div className="text-center flex items-center gap-2 ">
+          <div className=" bg-blue-100 dark:bg-slate-500 opacity-90 bg-cover bg-bottom h-[100px] rounded-lg p-6 filter brightness-90 contrast-125 saturate-200  hue-rotate-[14deg] w-full max-w-[90vw] mx-auto lg:max-w-[1410px] md:max-w-[800px] ">
+            <div className="flex justify-between lg:justify-around items-center gap-4 lg:gap-[800px] ">
+              <div className="text-center flex items-center gap-2  ">
                 <img src="https://cdn-icons-png.flaticon.com/512/2100/2100130.png" className="w-8" />
                 <div>
-                  <div className="temp font-semibold text-2xl opacity-90">26°C</div>
-                  <div className="text-xs opacity-60">Home Temp</div>
+                  <div className="dark:text-white temp font-semibold text-2xl opacity-90 ">26°C</div>
+                  <div className="dark:text-white text-xs opacity-60">Home Temp</div>
                 </div>
               </div>
 
               <div className="humid text-center flex items-center gap-2">
                 <img src="https://cdn-icons-png.flaticon.com/512/12564/12564499.png" alt="" className="w-8" />
                 <div>
-                  <div className="font-semibold text-2xl opacity-80">48.2%</div>
-                  <div className="opacity-60 text-xs">Home Humidity</div>
+                  <div className="dark:text-white font-semibold text-2xl opacity-80">48.2%</div>
+                  <div className="dark:text-white opacity-60 text-xs">Home Humidity</div>
                 </div>
               </div>
             </div>

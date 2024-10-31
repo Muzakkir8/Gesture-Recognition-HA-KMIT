@@ -1,14 +1,14 @@
 const dotenv = require('dotenv').config();
 const express=require('express')
-const connectDB = require('./config/db');
+const {connectUserDB,connectDevicesDB}= require('./config/db');
 const cors = require('cors');
 
 const app = express();
-PORT=8000;
+PORT= 8080;
 
 
-connectDB()
-
+connectUserDB();
+connectDevicesDB();
 
 app.use(cors());
 app.use(express.json({ extended: false }));

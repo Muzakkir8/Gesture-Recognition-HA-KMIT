@@ -4,7 +4,6 @@ import Room from '../Components/Room.jsx';
 import Bedroom from '../Components/Bedroom.jsx';
 import LivingRoom from '../Components/LivingRoom.jsx';
 import Kitchen from '../Components/Kitchen.jsx';
-import Outdoor from '../Components/Outdoor.jsx';
 
 
 const Dashboard = () => {
@@ -18,8 +17,7 @@ const Dashboard = () => {
         return <Kitchen />;
       case 'Bedroom':
         return <Bedroom />;
-      case 'Outdoor':
-        return <Outdoor />;
+    
       default:
         return <LivingRoom />;
     }

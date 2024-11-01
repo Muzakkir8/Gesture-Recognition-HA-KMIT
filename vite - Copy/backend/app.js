@@ -16,6 +16,8 @@ app.use(express.json({ extended: false }));
 
 
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/devices', require('./routes/devices'));
+
 
 
 app.listen(PORT,'0.0.0.0',()=>{

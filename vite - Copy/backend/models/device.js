@@ -1,11 +1,29 @@
-const mongoose=require('mongoose');
-const { connectDevicesDB } = require('../config/db');
-const devicesConnection=connectDevicesDB();
-DeviceSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const mongoose = require('mongoose');
+
+// Define the Device schema
+const deviceSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        enum: ['fan', 'light', 'ac', 'heater'], // Only allowed devices
+    },
+    status: {
+        type: String,
+        enum: ['on', 'off'],
+        required: true,
+    },
+    room: {
+        type: String,
+        required: true,
+        enum: ['bedroom', 'kitchen', 'livingroom'], // Add more rooms as needed
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now,
     }
-})
-// models/device.js
-module.exports = devicesConnection.model('Device', DeviceSchema);
+});
+
+// Create a model for the schema
+const Device = mongoose.model('Device', deviceSchema);
+
+module.exports = Device;

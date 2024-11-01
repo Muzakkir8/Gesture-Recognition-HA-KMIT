@@ -14,7 +14,7 @@
   position: fixed;
   padding: 30px 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 3.55px 1.95px 5.9px;
-  background-color: #785bf8;
+  background-color: rgba(120, 91, 248, 1);
   border-top-right-radius: 35px;
   z-index: 10;
   transition: width 0.6s, padding 0.6s;
@@ -114,7 +114,9 @@
 }
 
 .log img {
-  width: 25px;
+  width: 24px;
+  padding-bottom: 10px;
+
   
 }
 .nav-active li {

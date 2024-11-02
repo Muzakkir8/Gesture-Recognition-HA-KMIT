@@ -4,7 +4,7 @@ function Outdoor() {
     const [devices, setDevices] = useState([]);
     const [deviceStates, setDeviceStates] = useState({});
     const [newDevice, setNewDevice] = useState('');
-    const allowedDevices = ['fan', 'light', 'ac', 'heater'];
+    const allowedDevices = ['fan', 'light', 'ac', 'heater','tv'];
 
     useEffect(() => {
         const fetchDevices = async () => {

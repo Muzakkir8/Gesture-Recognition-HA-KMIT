@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function Device() {
     // Define the allowed room names (consistency in naming)
-    const allowedRooms = ['bedroom', 'kitchen', 'living room','livingroom']; // Using 'living room' consistently
+    const allowedRooms = ['bedroom', 'kitchen', 'living room','livingroom','outdoor']; // Using 'living room' consistently
     const [deviceName, setDeviceName] = useState('');
 
     const handleAddDevice = async (deviceType) => {

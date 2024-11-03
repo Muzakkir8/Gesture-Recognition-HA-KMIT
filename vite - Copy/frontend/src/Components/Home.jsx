@@ -9,12 +9,12 @@ const Home = ({ isAuthenticated }) => {
                 <div className="left">
                     G-160
                 </div>
-                <div className="middle">
+               <div className="middle">
                     <ul>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact Us</a></li>
-                        <li><a href="">Help</a></li>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="">About</Link></li>
+                        <li><Link to="">Contact Us</Link></li>
+                        <li><Link to="">Help</Link></li>
                     </ul>
                 </div>
                 <div className="right">

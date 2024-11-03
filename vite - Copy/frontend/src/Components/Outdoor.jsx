@@ -9,7 +9,7 @@ function Outdoor() {
     useEffect(() => {
         const fetchDevices = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/devices/Outdoor'); // Use lowercase 'Outdoor'
+                const response = await fetch('http://localhost:8080/api/devices/outdoor'); // Use lowercase 'Outdoor'
                 console.log('Response status:', response.status); // Log response status
                 if (response.ok) {
                     const data = await response.json();

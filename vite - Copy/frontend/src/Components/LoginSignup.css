@@ -168,6 +168,31 @@
     background-color: #5c00d0;
 }
 
+/* Directly target Toastify classes to ensure styles are applied */
+.Toastify__toast-container {
+    z-index: 9999 !important; /* Ensure it stays on top of all other elements */
+    position: fixed;
+    top: 20px;                /* Adjust top position if needed */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.Toastify__toast {
+    font-size: 16px;          /* Adjust font size if needed */
+    border-radius: 10px;      /* Rounded corners for toast */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.toast-container {
+    z-index: 9999;            /* Extra z-index for layering */
+}
+.Toastify__toast-container--top-center {
+    top: 70px; /* Adjust this based on the height of your navbar */
+  }
+  
+
+
+
 /* For better mobile responsiveness */
 @media screen and (max-width: 768px) {
     .container {

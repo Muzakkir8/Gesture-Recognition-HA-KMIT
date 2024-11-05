@@ -4,16 +4,14 @@ function Outdoor() {
     const [devices, setDevices] = useState([]);
     const [deviceStates, setDeviceStates] = useState({});
     const [newDevice, setNewDevice] = useState('');
-    const allowedDevices = ['fan', 'light', 'ac', 'heater','tv'];
+    const allowedDevices = ['fan', 'light', 'ac', 'heater'];
 
     useEffect(() => {
         const fetchDevices = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/devices/outdoor'); // Use lowercase 'Outdoor'
-                console.log('Response status:', response.status); // Log response status
+                const response = await fetch('http://localhost:8080/api/devices/outdoor'); // Correct endpoint
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('Fetched devices:', data); // Log fetched devices
                     setDevices(data);
                     const initialStates = {};
                     data.forEach((device) => {
@@ -57,7 +55,7 @@ function Outdoor() {
                 const response = await fetch('http://localhost:8080/api/devices', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: normalizedNewDevice, status: 'off', room: 'Outdoor' }), // Use lowercase 'Outdoor'
+                    body: JSON.stringify({ name: normalizedNewDevice, status: 'off', room: 'outdoor' }),
                 });
                 if (response.ok) {
                     const result = await response.json();

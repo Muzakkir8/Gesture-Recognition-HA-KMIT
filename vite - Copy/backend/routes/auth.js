@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
         };
 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-        return res.json({ token });
+        return res.json({ token ,username: user.name});
 
     } catch (err) {
         console.error("log in is not working");

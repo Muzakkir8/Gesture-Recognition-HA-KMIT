@@ -15,7 +15,7 @@ const deviceSchema = new mongoose.Schema({
     room: {
         type: String,
         required: true,
-        enum: ['bedroom', 'kitchen', 'livingroom'], // Add more rooms as needed
+        enum: ['bedroom', 'kitchen', 'livingroom','outdoor'], // Add more rooms as needed
     },
     timestamp: {
         type: Date,

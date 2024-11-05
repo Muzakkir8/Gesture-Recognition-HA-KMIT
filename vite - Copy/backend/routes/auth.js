@@ -48,14 +48,14 @@ router.post('/login', async (req, res) => {
     try {
         let user = await User.findOne({ email });
         if (!user) {
-            console.log("User not found.")
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            console.log("User not found.");
+            return res.status(400).json({ message: 'User with this email not found' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             console.log("Wrong password");
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Incorrect password' });
         }
 
         const payload = {
@@ -65,12 +65,13 @@ router.post('/login', async (req, res) => {
         };
 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-        return res.json({ token ,username: user.name});
+        return res.json({ token, username: user.name });
 
     } catch (err) {
-        console.error("log in is not working");
+        console.error("Login error:", err.message);
         res.status(500).send('Server error');
     }
 });
+
 
 module.exports = router;

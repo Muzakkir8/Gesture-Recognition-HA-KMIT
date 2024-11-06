@@ -20,12 +20,12 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
 
     return (
         <>
-         <div className="header mt-0 shadow-[0_4px_10px_rgba(0,0,0,0.1)] sticky top-0 z-99 dark:border-b-[1px] dark:border-slate-600 dark:bg-slate-800">
+         <div className="lg:bg-[#e9efff] header mt-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] sticky top-0 z-99 dark:border-b-[1px] dark:border-slate-600 dark:bg-slate-800">
 
 
                 <button
                     onClick={() => setDarkMode(!darkMode)}
-                    className="p-2 absolute right-0 bg-gray-200 dark:bg-gray-700 dark:border rounded text-xs my-2 mx-2 dark:text-white"
+                    className="p-2 absolute right-0 bg-slate-300 dark:bg-slate-600 border rounded text-xs my-2 mx-2 dark:text-white"
                 >
                     Dark Mode
                 </button>

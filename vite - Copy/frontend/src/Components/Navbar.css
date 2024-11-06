@@ -14,8 +14,9 @@
   position: fixed;
   padding: 30px 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 3.55px 1.95px 5.9px;
-  background-color: rgba(120, 91, 248, 1);
-  border-top-right-radius: 35px;
+  background-color: #0F1F4E;
+
+  border-top-right-radius: 15px;
   z-index: 10;
   transition: width 0.6s, padding 0.6s;
 }
@@ -26,10 +27,12 @@
   margin-right: 17px;
   margin-left: 30px;
   transition: margin-left 0.6s;
+  opacity: 55%;
 }
 
 .logo img {
   width: 30px;
+
   fill: azure;
   margin-right: 17px;
   margin-left: 1px;
@@ -79,8 +82,9 @@
 }
 
 .list li:hover {
-  background-color: indigo; /* Background color changes instantly */
+  background-color: #243D80; /* Background color changes instantly */
   border-radius: 5px;
+  
 }
 .dark .list li:hover {
   background-color: #334155; /* Background color changes instantly */
@@ -120,8 +124,11 @@
   
 }
 .nav-active li {
-  background-color: indigo;
+  background-color: #243D80;
   border-radius: 5px;
+}
+.nav-active img {
+opacity: 100%;
 }
 .dark .nav-active li {
   background-color: #334155;

@@ -12,6 +12,7 @@ import log from '../assets/log.svg';
 import logout from '../assets/logout.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './Dashboard';
 
 
 const Navbar = () => {
@@ -129,8 +130,8 @@ const Navbar = () => {
           </div>
         )}
         <div className="user">
-          <div className="logo">
-            <img src={userI} alt="User Icon" />
+          <div className="logo ">
+            <img src={userI} className='opacity-100' alt="User Icon" />
           </div>
           <h1>iSmart</h1>
         </div>
@@ -177,7 +178,6 @@ const Navbar = () => {
             <h2 className='dark:text-slate-400  -ml-1'>{username || 'User Name'} <br />{email || 'email@example.com'}</h2>
           </div>
         </div>
-        
         </div>
       
     </>

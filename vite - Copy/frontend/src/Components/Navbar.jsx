@@ -171,11 +171,11 @@ const Navbar = () => {
             <h2>Log out</h2>
           </li>
         </ul>
-        <hr className="border-t-2 border-azure w-50 my-24" />
+        <hr className="border-t-2 border-azure -ml-1 text-white my-24" />
         <div className="log overflow-hidden">
           <img src={log} alt="Log Icon" className="us " />
           <div>
-            <h2 className='dark:text-slate-400  -ml-1'>{username || 'User Name'} <br />{email || 'email@example.com'}</h2>
+            <h2 className='dark:text-slate-400 text-slate-400 -ml-1'>{username || 'User Name'} <br />{email || 'email@example.com'}</h2>
           </div>
         </div>
         </div>

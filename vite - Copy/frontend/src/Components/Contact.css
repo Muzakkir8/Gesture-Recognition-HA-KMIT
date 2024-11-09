@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #e9e4fd;
   
 
 
@@ -50,7 +49,7 @@ form .inputbox{
 form button{
     width: 100%;
     height: 55px;
-    background: #826afb;
+    background: #2a50af;
     border: none;
     border-radius: 6px;
     box-shadow: 0 0 10px rgba(0,0,0,-1);

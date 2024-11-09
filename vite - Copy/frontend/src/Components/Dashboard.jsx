@@ -30,9 +30,9 @@ const Dashboard = () => {
     <div className="max-h-screen  transition-all duration-200 ease-linear flex  dark:bg-slate-900">
       <div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-gray-100
-  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  [&::-webkit-scrollbar-thumb]:bg-gray-200
   dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 max-h-screen lg:ml-14 lg:w-[80vw] ">
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500  max-h-screen lg:ml-14 lg:w-[80vw] ">
 
         <div className=" mt-10 hello ml-10 text-[28px] hidden sm:block">Hey, <span className="name font-bold">Jhon. 👋🏻</span>Welcome to Dashboard<p className="a opacity-60 text-[16px]">Have a nice day!</p></div>
         {/* Header with Background Image */}

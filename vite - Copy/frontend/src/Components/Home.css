@@ -4,6 +4,7 @@
     margin: 0%;
     padding: 0%;
 }
+<<<<<<< HEAD
 .top{
     display: flex;
     justify-content: space-around;
@@ -53,6 +54,12 @@
 }
 .second{
     color: white;
+=======
+.home-container {
+    border-radius: 30px;
+    margin: 60px;
+    background-color:#3700ff;
+>>>>>>> ab7e71624dce4f1c81f47343044ca3020bd09c52
     display: flex;
     flex-direction: column;
     align-items: center;

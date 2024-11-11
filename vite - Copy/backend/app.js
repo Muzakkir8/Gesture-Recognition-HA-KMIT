@@ -2,6 +2,10 @@ const dotenv = require('dotenv').config();
 const express=require('express')
 const {connectUserDB,connectDevicesDB}= require('./config/db');
 const cors = require('cors');
+const initializeWebSocket = require('./websocket.js');
+
+// Call the function to start the server and WebSocket
+initializeWebSocket();
 
 const app = express();
 PORT= 8080;

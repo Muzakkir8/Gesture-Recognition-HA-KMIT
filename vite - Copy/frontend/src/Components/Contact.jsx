@@ -48,7 +48,7 @@ function contact() {
                 
             </div>
                 <div className="field">
-            <button type='submit' className='dark:bg-indigo-400  border-solid'>Send</button>
+            <button type='submit' className='dark:bg-blue-400  border-solid'>Send</button>
             </div>
         </form>
     </section>

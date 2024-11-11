@@ -5,6 +5,7 @@ function LivingRoom() {
     const [deviceStates, setDeviceStates] = useState({});
     const [newDevice, setNewDevice] = useState('');
     const allowedDevices = ['fan', 'light', 'ac', 'heater'];
+    const [ws, setWs] = useState(null);
 
     useEffect(() => {
         const fetchDevices = async () => {
@@ -29,24 +30,68 @@ function LivingRoom() {
             }
         };
         fetchDevices();
+        const socket = new WebSocket('ws://localhost:5001');
+        setWs(socket);
+        socket.onmessage = (event) => {
+            const { device, status,room } = JSON.parse(event.data);
+        
+            // Check if the device is the one we care about and update its state
+            if (room === 'livingroom' && deviceStates.hasOwnProperty(device)) {
+                setDeviceStates((prevState) => ({
+                    ...prevState,              // Spread the previous state
+                    [device]: status,          // Update only the specific device's state
+                }));
+            }
+        };
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+          };
+          socket.onclose = () => {
+            console.log("WebSocket connection closed");
+            setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000); // Reconnect after 5 seconds
+          };
+          return () => socket.close();
     }, []);
 
     const toggleDevice = async (device) => {
         try {
-            // Toggle the device status
-            const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: deviceStates[device.name] ? 'off' : 'on' }),
-            });
-            if (response.ok) {
-                // Update device states locally
-                setDeviceStates((prevState) => ({
-                    ...prevState,
-                    [device.name]: !prevState[device.name],
-                }));
+            // Check if WebSocket is open
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                // Get the current status of the device from deviceStates
+                const currentStatus = deviceStates[device.name];
+                
+                // Toggle the status
+                const newStatus = currentStatus ? 'off' : 'on';
+    
+                // Prepare the message with room information and device status
+                const message = {
+                    device: device.name,        // Device name (e.g., 'light')
+                    status: newStatus,          // New status ('on' or 'off')
+                    room: 'livingroom',            // Room name (you can set it dynamically if needed)
+                };
+    
+                // Send the updated status to the WebSocket server with room info
+                ws.send(JSON.stringify(message));
+    
+                // Send the updated status to the backend (API)
+                const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus }),
+                });
+    
+                // Check if the API request was successful
+                if (response.ok) {
+                    // Update the local state with the new status for the specific device
+                    setDeviceStates((prevState) => ({
+                        ...prevState,
+                        [device.name]: !prevState[device.name], // Toggle the local state
+                    }));
+                } else {
+                    console.error('Failed to toggle device');
+                }
             } else {
-                console.error('Failed to toggle device. Status:', response.status);
+                console.error('WebSocket is not open');
             }
         } catch (error) {
             console.error('Error toggling device:', error);

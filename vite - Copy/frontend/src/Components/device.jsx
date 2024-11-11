@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { FaLightbulb, FaFan, FaFireAlt, FaSnowflake, FaTv, FaWarehouse } from 'react-icons/fa'; // Import icons
 
 function Device() {
-    // Define the allowed room names (consistency in naming)
-    const allowedRooms = ['bedroom', 'kitchen', 'living room','livingroom','outdoor']; // Using 'living room' consistently
+    const allowedRooms = ['bedroom', 'kitchen', 'living room', 'livingroom', 'outdoor'];
     const [deviceName, setDeviceName] = useState('');
 
     const handleAddDevice = async (deviceType) => {
@@ -18,7 +18,7 @@ function Device() {
             const normalizedDevice = deviceType.toLowerCase();
 
             try {
-                const response = await fetch('http://localhost:8080/api/devices', { // Ensure this URL is correct
+                const response = await fetch('http://localhost:8080/api/devices', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: normalizedDevice, status: 'off', room: normalizedRoom }),
@@ -36,18 +36,30 @@ function Device() {
         }
     };
 
+    // Define the devices with their corresponding icons and colors
+    const devices = [
+        { name: 'Light', icon: <FaLightbulb color="#FFD700" size="2em" /> },
+        { name: 'Fan', icon: <FaFan color="#1E90FF" size="2em" /> },
+        { name: 'Heater', icon: <FaFireAlt color="#FF4500" size="2em" /> },
+        { name: 'Air Conditioner', icon: <FaSnowflake color="#00BFFF" size="2em" /> },
+        { name: 'Refrigerator', icon: <FaWarehouse color="#8A2BE2" size="2em" /> },
+        { name: 'Television', icon: <FaTv color="#32CD32" size="2em" /> },
+    ];
+
     return (
-        <div className="p-6 bg-gray-50 min-h-screen">
-            <div className="bg-gray-100 p-6">
+        <div className="lg:ml-14 md:ml-14 p-6 min-h-screen">
+            <div className="p-6">
                 <h1 className="text-2xl font-bold mb-6 text-center">Add Devices</h1>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                {['Light', 'Fan', 'Heater', 'Air Conditioner', 'Refrigerator', 'Television'].map((deviceType, index) => (
-                    <div key={index} className="bg-white p-4 shadow rounded text-center">
-                        <h2 className="font-semibold text-lg mb-2">{deviceType}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {devices.map((device, index) => (
+                    <div key={index} className="bg-white p-4 shadow-md rounded text-center">
+                        <div className="flex justify-center mb-2 opacity-80">{device.icon}</div> {/* Display the icon */}
+                        
+                        <h2 className="font-semibold text-lg mb-2">{device.name}</h2>
                         <button
-                            onClick={() => handleAddDevice(deviceType)}
+                            onClick={() => handleAddDevice(device.name)}
                             className="text-blue-500 hover:underline"
                         >
                             + Add Device

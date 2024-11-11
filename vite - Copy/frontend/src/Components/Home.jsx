@@ -5,32 +5,30 @@ import './Home.css';
 const Home = ({ isAuthenticated }) => {
     return (
         <>
-            <div className="top">
-                <div className="left">
-                    G-160
+            <div className="head">
+                <div className="top">
+                    <div className="left">
+                        <div className='homelogo'><Link to="/"></Link></div>
+                        <div className='g160'><Link to="/">G-160</Link></div>
+
+                    </div>
+
+                    <div className="sec1"></div>
+                    <div className="right">
+                        <Link to="/login">
+                            <button className='home-button'>Login</button>
+                        </Link>
+                        <Link to="/signup">
+                            <button className='home-button'>Sign Up</button>
+                        </Link>
+                    </div>
                 </div>
-               <div className="middle">
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="">About</Link></li>
-                        <li><Link to="">Contact Us</Link></li>
-                        <li><Link to="">Help</Link></li>
-                    </ul>
-                </div>
-                <div className="right">
-                    <Link to="/login">
-                        <button className='home-button'>Login</button>
-                    </Link>
-                    <Link to="/signup">
-                        <button className='home-button'>Sign Up</button>
-                    </Link>
-                </div>
-            </div>
-            <main>
+
                 <div className='second'>
+                    {/* <div className="sec1"></div> */}
                     <div className='H1 dark:text-white'>MAKE YOUR LIFE MORE COMFORTABLE</div>
                     <div className='H2 dark:text-slate-400'>Transforming comfort into a seamless experience.</div>
-
+                    <button className='joinbtn'>LOGIN AS GUEST</button>
 
                     <div className='home-container'>
                         <h1 className='home-title dark:text-yellow-500'>Welcome to Our App</h1>
@@ -45,12 +43,39 @@ const Home = ({ isAuthenticated }) => {
                     </div>
 
                 </div>
+            </div>
+            <main>
                 <div className="third">
                     <div className="head3 dark:text-violet-200">Control Your Appliances With Ease And Comfort</div>
                     <div className="body3 dark:bg-slate-500 ">
-                        <div className="left3 dark:text-white dark:bg-slate-800">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, consectetur.</div>
-                        <div className="right3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate necessitatibus illum ipsam, a mollitia eaque ipsa exercitationem est iste et?</div>
+                        <div className="left3 dark:text-white dark:bg-slate-800">
+                            <div className="im1"></div>
+                            <div className="im2"></div>
+                            <div className="im3"></div>
+                            <div className="im4"></div>
+                            <div className="im5"></div>
+                            <div className="im6"></div>
+                        </div>
+                        <div className="right3"><b>Convenience and Control:</b> Voice commands provide seamless, hands-free management of home devices for enhanced user comfort.
+                            <br />
+                            <br />
+                            <b>Energy Efficiency:</b> Automated scheduling and smart device control help optimize energy usage, lowering costs.
+                            <br />
+                            <br />
+                            <b>Enhanced Security:</b> Advanced encryption and user authentication ensure data privacy and protection against unauthorized access.
+                            <br />
+                            <br />
+                            <b>Customizability and Scalability:</b> The system supports tailored setups and can expand with new devices as needed.</div>
                     </div>
+                    <div className="thirdbtns">
+                        <Link to="/login">
+                            <button className='thirdbtn'>LOGIN</button>
+                        </Link>
+                        <Link to="/signup">
+                            <button className='thirdbtn'>SIGN UP</button>
+                        </Link>
+                    </div>
+                    {/* <button className='joinbtn'>LOGIN AS GUEST</button> */}
                 </div>
                 <div className="fourth dark:bg-violet-900">
                     <div className="top4 dark:text-white">You will gain access to...</div>
@@ -62,51 +87,51 @@ const Home = ({ isAuthenticated }) => {
 
                                 <div className="img1"></div>
                                 <div className="itembody">
-                                Seamlessly control your home appliances, such as fans, lights, and AC, through voice commands or mobile access.
+                                    Seamlessly control your home appliances, such as fans, lights, and AC, through voice commands or mobile access.
                                 </div>
                                 <div>
-                                <Link to="/signup">
-                                    <button className='btn1'>Get Access</button>
-                                </Link >
-                                <Link to="/help">
+                                    <Link to="/signup">
+                                        <button className='btn1'>Get Access</button>
+                                    </Link >
+                                    <Link to="/Help">
 
-                                    <button className='btn2'>Need Help?</button>
+                                        <button className='btn2'>Need Help?</button>
                                     </Link >
 
                                 </div>
                             </div>
                             <div className="item item2">
                                 <div className="itemhead">SmartSave</div>
-                                
+
                                 <div className="img2"></div>
                                 <div className="itembody">
-                                Monitor your appliance usage history to optimize performance and save energy
+                                    Monitor your appliance usage history to optimize performance and save energy
                                 </div>
                                 <div>
-                                <Link to="/signup">
-                                    <button className='btn1'>Get Access</button>
-                                </Link>
-                                <Link to="/help">
+                                    <Link to="/signup">
+                                        <button className='btn1'>Get Access</button>
+                                    </Link>
+                                    <Link to="/Help">
 
-                                    <button className='btn2'>Need Help?</button>
+                                        <button className='btn2'>Need Help?</button>
                                     </Link>
 
                                 </div>
                             </div>
                             <div className="item item3">
                                 <div className="itemhead">Temp Insight</div>
-                                
+
                                 <div className="img3"></div>
                                 <div className="itembody">
-                                Access real-time temperature insights to make informed decisions on device usage.
+                                    Access real-time temperature insights to make informed decisions on device usage.
                                 </div>
                                 <div>
-                                <Link to="/signup">
-                                    <button className='btn1'>Get Access</button>
-                                </Link>
-                                <Link to="/help">
+                                    <Link to="/signup">
+                                        <button className='btn1'>Get Access</button>
+                                    </Link>
+                                    <Link to="/Help">
 
-                                    <button className='btn2'>Need Help?</button>
+                                        <button className='btn2'>Need Help?</button>
                                     </Link>
 
                                 </div>
@@ -114,22 +139,22 @@ const Home = ({ isAuthenticated }) => {
                         </div>
                     </div>
                 </div>
-
-                {/* <p className='home-text'>Sign up or log in to access your dashboard.</p> */}
-
-                {/* <div className='home-buttons'> */}
-                {/* <Link to="/login"> */}
-                {/* <button className='home-button'>Login</button> */}
-                {/* </Link> */}
-                {/* <Link to="/signup"> */}
-                {/* <button className='home-button'>Sign Up</button> */}
-                {/* </Link>  */}
-
-
-                {/* </div> */}
-                <div className="pop"><a href="">Help?</a></div>
+                <div className="pop">
+                    <Link to="/Help">
+                        Help?
+                    </Link></div>
+                <div className="bottom">
+                    <ul>
+                        <li><Link to="/"> Home</Link></li>
+                        <li><Link to="/Help">Help?</Link></li>
+                        <li><Link to="/login">Login</Link></li>
+                        <li><Link to="/signup">SignUp</Link></li>
+                        <li><Link to="/guest">Login As Guest</Link></li>    
+                    </ul>
+                </div>
 
             </main>
+
         </>
     );
 };

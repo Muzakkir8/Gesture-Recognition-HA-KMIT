@@ -22,7 +22,7 @@ function initializeWebSocket() {
   const wss = new WebSocket.Server({ server });
 
   wss.on('connection', (ws) => {
-    console.log("Client connected");
+    //console.log("Client connected");
 
     ws.on('message', async (message) => {
       try {
@@ -42,7 +42,7 @@ function initializeWebSocket() {
           }
         });
 
-        console.log(`Updated device: ${device} in room: ${room} to status: ${status}`);
+        //console.log(`Updated device: ${device} in room: ${room} to status: ${status}`);
       } catch (error) {
         console.error('WebSocket message error:', error);
         ws.send(JSON.stringify({ error: 'Error updating device status' }));
@@ -50,7 +50,7 @@ function initializeWebSocket() {
     });
 
     ws.on('close', () => {
-      console.log('WebSocket connection closed');
+      //console.log('WebSocket connection closed');
     });
   });
 

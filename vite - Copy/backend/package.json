@@ -7,7 +7,7 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.10.0",
-    "mongoose": "^8.7.3",
+    "mongoose": "^8.8.1",
     "mongoosh": "^0.0.7",
     "nodemon": "^3.1.7",
     "ws": "^8.18.0"

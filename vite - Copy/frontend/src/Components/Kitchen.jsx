@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 function Kitchen() {
     const [devices, setDevices] = useState([]);
@@ -11,81 +10,81 @@ function Kitchen() {
     useEffect(() => {
         const fetchDevices = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/devices/kitchen'); // Correct endpoint
+                // Fetch devices for Kitchen
+                const response = await fetch('http://localhost:8080/api/devices/kitchen');
                 if (response.ok) {
                     const data = await response.json();
                     setDevices(data);
+
+                    // Initialize device states based on fetched data
                     const initialStates = {};
                     data.forEach((device) => {
                         initialStates[device.name] = device.status === 'on';
                     });
                     setDeviceStates(initialStates);
                 } else {
-                    console.error('Failed to fetch devices');
+                    console.error('Failed to fetch devices. Status:', response.status);
                 }
             } catch (error) {
                 console.error('Error fetching devices:', error);
             }
         };
         fetchDevices();
+
         const socket = new WebSocket('ws://localhost:5001');
         setWs(socket);
         socket.onmessage = (event) => {
-            const { device, status,room } = JSON.parse(event.data);
-        
+            const { device, status, room } = JSON.parse(event.data);
+
             // Check if the device is the one we care about and update its state
             if (room === 'kitchen' && deviceStates.hasOwnProperty(device)) {
                 setDeviceStates((prevState) => ({
-                    ...prevState,              // Spread the previous state
-                    [device]: status,          // Update only the specific device's state
+                    ...prevState,
+                    [device]: status,
                 }));
             }
         };
+
         socket.onerror = (error) => {
             console.error("WebSocket error:", error);
-          };
-          socket.onclose = () => {
+        };
+
+        socket.onclose = () => {
             console.log("WebSocket connection closed");
             setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000); // Reconnect after 5 seconds
-          };
-          return () => socket.close();
+        };
+
+        return () => socket.close();
     }, []);
 
     const toggleDevice = async (device) => {
         try {
-            // Check if WebSocket is open
             if (ws && ws.readyState === WebSocket.OPEN) {
-                // Get the current status of the device from deviceStates
                 const currentStatus = deviceStates[device.name];
-                
-                // Toggle the status
                 const newStatus = currentStatus ? 'off' : 'on';
-    
-                // Prepare the message with room information and device status
+
+                // Update local state first
+                setDeviceStates((prevState) => ({
+                    ...prevState,
+                    [device.name]: !prevState[device.name], // Toggle the local state immediately
+                }));
+
+                // Send the updated status through WebSocket
                 const message = {
-                    device: device.name,        // Device name (e.g., 'light')
-                    status: newStatus,          // New status ('on' or 'off')
-                    room: 'kitchen',            // Room name (you can set it dynamically if needed)
+                    device: device.name,
+                    status: newStatus,
+                    room: 'kitchen',
                 };
-    
-                // Send the updated status to the WebSocket server with room info
                 ws.send(JSON.stringify(message));
-    
-                // Send the updated status to the backend (API)
+
+                // Send updated status to the API
                 const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus }),
                 });
-    
-                // Check if the API request was successful
-                if (response.ok) {
-                    // Update the local state with the new status for the specific device
-                    setDeviceStates((prevState) => ({
-                        ...prevState,
-                        [device.name]: !prevState[device.name], // Toggle the local state
-                    }));
-                } else {
+
+                if (!response.ok) {
                     console.error('Failed to toggle device');
                 }
             } else {
@@ -95,7 +94,6 @@ function Kitchen() {
             console.error('Error toggling device:', error);
         }
     };
- 
 
     const addDevice = async () => {
         const normalizedNewDevice = newDevice.toLowerCase();
@@ -138,7 +136,7 @@ function Kitchen() {
                     return newState;
                 });
             } else {
-                console.error('Failed to remove device');
+                console.error('Failed to remove device. Status:', response.status);
             }
         } catch (error) {
             console.error('Error removing device:', error);
@@ -146,7 +144,7 @@ function Kitchen() {
     };
 
     return (
-        <div className="p-6 bg-transparent min-h-screen">
+        <div className="p-6 min-h-screen">
             <h2 className="text-2xl font-bold mb-4">Kitchen</h2>
             <div className="mb-4">
                 <input
@@ -160,29 +158,87 @@ function Kitchen() {
                     Add Device
                 </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-2 w-full max-w-lg">
                 {devices.length > 0 ? (
-                    devices.map((device, index) => (
-                        <div key={index} className="bg-white p-4 shadow rounded">
-                            <h2 className="font-semibold text-lg capitalize text-center">{device.name}</h2>
-                            <div className="flex justify-center mt-2">
-                                <button
+                    devices.map((device) => (
+                        <div key={device._id}
+                             style={{
+                                 display: "flex",
+                                 justifyContent: "space-between",
+                                 alignItems: "center",
+                                 backgroundColor: deviceStates[device.name] ? "#527ff4" : "#d0d7e0",
+                                 padding: "12px 15px",
+                                 borderRadius: "12px",
+                                 width: "95%",
+                                 height:"65px",
+                                 marginBottom: "16px",
+                                 transition: "background-color 0.3s ease",
+                             }}>
+                            <div style={{ display: "flex", flexDirection: "column" }}>
+                                <h3 style={{ margin: "0", fontSize: "1.2rem", color: "white" }}>
+                                    {device.name.charAt(0).toUpperCase() + device.name.slice(1)}
+                                </h3>
+                            </div>
+
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <div
                                     onClick={() => toggleDevice(device)}
-                                    className="bg-blue-500 text-white py-1 px-4 rounded mr-2"
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        backgroundColor: deviceStates[device.name] ? "#3863ee" : "#b0bec5",
+                                        padding: "5px",
+                                        borderRadius: "8px",
+                                        cursor: "pointer",
+                                        transition: "background-color 0.3s ease",
+                                        width: "70px",
+                                        height: "38px",
+                                        position: "relative",
+                                        marginRight: "8px",
+                                    }}
                                 >
-                                    {deviceStates[device.name] ? 'On' : 'Off'}
-                                </button>
+                                    <span
+                                        style={{
+                                            position: "absolute",
+                                            left: deviceStates[device.name] ? "10px" : "34px",
+                                            color: deviceStates[device.name] ? "white" : "#4b82f1",
+                                            fontSize: "0.75rem",
+                                            fontWeight: "bold",
+                                            textTransform: "uppercase",
+                                            transition: "left 0.3s, color 0.3s",
+                                        }}
+                                    >
+                                        {deviceStates[device.name] ? "ON" : "OFF"}
+                                    </span>
+                                    <div
+                                        style={{
+                                            height: "33px",
+                                            width: "28px",
+                                            backgroundColor: "white",
+                                            borderRadius: "6px",
+                                            transition: "transform 0.3s ease",
+                                            transform: deviceStates[device.name] ? "translateX(38px)" : "translateX(0)",
+                                        }}
+                                    ></div>
+                                </div>
+
                                 <button
                                     onClick={() => removeDevice(device)}
-                                    className="bg-red-500 text-white py-1 px-4 rounded"
+                                    style={{
+                                        fontSize: "1.2rem", // Larger "X" size
+                                        color: "#f44336",
+                                        backgroundColor: "transparent",
+                                        border: "none",
+                                        cursor: "pointer",
+                                    }}
                                 >
-                                    Remove
+                                    &times;
                                 </button>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <p className="text-gray-500">No devices added yet.</p>
+                    <div className="text-gray-500">No devices added yet.</div>
                 )}
             </div>
         </div>

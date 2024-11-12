@@ -1,81 +1,109 @@
-import React from 'react';
-import { useRef, useEffect, useState } from 'react';
+// Dashboard.jsx
+import React, { useState, useEffect } from 'react';
 import Room from '../Components/Room.jsx';
 import Bedroom from '../Components/Bedroom.jsx';
 import LivingRoom from '../Components/LivingRoom.jsx';
 import Kitchen from '../Components/Kitchen.jsx';
-import Outdoor from '../Components/Outdoor.jsx'
-import Temp from '../Components/temp.jsx'
-
+import Outdoor from '../Components/Outdoor.jsx';
+import ACControl from '../Components/ACControl.jsx';
+import Temp from '../Components/temp.jsx';
 
 const Dashboard = () => {
-  
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
+  const [userName, setUserName] = useState('');
+  const [ws, setWs] = useState(null);
+  const [isAcOn, setIsAcOn] = useState(false); 
+
+  useEffect(() => {
+    const storedUserName = localStorage.getItem('username');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+
+    const socket = new WebSocket('ws://localhost:5001');
+    setWs(socket);
+
+    socket.onmessage = (event) => {
+      const { device, status, room } = JSON.parse(event.data);
+      if (room === 'livingroom' && device === 'ac') {
+        
+        setIsAcOn(status === 'on');
+      }
+    };
+
+    socket.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    socket.onclose = () => {
+      console.log('WebSocket connection closed');
+      setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000);
+    };
+
+    return () => socket.close();
+  }, []);
+
+  const toggleAC = () => {
+    const newStatus = isAcOn ? 'off' : 'on';
+    setIsAcOn(!isAcOn);
+    
+    
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ device: 'ac', status: newStatus, room: 'livingroom' }));
+    }
+  };
+
   const renderRoom = () => {
     switch (selectedRoom) {
       case 'LivingRoom':
-        return <LivingRoom />;
+        return <LivingRoom ws={ws} isAcOn={isAcOn} toggleAC={toggleAC} />;
       case 'Kitchen':
         return <Kitchen />;
       case 'Bedroom':
         return <Bedroom />;
-        case 'Outdoor':
+      case 'Outdoor':
         return <Outdoor />;
-    
       default:
-        return <LivingRoom />;
+        return <LivingRoom ws={ws} isAcOn={isAcOn} toggleAC={toggleAC} />;
     }
   };
+
   return (
-    <div className="max-h-screen  transition-all duration-200 ease-linear flex  dark:bg-slate-900">
-      <div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-2
-  [&::-webkit-scrollbar-track]:bg-gray-100
-  [&::-webkit-scrollbar-thumb]:bg-gray-200
-  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500  max-h-screen lg:ml-14 lg:w-[80vw] ">
+    <div className="flex max-h-screen dark:bg-slate-900">
+      {/* Main Section - Temperature, Humidity, Greeting, and AC Control */}
+      <div className="flex flex-col w-full lg:w-[65vw] min-h-screen p-6 relative">
+        
+        {/* Greeting at the top */}
+        <div className="w-full max-w-[90vw] mx-auto mt-6 lg:max-w-[800px]">
+          <h1 className="text-[28px] text-gray-800">
+            Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
+          </h1>
+          <p className="text-gray-600 opacity-60 text-[16px]">Have a nice day!</p>
+        </div>
 
-        <div className=" mt-10 hello ml-10 text-[28px] hidden sm:block">Hey, <span className="name font-bold">Jhon. 👋🏻</span>Welcome to Dashboard<p className="a opacity-60 text-[16px]">Have a nice day!</p></div>
-        {/* Header with Background Image */}
-        <div className="lg:hidden h-[100px] rounded-lg shadow-sm w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[1410px] lg:ml-[80px] md:max-w-[800px]"> {/*1487*/}
-          <div className=" bg-blue-100 dark:bg-slate-500 opacity-90 bg-cover bg-bottom h-[100px] rounded-lg p-6 filter brightness-90 contrast-125 saturate-200  hue-rotate-[14deg] w-full max-w-[90vw] mx-auto lg:max-w-[1410px] md:max-w-[800px] ">
-            <div className="flex justify-between lg:justify-around items-center gap-4 lg:gap-[800px] ">
-              <div className="text-center flex items-center gap-2  ">
-                <img src="https://cdn-icons-png.flaticon.com/512/2100/2100130.png" className="w-8" />
-                <div>
-                  <div className="dark:text-white temp font-semibold text-2xl opacity-90 ">26°C</div>
-                  <div className="dark:text-white text-xs opacity-60">Home Temp</div>
-                </div>
-              </div>
+        {/* AC Control Widget */}
+        <div className="mt-8">
+          <ACControl isOn={isAcOn} toggleAC={toggleAC} />
+        </div>
 
-              <div className="humid text-center flex items-center gap-2">
-                <img src="https://cdn-icons-png.flaticon.com/512/12564/12564499.png" alt="" className="w-8" />
-                <div>
-                  <div className="dark:text-white font-semibold text-2xl opacity-80">48.2%</div>
-                  <div className="dark:text-white opacity-60 text-xs">Home Humidity</div>
-                </div>
-              </div>
-            </div>
-
-          </div></div><div></div>
-
-        {/* Main content area */}
-        <div className=" dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full max-w-[90vw] mx-auto rounded-lg p-6 mt-4 lg:max-w-[1410px] md:max-w-[800px] min-h-[calc(100vh-100px)] lg:ml-[80px]">
-          <div className="">
-            
-            {renderRoom()}
-
-
-          </div>
+        {/* Temperature Widget at the Bottom Right */}
+        <div className="absolute bottom-16 right-6">
+          <Temp />
         </div>
       </div>
-      {/* right content */}
-      <div className="right max-h-screen w-[35vw] bg-white">
-      <Room onSelectedRoom={setSelectedRoom} />
 
-        <div className="temp fixed bottom-5  ml-5 "><Temp/></div>
-        </div></div>
+      {/* Right Section - Room Selection and Device Content */}
+      <div className="flex flex-col w-[35vw] bg-white dark:bg-slate-800 min-h-screen p-6 overflow-y-auto">
+        
+        {/* Room Selection */}
+        <Room onSelectedRoom={setSelectedRoom} />
 
-
+        {/* Room Content */}
+        <div className="dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-6 mt-4">
+          {renderRoom()}
+        </div>
+      </div>
+    </div>
   );
 };
 

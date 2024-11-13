@@ -25,11 +25,15 @@ const Home = ({ isAuthenticated }) => {
                 </div>
 
                 <div className='second'>
-                    {/* <div className="sec1"></div> */}
+
                     <div className='H1 dark:text-white'>MAKE YOUR LIFE MORE COMFORTABLE</div>
                     <div className='H2 dark:text-slate-400'>Transforming comfort into a seamless experience.</div>
-                    <button className='joinbtn'>LOGIN AS GUEST</button>
 
+                    {/* linking to guest page after validating username  */}
+                    <Link to="/guest">
+                        <button className='joinbtn'>LOGIN AS GUEST</button>
+                    </Link>
+                    {/* </div> */}
                     <div className='home-container'>
                         <h1 className='home-title dark:text-yellow-500'>Welcome to Our App</h1>
                         <div className="canbody">
@@ -93,7 +97,7 @@ const Home = ({ isAuthenticated }) => {
                                     <Link to="/signup">
                                         <button className='btn1'>Get Access</button>
                                     </Link >
-                                    <Link to="/Help">
+                                    <Link to="/help">
 
                                         <button className='btn2'>Need Help?</button>
                                     </Link >
@@ -111,7 +115,7 @@ const Home = ({ isAuthenticated }) => {
                                     <Link to="/signup">
                                         <button className='btn1'>Get Access</button>
                                     </Link>
-                                    <Link to="/Help">
+                                    <Link to="/help">
 
                                         <button className='btn2'>Need Help?</button>
                                     </Link>
@@ -129,7 +133,7 @@ const Home = ({ isAuthenticated }) => {
                                     <Link to="/signup">
                                         <button className='btn1'>Get Access</button>
                                     </Link>
-                                    <Link to="/Help">
+                                    <Link to="/help">
 
                                         <button className='btn2'>Need Help?</button>
                                     </Link>
@@ -140,16 +144,16 @@ const Home = ({ isAuthenticated }) => {
                     </div>
                 </div>
                 <div className="pop">
-                    <Link to="/Help">
+                    <Link to="/help">
                         Help?
                     </Link></div>
                 <div className="bottom">
                     <ul>
                         <li><Link to="/"> Home</Link></li>
-                        <li><Link to="/Help">Help?</Link></li>
+                        <li><Link to="/help">Help?</Link></li>
                         <li><Link to="/login">Login</Link></li>
                         <li><Link to="/signup">SignUp</Link></li>
-                        <li><Link to="/guest">Login As Guest</Link></li>    
+                        <li><Link to="/guest">Login As Guest</Link></li>
                     </ul>
                 </div>
 

@@ -50,7 +50,7 @@ function Kitchen() {
         };
 
         socket.onclose = () => {
-            console.log("WebSocket connection closed");
+            // console.log("WebSocket connection closed");
             setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000); // Reconnect after 5 seconds
         };
 

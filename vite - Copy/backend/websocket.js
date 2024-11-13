@@ -5,7 +5,7 @@ const WebSocket = require('ws');
 const Device = require('./models/device'); // Import the Device model
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://zeeshan:Zeeshan123%402023@cluster0.knc0r.mongodb.net/Users?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://zeeshan:Zeeshan123%402023@cluster0.knc0r.mongodb.net/User?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('MongoDB connection error:', error));
 
@@ -22,7 +22,7 @@ function initializeWebSocket() {
   const wss = new WebSocket.Server({ server });
 
   wss.on('connection', (ws) => {
-    console.log("Client connected");
+    // console.log("Client connected");
 
     ws.on('message', async (message) => {
       try {
@@ -50,7 +50,7 @@ function initializeWebSocket() {
     });
 
     ws.on('close', () => {
-      console.log('WebSocket connection closed');
+      // console.log('WebSocket connection closed');
     });
   });
 

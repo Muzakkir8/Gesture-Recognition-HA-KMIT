@@ -1,36 +1,103 @@
 /* Home.css */
 
 *{
-    color: black;
+    margin: 0%;
+    padding: 0%;
 }
-.home-container {
-    border-radius: 30px;
-    margin: 60px;
-    background-color:#3700ff;
+.top{
+    display: flex;
+    justify-content: space-around;
+    position: sticky;
+    padding-top: 2vh;
+    background-color: #08122e;
+    color: white;
+}
+.right {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    margin: 0%;
+
+}
+
+.left{
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 2px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.homelogo{
+    background-image: url('src/assets/homelogo.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    width: 7vw;
+    height: 7vh;
+    
+}
+.g160{
+    /* padding-left: 1vw; */
+}
+.sec1{
+    background-image: url('src/assets/blue1.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 40vh;
+    width: 30vw;
+    
+}
+.second{
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* min-height: 100vh; */
-    /* background-color: #f0f4f8; */
-    padding: 20px;
+    font-size: 3rem;
+    padding-top: 2vh;
+    font-weight: 500;
+    background-color: #08122e;
+    
+}
+
+
+.home-container {
+    border-radius: 30px;
+    margin: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5vw;
     text-align: center;
     height: 30vw;
+    background-image: url('src/assets/sec2.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #08122e;
 }
 .canbody{
     display: flex;
     flex-direction: row;
-    /* margin-top: 30px; */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .containeright{
     border-color: black;
     background-image: url('src/assets/image1.jpg');
 
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-color: #ffffff;
-    height: 45vh;
-    width: 55vw;
+    
+    height: 30vh;
+    width: 45vw;
     text-overflow: ellipsis;
     font-size: large;
 
@@ -43,7 +110,6 @@
     margin-top: 80px;
     font-size: 20px;
 }
-
 .home-title {
     font-size: 2.5rem;
     font-weight: bold;
@@ -53,7 +119,6 @@
 
 .home-text {
     font-size: 1.2rem;
-    /* color: #666; */
     margin-bottom: 20px;
 }
 
@@ -68,7 +133,7 @@
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
-    background-color:#5c45ae;
+    background-color:hsl(193, 48%, 56%);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -77,73 +142,44 @@
 }
 
 .home-button:hover {
-    background-color:purple;
+    background-color:#11255b;
 }
-.top{
-    display: flex;
-    justify-content: space-between;
-    position: sticky;
-    background-color: #e2daff;
-}
-.right {
-    display: flex;
-    flex-direction: row;
-}
-.middle{
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-}
-.middle ul{
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    font-weight:700;
-    /* position:; */
-}
-.left{
+.joinbtn {
+    margin-top: 20vh;
 
-    color: black;
-    /* background-color: gold; */
-    border-radius: 5px;
     padding: 10px 20px;
     font-size: 2rem;
     font-weight: bold;
-    padding: 2px;
-    margin: 5px;
+    color: #f6fafb;
+    background-color:#08122e;
+    border-color: #36c6f6;
+    border-width:medium;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10vh;
+    background-image: url('src/assets/—Pngtree—technology circuit line horizontal drawing_8803469.png');
+    background-size: contain;
 }
-.second{
-    background-image: url('src/assets/background1.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 50px;
-    padding-top: 100px;
-    font-weight: 500;
-    
+
+.joinbtn:hover {
+    background-color:#11255b;
 }
-.homelogo{
-    width: 50px;
-    height: 60px;
-}
+
+
+
 main{
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* align-items: center; */
+    background-color: #08122e;
+    color: white;
+
 }
 
 .third{
     display: flex;
     flex-direction: column;
-     background-image: url('src\assets\background1.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat; 
+
     justify-content: center;
     align-items: center;
     font-size: 50px;
@@ -151,29 +187,79 @@ main{
     font-weight: 500;
     margin: 10px;
     margin-top: 90px;
-    /* background-color: beige; */
-    /* background-color: #0056b3; */
 }
 .body3{
     display: flex;
-    flex-direction: row;
-    background-color:#f0eef8;
-    margin: 30px;
+    flex-direction: row;    
     border-radius: 30px;
-    padding: 70px;
+    padding-top: 10vh;
 }
 .left3{
-    background-color: #e2daff;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2vw;
     margin: 10px;
     width: 30vw;
-    height: 70vh;
+    height: 50vh;
     font-size: large;
 
 }
+.im1{
+    background-image: url('src/assets/home_1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.im2{
+    background-image: url('src/assets/iot2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.im3{
+    background-image: url('src/assets/voice-control.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.im4{
+    background-image: url('src/assets/fan.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.im5{
+    background-image: url('src/assets/bulb2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.im6{
+    background-image: url('src/assets/ac.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 .right3{
-    margin-left: 30px;
-    margin-top: 90px;
-    font-size: large;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3vw;
+    font-size: 1.5rem;
+    width: 60vw;
+    
+}
+
+.thirdbtn{
+    padding: 15px 40px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color:hsl(193, 72%, 67%);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 2vw;
+    background-image: url('src/assets/—Pngtree—technology circuit line horizontal drawing_8803469.png');
+ 
+    background-size: contain;
+    color: #f6fafb;
+    background-color:#08122e;
+    border-color: #36c6f6;
+    border-width:medium;
+
 }
 .H1{
     font-size: larger;
@@ -183,14 +269,12 @@ main{
     margin-top: 30px;
 }
 .fourth{
-    background-color: #bbaaf9;
-    /* height: 50vh; */
-    margin: 60px;
+    background-color:#08122e    ;
+    margin: 2vh;
     border-radius: 30px;
-    margin-top: 90px;
+    margin-top: 15vh;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     padding: 40px;
 }
@@ -199,7 +283,7 @@ main{
     flex-direction: row;
 }
 .right4{
-    background-color: #fff;
+    background-color: #d15050;
     height: 40vh;
     margin: 40px;
 }
@@ -212,7 +296,7 @@ main{
     padding: 10px;
     border-radius: 20px;
     font-weight: bold;
-    background-color:#ebbefa
+    background-color:#51ade6
 }
 .grid{
     display: grid;
@@ -220,13 +304,12 @@ main{
     gap: 35px;
 }
 .item1{
-    background-color: #cbc1f2;
+    background-color: #69c5fe;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     width: 25vw;
-    /* height: 50vh; */
     border-radius: 30px;
     transition: o.3s;
     
@@ -236,23 +319,21 @@ main{
     padding-top: 10px;
 }
 .item2{
-    background-color: #f0eef8;
+    background-color: #fa7eb2;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     width: 25vw;
-    /* height: 50vh; */
     border-radius: 30px;
 }
 .item3{
-    background-color: #cbc1f2;
+    background-color: #5daada;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     width: 25vw;
-    /* height: 50vh; */
     border-radius: 30px;
     
 }
@@ -262,7 +343,7 @@ main{
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
-    background-color:#5c45ae;
+    background-color:#08122e;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -274,8 +355,8 @@ main{
     padding: 10px 20px;
     font-size: 1rem;
     font-weight: bold;
-    color: #fff;
-    background-color:#aa99ed;
+    color: black;
+    background-color:#f0ecee;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -287,7 +368,6 @@ main{
 .top4{
     font-size: 50px;
     margin-bottom: 30px;
-    /* margin-top: 20px; */
 }
 .itemhead{
     font-size: 30px;
@@ -309,7 +389,6 @@ main{
     margin: 40px;
     font-weight: 700;
     position: relative;
-    /* right: 70px; */
 }
 .img2{
     background-image: url('src/assets/track.jpg');
@@ -326,4 +405,104 @@ main{
     background-repeat: no-repeat;
     height: 290px;
     width: 300px;
+}
+.bottom{
+    margin-top: 20vh;
+    background-color:#08122e;
+    color:#36c6f6;
+}
+.bottom ul li{
+    border-color:#36c6f6;
+    border-width: thin;
+    padding: 1vw;
+}
+@media (min-width: 780px)and (max-width:1140px){
+    .top{
+        justify-content: space-around;
+        /* flex-direction: column; */
+        align-items: center;
+
+    }
+    .homelogo{
+        display: none;
+    }
+    .g160{
+        /* font-size: large; */
+        margin-left: 2vw;
+    }
+    .left{
+        justify-content: space-around;
+    }
+    .right{
+
+    }
+    .sec1{
+        width: 15vw;
+        height: 10vh;
+    }
+    .home-button{
+        padding: 1.5vw;
+        font-size: large;
+    }
+    .H1{
+        font-size: 2rem;
+    }
+    .H2{
+        font-size: 1.2rem;
+    }
+    .joinbtn{
+        padding: 1vh 2vw;
+        font-size: medium;
+    }
+    .second{
+        margin-top:0%;
+    }
+    .home-container{
+        position: relative;
+        padding: 2vw;
+        margin: 5vw;
+    }
+    
+    .home-title{
+        font-size: 2rem;
+        position: static;
+    }
+    .containerleft{
+        padding: 1vw;
+        justify-content: center;
+        align-items: center;
+        margin-top:0%;
+        font-size: medium;
+        padding-top: 0%;
+    }
+    .containeright{
+        width: 38vw;
+        height: auto    ;
+    }
+}
+@media (min-width: 320px) and (max-width: 780px){
+    .top{
+        display: flex;
+    }
+    .homelogo{
+        display: none;
+    }
+    .H1{
+        font-size: large;
+    }
+    .H2{
+        font-size: medium;
+    }
+    .joinbtn{
+        font-size: medium;
+    }
+    .home-title{
+        font-size: 0.1rem;
+    }
+    .containeright{
+
+    }
+    .containerleft{
+        font-size: 0.5rem;
+    }
 }

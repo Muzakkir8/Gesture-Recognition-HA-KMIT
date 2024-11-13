@@ -10,12 +10,14 @@ import Signup from './Components/Signup.jsx';
 import Home from './Components/Home.jsx';
 import Contact from './Components/Contact.jsx';
 import Reports from './Components/Reports.jsx';
+// import Help from './Components/help.jsx';
+// import hamburger from './Components/hamburger.jsx';
 
 function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated, setUsername }) {
     const location = useLocation();
 
     // Define paths where the Navbar should be hidden
-    const hideNavbarPaths = ['/', '/login', '/signup'];
+    const hideNavbarPaths = ['/', '/login', '/signup','/Help'];
     const showNavbar = !hideNavbarPaths.includes(location.pathname);
 
     return (
@@ -34,6 +36,7 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
             {showNavbar && <Navbar />}
             <Routes>
                 <Route path="/" element={<Home />} />
+                {/* <Route path="/Help" element={<Help />} /> */}
                 <Route path="/devices" element={<Device />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route 
@@ -46,6 +49,7 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/contact" element={<Contact />} />
+               
             </Routes>
         </>
     );

@@ -1,4 +1,3 @@
-// Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import Room from '../Components/Room.jsx';
 import Bedroom from '../Components/Bedroom.jsx';
@@ -12,7 +11,18 @@ const Dashboard = () => {
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
   const [userName, setUserName] = useState('');
   const [ws, setWs] = useState(null);
-  const [isAcOn, setIsAcOn] = useState(false); 
+  const [acStatus, setAcStatus] = useState({
+    LivingRoom: false,
+    Bedroom: false,
+    Kitchen: false,
+  });
+
+  // Mapping of room names for consistency
+  const roomMapping = {
+    LivingRoom: 'livingroom',
+    Bedroom: 'bedroom',
+    Kitchen: 'kitchen',
+  };
 
   useEffect(() => {
     const storedUserName = localStorage.getItem('username');
@@ -20,14 +30,28 @@ const Dashboard = () => {
       setUserName(storedUserName);
     }
 
+    // Load initial AC status for each room from localStorage
+    const initialAcStatus = {
+      LivingRoom: localStorage.getItem('LivingRoomAcStatus') === 'on',
+      Bedroom: localStorage.getItem('BedroomAcStatus') === 'on',
+      Kitchen: localStorage.getItem('KitchenAcStatus') === 'on',
+    };
+    setAcStatus(initialAcStatus);
+
     const socket = new WebSocket('ws://localhost:5001');
     setWs(socket);
 
     socket.onmessage = (event) => {
       const { device, status, room } = JSON.parse(event.data);
-      if (room === 'livingroom' && device === 'ac') {
-        
-        setIsAcOn(status === 'on');
+      const formattedRoom = Object.keys(roomMapping).find(
+        (key) => roomMapping[key] === room
+      );
+      if (device === 'ac' && formattedRoom) {
+        setAcStatus((prevStatus) => ({
+          ...prevStatus,
+          [formattedRoom]: status === 'on',
+        }));
+        localStorage.setItem(`${formattedRoom}AcStatus`, status); // Update localStorage
       }
     };
 
@@ -44,67 +68,83 @@ const Dashboard = () => {
   }, []);
 
   const toggleAC = () => {
-    const newStatus = isAcOn ? 'off' : 'on';
-    setIsAcOn(!isAcOn);
-    
-    
+    const newStatus = !acStatus[selectedRoom];
+    setAcStatus((prevStatus) => ({
+      ...prevStatus,
+      [selectedRoom]: newStatus,
+    }));
+    localStorage.setItem(`${selectedRoom}AcStatus`, newStatus ? 'on' : 'off'); // Save to localStorage
+
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ device: 'ac', status: newStatus, room: 'livingroom' }));
+      ws.send(
+        JSON.stringify({ device: 'ac', status: newStatus ? 'on' : 'off', room: roomMapping[selectedRoom] })
+      );
+    } else {
+      console.log("WebSocket is not open.");
     }
   };
 
   const renderRoom = () => {
     switch (selectedRoom) {
       case 'LivingRoom':
-        return <LivingRoom ws={ws} isAcOn={isAcOn} toggleAC={toggleAC} />;
+        return <LivingRoom ws={ws} isAcOn={acStatus.LivingRoom} toggleAC={toggleAC} />;
       case 'Kitchen':
-        return <Kitchen />;
+        return <Kitchen ws={ws} isAcOn={acStatus.Kitchen} toggleAC={toggleAC} />;
       case 'Bedroom':
-        return <Bedroom />;
+        return <Bedroom ws={ws} isAcOn={acStatus.Bedroom} toggleAC={toggleAC} />;
       case 'Outdoor':
         return <Outdoor />;
       default:
-        return <LivingRoom ws={ws} isAcOn={isAcOn} toggleAC={toggleAC} />;
+        return <LivingRoom ws={ws} isAcOn={acStatus.LivingRoom} toggleAC={toggleAC} />;
     }
   };
 
   return (
     <div className="flex max-h-screen dark:bg-slate-900">
-      {/* Main Section - Temperature, Humidity, Greeting, and AC Control */}
-      <div className="flex flex-col w-full lg:w-[65vw] min-h-screen p-6 relative">
-        
-        {/* Greeting at the top */}
-        <div className="w-full max-w-[90vw] mx-auto mt-6 lg:max-w-[800px]">
-          <h1 className="text-[28px] text-gray-800">
+      <style>
+        {`
+          /* Hide scrollbar but keep scrolling */
+          .hide-scrollbar {
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+          }
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+          }
+        `}
+      </style>
+
+      <div className="flex flex-col w-full lg:w-[65vw] min-h-screen p-4">
+        <div className="w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[800px]">
+          <h1 className="text-[24px] text-gray-800">
             Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
           </h1>
-          <p className="text-gray-600 opacity-60 text-[16px]">Have a nice day!</p>
+          <p className="text-gray-600 opacity-60 text-[14px]">
+            {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
+          </p>
         </div>
 
-        {/* AC Control Widget */}
-        <div className="mt-8">
-          <ACControl isOn={isAcOn} toggleAC={toggleAC} />
-        </div>
-
-        {/* Temperature Widget at the Bottom Right */}
-        <div className="absolute bottom-16 right-6">
-          <Temp />
+        <div className="mt-6">
+          <ACControl isOn={acStatus[selectedRoom]} toggleAC={toggleAC} />
         </div>
       </div>
 
-      {/* Right Section - Room Selection and Device Content */}
-      <div className="flex flex-col w-[35vw] bg-white dark:bg-slate-800 min-h-screen p-6 overflow-y-auto">
-        
-        {/* Room Selection */}
+      <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
         <Room onSelectedRoom={setSelectedRoom} />
 
-        {/* Room Content */}
-        <div className="dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-6 mt-4">
+        <div
+          className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-4 hide-scrollbar"
+          style={{ maxHeight: '55vh' }} // Updated maxHeight to limit scroll area
+        >
           {renderRoom()}
+        </div>
+
+        <div className="w-full mx-auto flex justify-center mt-3"> {/* Updated width for Temp widget */}
+          <Temp />
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Dashboard;

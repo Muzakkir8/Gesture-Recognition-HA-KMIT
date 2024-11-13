@@ -62,7 +62,7 @@ const Guest = ({ setUsername, setIsAuthenticated }) => {
             />
 
                 <div className="header bg-purple-600 rounded-2xl lg:w-[500px]">
-                    <div className="text text-violet-100 dark:text-white">Login As Guest</div>
+                    <div className="text text-violet-100 dark:text-white">Login as Guest</div>
                     <div className="underline"></div>
                 </div>
                 <form className='dark:bg-slate-400' onSubmit={handleSubmit}>

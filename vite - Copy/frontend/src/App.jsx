@@ -12,7 +12,7 @@ import Contact from './Components/Contact.jsx';
 import Reports from './Components/Reports.jsx';
 import Guest from './Components/guest_login.jsx';
 import Help from './Components/Help.jsx';
-// import hamburger from './Components/hamburger.jsx';
+
 
 function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated, setUsername }) {
     const location = useLocation();
@@ -37,6 +37,7 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
             {showNavbar && <Navbar />}
             <Routes>
                 <Route path="/" element={<Home />} />
+                {/* <Route path="/Help" element={<Help />} /> */}
                 <Route path="/devices" element={<Device />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route 

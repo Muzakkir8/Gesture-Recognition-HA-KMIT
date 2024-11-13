@@ -1,82 +1,150 @@
-import React from 'react';
-import { useRef, useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Room from '../Components/Room.jsx';
 import Bedroom from '../Components/Bedroom.jsx';
 import LivingRoom from '../Components/LivingRoom.jsx';
 import Kitchen from '../Components/Kitchen.jsx';
-import Outdoor from '../Components/Outdoor.jsx'
-import Temp from '../Components/temp.jsx'
-
+import Outdoor from '../Components/Outdoor.jsx';
+import ACControl from '../Components/ACControl.jsx';
+import Temp from '../Components/temp.jsx';
 
 const Dashboard = () => {
-  
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
+  const [userName, setUserName] = useState('');
+  const [ws, setWs] = useState(null);
+  const [acStatus, setAcStatus] = useState({
+    LivingRoom: false,
+    Bedroom: false,
+    Kitchen: false,
+  });
+
+  // Mapping of room names for consistency
+  const roomMapping = {
+    LivingRoom: 'livingroom',
+    Bedroom: 'bedroom',
+    Kitchen: 'kitchen',
+  };
+
+  useEffect(() => {
+    const storedUserName = localStorage.getItem('username');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+
+    // Load initial AC status for each room from localStorage
+    const initialAcStatus = {
+      LivingRoom: localStorage.getItem('LivingRoomAcStatus') === 'on',
+      Bedroom: localStorage.getItem('BedroomAcStatus') === 'on',
+      Kitchen: localStorage.getItem('KitchenAcStatus') === 'on',
+    };
+    setAcStatus(initialAcStatus);
+
+    const socket = new WebSocket('ws://localhost:5001');
+    setWs(socket);
+
+    socket.onmessage = (event) => {
+      const { device, status, room } = JSON.parse(event.data);
+      const formattedRoom = Object.keys(roomMapping).find(
+        (key) => roomMapping[key] === room
+      );
+      if (device === 'ac' && formattedRoom) {
+        setAcStatus((prevStatus) => ({
+          ...prevStatus,
+          [formattedRoom]: status === 'on',
+        }));
+        localStorage.setItem(`${formattedRoom}AcStatus`, status); // Update localStorage
+      }
+    };
+
+    socket.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    socket.onclose = () => {
+      console.log('WebSocket connection closed');
+      setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000);
+    };
+
+    return () => socket.close();
+  }, []);
+
+  const toggleAC = () => {
+    const newStatus = !acStatus[selectedRoom];
+    setAcStatus((prevStatus) => ({
+      ...prevStatus,
+      [selectedRoom]: newStatus,
+    }));
+    localStorage.setItem(`${selectedRoom}AcStatus`, newStatus ? 'on' : 'off'); // Save to localStorage
+
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(
+        JSON.stringify({ device: 'ac', status: newStatus ? 'on' : 'off', room: roomMapping[selectedRoom] })
+      );
+    } else {
+      console.log("WebSocket is not open.");
+    }
+  };
+
   const renderRoom = () => {
     switch (selectedRoom) {
       case 'LivingRoom':
-        return <LivingRoom />;
+        return <LivingRoom ws={ws} isAcOn={acStatus.LivingRoom} toggleAC={toggleAC} />;
       case 'Kitchen':
-        return <Kitchen />;
+        return <Kitchen ws={ws} isAcOn={acStatus.Kitchen} toggleAC={toggleAC} />;
       case 'Bedroom':
-        return <Bedroom />;
-        case 'Outdoor':
+        return <Bedroom ws={ws} isAcOn={acStatus.Bedroom} toggleAC={toggleAC} />;
+      case 'Outdoor':
         return <Outdoor />;
-    
       default:
-        return <LivingRoom />;
+        return <LivingRoom ws={ws} isAcOn={acStatus.LivingRoom} toggleAC={toggleAC} />;
     }
   };
+
   return (
-    <div className="max-h-screen  transition-all duration-200 ease-linear flex  dark:bg-slate-900">
-      <div className="flex flex-col overflow-y-auto [&::-webkit-scrollbar]:w-2
-  [&::-webkit-scrollbar-track]:bg-gray-100
-  [&::-webkit-scrollbar-thumb]:bg-gray-200
-  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500  max-h-screen lg:ml-14 lg:w-[80vw] ">
+    <div className="flex max-h-screen dark:bg-slate-900">
+      <style>
+        {`
+          /* Hide scrollbar but keep scrolling */
+          .hide-scrollbar {
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+          }
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+          }
+        `}
+      </style>
 
-        <div className=" mt-10 hello ml-10 text-[28px] hidden sm:block">Hey, <span className="name font-bold">Jhon. 👋🏻</span>Welcome to Dashboard<p className="a opacity-60 text-[16px]">Have a nice day!</p></div>
-        {/* Header with Background Image */}
-        <div className="lg:hidden h-[100px] rounded-lg shadow-sm w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[1410px] lg:ml-[80px] md:max-w-[800px]"> {/*1487*/}
-          <div className=" bg-blue-100 dark:bg-slate-500 opacity-90 bg-cover bg-bottom h-[100px] rounded-lg p-6 filter brightness-90 contrast-125 saturate-200  hue-rotate-[14deg] w-full max-w-[90vw] mx-auto lg:max-w-[1410px] md:max-w-[800px] ">
-            <div className="flex justify-between lg:justify-around items-center gap-4 lg:gap-[800px] ">
-              <div className="text-center flex items-center gap-2  ">
-                <img src="https://cdn-icons-png.flaticon.com/512/2100/2100130.png" className="w-8" />
-                <div>
-                  <div className="dark:text-white temp font-semibold text-2xl opacity-90 ">26°C</div>
-                  <div className="dark:text-white text-xs opacity-60">Home Temp</div>
-                </div>
-              </div>
+      <div className="flex flex-col w-full lg:w-[65vw] min-h-screen p-4">
+        <div className="w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[800px]">
+          <h1 className="text-[24px] text-gray-800">
+            Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
+          </h1>
+          <p className="text-gray-600 opacity-60 text-[14px]">
+            {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
+          </p>
+        </div>
 
-              <div className="humid text-center flex items-center gap-2">
-                <img src="https://cdn-icons-png.flaticon.com/512/12564/12564499.png" alt="" className="w-8" />
-                <div>
-                  <div className="dark:text-white font-semibold text-2xl opacity-80">48.2%</div>
-                  <div className="dark:text-white opacity-60 text-xs">Home Humidity</div>
-                </div>
-              </div>
-            </div>
-
-          </div></div><div></div>
-
-        {/* Main content area */}
-        <div className=" dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full max-w-[90vw] mx-auto rounded-lg p-6 mt-4 lg:max-w-[1410px] md:max-w-[800px] min-h-[calc(100vh-100px)] lg:ml-[80px]">
-          <div className="">
-            
-            {renderRoom()}
-
-
-          </div>
+        <div className="mt-6">
+          <ACControl isOn={acStatus[selectedRoom]} toggleAC={toggleAC} />
         </div>
       </div>
-      {/* right content */}
-      <div className="right max-h-screen w-[35vw] bg-white">
-      <Room onSelectedRoom={setSelectedRoom} />
 
-        <div className="temp fixed bottom-5  ml-5 "><Temp/></div>
-        </div></div>
+      <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
+        <Room onSelectedRoom={setSelectedRoom} />
 
+        <div
+          className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-4 hide-scrollbar"
+          style={{ maxHeight: '55vh' }} // Updated maxHeight to limit scroll area
+        >
+          {renderRoom()}
+        </div>
 
+        <div className="w-full mx-auto flex justify-center mt-3"> {/* Updated width for Temp widget */}
+          <Temp />
+        </div>
+      </div>
+    </div>
   );
-};
+}
 
 export default Dashboard;

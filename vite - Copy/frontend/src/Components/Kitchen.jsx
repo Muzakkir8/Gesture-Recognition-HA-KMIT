@@ -37,8 +37,8 @@ function Kitchen() {
             const { device, status, room } = JSON.parse(event.data);
 
             // Check if the device is the one we care about and update its state
-            if (room === 'kitchen' && deviceStates.hasOwnProperty(device)) {
-                setDeviceStates((prevState) => ({
+            if (room === 'kitchen' && deviceStates.hasOwnProperty(device)) { //checks if light present in kitchen room
+                setDeviceStates((prevState) => ({ //update the array particularly
                     ...prevState,
                     [device]: status,
                 }));

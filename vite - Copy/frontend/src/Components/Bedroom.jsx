@@ -33,15 +33,18 @@ function Bedroom() {
 
         const socket = new WebSocket('ws://localhost:5001');
         setWs(socket);
+
+        // Handle incoming WebSocket messages to toggle device state automatically
         socket.onmessage = (event) => {
             const { device, status, room } = JSON.parse(event.data);
 
-            // Check if the device is the one we care about and update its state
+            // Check if the message is for the Bedroom and if the device exists
             if (room === 'bedroom' && deviceStates.hasOwnProperty(device)) {
                 setDeviceStates((prevState) => ({
                     ...prevState,
-                    [device]: status,
+                    [device]: status === 'on', // Update the state based on the incoming status
                 }));
+                console.log(`Device: ${device}, Status: ${status}`);
             }
         };
 
@@ -62,12 +65,6 @@ function Bedroom() {
             if (ws && ws.readyState === WebSocket.OPEN) {
                 const currentStatus = deviceStates[device.name];
                 const newStatus = currentStatus ? 'off' : 'on';
-
-                // Update local state first
-                setDeviceStates((prevState) => ({
-                    ...prevState,
-                    [device.name]: !prevState[device.name], // Toggle the local state immediately
-                }));
 
                 // Send the updated status through WebSocket
                 const message = {

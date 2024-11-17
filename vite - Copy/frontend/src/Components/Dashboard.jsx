@@ -155,7 +155,27 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       );
+=======
+
+      <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
+        <Room onSelectedRoom={setSelectedRoom} />
+
+        <div
+          className="flex-grow mt-1   dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-4 hide-scrollbar"
+          style={{ maxHeight: '55vh' }} // Updated maxHeight to limit scroll area
+        >
+          {renderRoom()}
+        </div>
+
+        <div className="w-full mx-auto flex justify-center mt-2"> {/* Updated width for Temp widget */}
+          <Temp />
+        </div>
+      </div>
+    </div>
+  );
+>>>>>>> d29e17fb1725081921f7ca04351e072aff478064
 }
 
       export default Dashboard;

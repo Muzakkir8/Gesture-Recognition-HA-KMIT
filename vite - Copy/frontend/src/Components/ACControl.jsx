@@ -5,7 +5,7 @@ const ACControl = ({ isOn, toggleAC, temperature, setTemperature, speed, changeS
   const decreaseTemperature = () => setTemperature((prevTemp) => Math.max(prevTemp - 1, 16));
 
   return (
-    <div className="ml-20 p-5 bg-white dark:bg-slate-800 rounded-lg shadow-lg text-center w-[40vw] lg:w-[25vw]">
+    <div className="ml-20 p-5 bg-white dark:bg-slate-800 rounded-lg text-center w-[40vw] lg:w-[25vw]">
       <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-3">Air Conditioner Control</h2>
 
       {/* Temperature Display */}

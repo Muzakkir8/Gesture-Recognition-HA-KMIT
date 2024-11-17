@@ -30,12 +30,12 @@ const Home = ({ isAuthenticated }) => {
                     <div className='H2 dark:text-slate-400'>Transforming comfort into a seamless experience.</div>
 
                     {/* linking to guest page after validating username  */}
-                    <Link to="/guest">
+                    <Link to="/guest_login">
                         <button className='joinbtn'>LOGIN AS GUEST</button>
                     </Link>
                     {/* </div> */}
                     <div className='home-container'>
-                        <h1 className='home-title dark:text-yellow-500'>Welcome to Our App</h1>
+                        <h1 className='home-title'>Welcome to Our App</h1>
                         <div className="canbody">
                             <div className="containerleft">
                                 Effortlessly control your surroundings with our IoT-based voice automation system. From home to office, hotel, or outdoor spaces, manage lighting, security, and climate with a simple command. Experience the ease and convenience of a smart, responsive environment tailored to your daily life.

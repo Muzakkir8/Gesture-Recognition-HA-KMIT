@@ -489,7 +489,7 @@ main{
     }
     .containeright{
         width: 38vw;
-        height: auto    ;
+        height: auto;
     }
 }
 @media (min-width: 320px) and (max-width: 780px){

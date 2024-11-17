@@ -9,7 +9,6 @@ const Help = () => {
       <div className='glass text container'>
         <h1>Stuck? Welcome to the Help Page for your IoT-based automated Home! Here’s a quick guide to get started and troubleshoot common issues.</h1>
 
-<<<<<<< HEAD
         <h2>Features :-</h2>
         <ul>
           <li className='text2 font-bold mb-2'>Device Control: Use the mobile app, web dashboard, or voice assistant to control connected devices like lights and fans.</li>
@@ -38,6 +37,3 @@ const Help = () => {
 };
 
 export default Help;
-=======
-export default Help
->>>>>>> 2d4e796430794eb08fe79a82f614329239de9515

@@ -29,14 +29,14 @@ const Login = ({ setUsername, setIsAuthenticated }) => {
                 formData,
                 { headers: { 'Content-Type': 'application/json' } }
             );
-    
+
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', data.username);
             localStorage.setItem('email', formData.email);
-    
+
             setIsAuthenticated(true);
             setUsername(data.username);
-    
+
             toast.success('Logged in successfully!');
             setTimeout(() => {
                 navigate('/dashboard');
@@ -47,19 +47,19 @@ const Login = ({ setUsername, setIsAuthenticated }) => {
             toast.error(errorMessage);
         }
     };
-    
+
     return (
         <div className="body fixed top-0 dark:bg-slate-900 bg-slate-200 h-screen w-screen flex justify-center items-center">
             <div className='container lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed'>
-            <ToastContainer
-                position="top-center"  // This will place the toast at the top center
-                autoClose={2000}       // Set auto-close to 2 seconds
-                hideProgressBar        // Hide the progress bar for simplicity
-                closeOnClick
-                pauseOnHover
-                draggable={false}
-                className="toast-container" // Custom class for additional styles
-            />
+                <ToastContainer
+                    position="top-center"  // This will place the toast at the top center
+                    autoClose={2000}       // Set auto-close to 2 seconds
+                    hideProgressBar        // Hide the progress bar for simplicity
+                    closeOnClick
+                    pauseOnHover
+                    draggable={false}
+                    className="toast-container" // Custom class for additional styles
+                />
 
                 <div className="header bg-purple-600 rounded-2xl lg:w-[500px]">
                     <div className="text text-violet-100 dark:text-white">Login</div>

@@ -6,6 +6,9 @@ import Kitchen from '../Components/Kitchen.jsx';
 import Outdoor from '../Components/Outdoor.jsx';
 import ACControl from '../Components/ACControl.jsx';
 import Temp from '../Components/temp.jsx';
+import FanControl from './Fan_Control.jsx';
+import LightControl from './LightControl.jsx';
+import './Dashboard.css';
 
 const Dashboard = () => {
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
@@ -123,28 +126,36 @@ const Dashboard = () => {
             {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
           </p>
         </div>
+        <div className="deviceControl">
+          <div className="mt-6">
+            <ACControl isOn={acStatus[selectedRoom]} toggleAC={toggleAC} />
+          </div>
+          <div className="LightFanControl">
+            <FanControl />
+            <LightControl/>
+          </div>
+            
+        </div>
 
-        <div className="mt-6">
-          <ACControl isOn={acStatus[selectedRoom]} toggleAC={toggleAC} />
+
+        </div>
+
+        <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
+          <Room onSelectedRoom={setSelectedRoom} />
+
+          <div
+            className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-4 hide-scrollbar"
+            style={{ maxHeight: '55vh' }} // Updated maxHeight to limit scroll area
+          >
+            {renderRoom()}
+          </div>
+
+          <div className="w-full mx-auto flex justify-center mt-3"> {/* Updated width for Temp widget */}
+            <Temp />
+          </div>
         </div>
       </div>
-
-      <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
-        <Room onSelectedRoom={setSelectedRoom} />
-
-        <div
-          className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-4 hide-scrollbar"
-          style={{ maxHeight: '55vh' }} // Updated maxHeight to limit scroll area
-        >
-          {renderRoom()}
-        </div>
-
-        <div className="w-full mx-auto flex justify-center mt-3"> {/* Updated width for Temp widget */}
-          <Temp />
-        </div>
-      </div>
-    </div>
-  );
+      );
 }
 
-export default Dashboard;
+      export default Dashboard;

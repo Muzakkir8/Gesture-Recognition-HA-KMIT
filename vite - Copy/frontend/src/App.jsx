@@ -10,7 +10,8 @@ import Signup from './Components/Signup.jsx';
 import Home from './Components/Home.jsx';
 import Contact from './Components/Contact.jsx';
 import Reports from './Components/Reports.jsx';
-import Guest from './Components/guest_login.jsx';
+import Guest from './Components/guest.jsx';
+import Guest_Login from './Components/guest_login.jsx';
 import Help from './Components/Help.jsx';
 
 
@@ -18,7 +19,7 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
     const location = useLocation();
 
     // Define paths where the Navbar should be hidden
-    const hideNavbarPaths = ['/', '/login', '/signup','/help','/guest'];
+    const hideNavbarPaths = ['/', '/login', '/signup','/help','/guest','/guest_login'];
     const showNavbar = !hideNavbarPaths.includes(location.pathname);
 
     return (
@@ -50,8 +51,9 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/guest" element={<Guest />} />
+                <Route path="/guest_login" element={<Guest_Login />} />
                 <Route path="/help" element={<Help />} />
+                <Route path="/guest" element={<Guest />}/>
             </Routes>
         </>
     );

@@ -1,0 +1,4 @@
+.deviceControl{
+    display: flex;
+    flex-direction: row;
+}

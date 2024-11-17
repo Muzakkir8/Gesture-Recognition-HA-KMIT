@@ -22,11 +22,7 @@ function initializeWebSocket() {
   const wss = new WebSocket.Server({ server });
 
   wss.on('connection', (ws) => {
-<<<<<<< HEAD
-    // console.log("Client connected");
-=======
     //console.log("Client connected");
->>>>>>> e3cc9b12255ab72ad1608fee5fbc4a377a9d2c70
 
     ws.on('message', async (message) => {
       try {
@@ -54,11 +50,7 @@ function initializeWebSocket() {
     });
 
     ws.on('close', () => {
-<<<<<<< HEAD
-      // console.log('WebSocket connection closed');
-=======
       //console.log('WebSocket connection closed');
->>>>>>> e3cc9b12255ab72ad1608fee5fbc4a377a9d2c70
     });
   });
 

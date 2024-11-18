@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { fetchDevices, toggleDevice, addDevice, removeDevice } from './deviceUtils';
 
 function Outdoor() {
     const [devices, setDevices] = useState([]);
@@ -7,182 +8,87 @@ function Outdoor() {
     const allowedDevices = ['fan', 'light', 'ac', 'heater'];
     const [ws, setWs] = useState(null);
 
-    useEffect(() => {
-        const fetchDevices = async () => {
-            try {
-                // Fetch devices for Outdoor
-                const response = await fetch('http://localhost:8080/api/devices/outdoor');
-                if (response.ok) {
-                    const data = await response.json();
-                    setDevices(data);
+    const isGuest = window.location.pathname.includes('/guest');
 
-                    // Initialize device states based on fetched data
-                    const initialStates = {};
-                    data.forEach((device) => {
-                        initialStates[device.name] = device.status === 'on';
-                    });
-                    setDeviceStates(initialStates);
-                } else {
-                    console.error('Failed to fetch devices. Status:', response.status);
-                }
-            } catch (error) {
-                console.error('Error fetching devices:', error);
-            }
-        };
-        fetchDevices();
+    useEffect(() => {
+        fetchDevices(setDevices, setDeviceStates, 'outdoor');
 
         const socket = new WebSocket('ws://localhost:5001');
         setWs(socket);
         socket.onmessage = (event) => {
             const { device, status, room } = JSON.parse(event.data);
-
-            // Check if the device is the one we care about and update its state
             if (room === 'outdoor' && deviceStates.hasOwnProperty(device)) {
                 setDeviceStates((prevState) => ({
                     ...prevState,
-                    [device]: status,
+                    [device]: status === 'on',
                 }));
             }
         };
 
-        socket.onerror = (error) => {
-            console.error("WebSocket error:", error);
-        };
+        socket.onerror = (error) => console.error("WebSocket error:", error);
 
-        socket.onclose = () => {
-            console.log("WebSocket connection closed");
-            setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000); // Reconnect after 5 seconds
-        };
+        socket.onclose = () => setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000);
 
         return () => socket.close();
     }, []);
 
-    const toggleDevice = async (device) => {
-        try {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                const currentStatus = deviceStates[device.name];
-                const newStatus = currentStatus ? 'off' : 'on';
-
-                // Update local state first
-                setDeviceStates((prevState) => ({
-                    ...prevState,
-                    [device.name]: !prevState[device.name], // Toggle the local state immediately
-                }));
-
-                // Send the updated status through WebSocket
-                const message = {
-                    device: device.name,
-                    status: newStatus,
-                    room: 'outdoor',
-                };
-                ws.send(JSON.stringify(message));
-
-                // Send updated status to the API
-                const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: newStatus }),
-                });
-
-                if (!response.ok) {
-                    console.error('Failed to toggle device');
-                }
-            } else {
-                console.error('WebSocket is not open');
-            }
-        } catch (error) {
-            console.error('Error toggling device:', error);
-        }
-    };
-
-    const addDevice = async () => {
-        const normalizedNewDevice = newDevice.toLowerCase();
-        if (normalizedNewDevice && allowedDevices.includes(normalizedNewDevice) && !devices.some((d) => d.name === normalizedNewDevice)) {
-            try {
-                const response = await fetch('http://localhost:8080/api/devices', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: normalizedNewDevice, status: 'off', room: 'outdoor' }),
-                });
-                if (response.ok) {
-                    const result = await response.json();
-                    setDevices((prevDevices) => [...prevDevices, result.device]);
-                    setDeviceStates((prevState) => ({
-                        ...prevState,
-                        [normalizedNewDevice]: false,
-                    }));
-                    setNewDevice('');
-                } else {
-                    alert('Failed to add device.');
-                }
-            } catch (error) {
-                console.error('Error adding device:', error);
-            }
-        } else {
-            alert('Please enter a valid device: fan, light, AC, or heater.');
-        }
-    };
-
-    const removeDevice = async (device) => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {
-                method: 'DELETE',
-            });
-            if (response.ok) {
-                setDevices((prevDevices) => prevDevices.filter((d) => d._id !== device._id));
-                setDeviceStates((prevState) => {
-                    const newState = { ...prevState };
-                    delete newState[device.name];
-                    return newState;
-                });
-            } else {
-                console.error('Failed to remove device. Status:', response.status);
-            }
-        } catch (error) {
-            console.error('Error removing device:', error);
-        }
-    };
-
     return (
         <div className="p-6 min-h-screen">
             <h2 className="text-2xl font-bold mb-4">Outdoor</h2>
-            <div className="mb-4">
-                <input
-                    type="text"
-                    value={newDevice}
-                    onChange={(e) => setNewDevice(e.target.value)}
-                    placeholder="Add new device"
-                    className="border p-2 rounded mr-2"
-                />
-                <button onClick={addDevice} className="bg-blue-500 text-white py-1 px-4 rounded">
-                    Add Device
-                </button>
-            </div>
+            {!isGuest && (
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        value={newDevice}
+                        onChange={(e) => setNewDevice(e.target.value)}
+                        placeholder="Add new device"
+                        className="border p-2 rounded mr-2 bg-black text-white"
+                    />
+                    <button
+                        onClick={() =>
+                            addDevice(
+                                newDevice,
+                                allowedDevices,
+                                devices,
+                                setDevices,
+                                setDeviceStates,
+                                setNewDevice,
+                                isGuest,
+                                'outdoor'
+                            )
+                        }
+                        className="bg-blue-500 text-white py-1 px-4 rounded"
+                    >
+                        Add Device
+                    </button>
+                </div>
+            )}
             <div className="grid grid-cols-1 gap-2 w-full max-w-lg">
                 {devices.length > 0 ? (
                     devices.map((device) => (
-                        <div key={device._id}
-                             style={{
-                                 display: "flex",
-                                 justifyContent: "space-between",
-                                 alignItems: "center",
-                                 backgroundColor: deviceStates[device.name] ? "#527ff4" : "#d0d7e0",
-                                 padding: "12px 15px",
-                                 borderRadius: "12px",
-                                 width: "95%",
-                                 height:"65px",
-                                 marginBottom: "16px",
-                                 transition: "background-color 0.3s ease",
-                             }}>
+                        <div
+                            key={device._id}
+                            style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                backgroundColor: deviceStates[device.name] ? "#527ff4" : "#d0d7e0",
+                                padding: "12px 15px",
+                                borderRadius: "12px",
+                                width: "95%",
+                                height: "65px",
+                                marginBottom: "16px",
+                                transition: "background-color 0.3s ease",
+                            }}
+                        >
                             <div style={{ display: "flex", flexDirection: "column" }}>
                                 <h3 style={{ margin: "0", fontSize: "1.2rem", color: "white" }}>
                                     {device.name.charAt(0).toUpperCase() + device.name.slice(1)}
                                 </h3>
                             </div>
-
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                    onClick={() => toggleDevice(device)}
+                                    onClick={() => toggleDevice(device, ws, deviceStates, setDeviceStates, 'outdoor')}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",
@@ -221,24 +127,25 @@ function Outdoor() {
                                         }}
                                     ></div>
                                 </div>
-
-                                <button
-                                    onClick={() => removeDevice(device)}
-                                    style={{
-                                        fontSize: "1.2rem", // Larger "X" size
-                                        color: "#f44336",
-                                        backgroundColor: "transparent",
-                                        border: "none",
-                                        cursor: "pointer",
-                                    }}
-                                >
-                                    &times;
-                                </button>
+                                {!isGuest && (
+                                    <button
+                                        onClick={() => removeDevice(device, setDevices, setDeviceStates, isGuest)}
+                                        style={{
+                                            fontSize: "1.2rem",
+                                            color: "#f44336",
+                                            border: "none",
+                                            background: "none",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        x
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="text-gray-500">No devices added yet.</div>
+                    <p>No devices available in the Outdoor.</p>
                 )}
             </div>
         </div>

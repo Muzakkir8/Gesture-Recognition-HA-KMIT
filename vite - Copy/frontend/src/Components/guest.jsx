@@ -102,6 +102,11 @@ const Guest = () => {
     }
   };
 
+  const handleLogout = () => {
+   
+    window.location.href = '/'; // This will reload the page and navigate to the homepage
+  };
+
   return (
     <div className="flex max-h-screen dark:bg-slate-900">
       <style>
@@ -120,12 +125,13 @@ const Guest = () => {
       <div className="flex flex-col w-full lg:w-[65vw] min-h-screen p-4">
         <div className="w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[800px]">
           <h1 className="text-[24px] text-gray-800">
-            Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
+            Hey, <span className="font-bold"> Guest 👋🏻</span> Welcome to Dashboard
           </h1>
           <p className="text-gray-600 opacity-60 text-[14px]">
             {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
           </p>
         </div>
+
         <div className="deviceControl">
           <div className="mt-6">
             <ACControl isOn={acStatus[selectedRoom]} toggleAC={toggleAC} />
@@ -134,10 +140,15 @@ const Guest = () => {
             <FanControl />
             <LightControl />
           </div>
-
         </div>
-
-
+        
+        {/* Simple Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="mt-6 bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 transition duration-300"
+        >
+          Log Out
+        </button>
       </div>
 
       <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
@@ -156,6 +167,6 @@ const Guest = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Guest;

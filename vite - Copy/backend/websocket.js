@@ -42,9 +42,9 @@ function initializeWebSocket() {
           }
         });
 
-        console.log(`Updated device: ${device} in room: ${room} to status: ${status}`);
+        // console.log(`Updated device: ${device} in room: ${room} to status: ${status}`);
       } catch (error) {
-        console.error('WebSocket message error:', error);
+        // console.error('WebSocket message error:', error);
         ws.send(JSON.stringify({ error: 'Error updating device status' }));
       }
     });

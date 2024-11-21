@@ -1,35 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDevices, toggleDevice, addDevice, removeDevice } from './deviceUtils';
+import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
+
 
 function Bedroom() {
     const [devices, setDevices] = useState([]);
     const [deviceStates, setDeviceStates] = useState({});
     const [newDevice, setNewDevice] = useState('');
-    const allowedDevices = ['fan', 'light', 'ac', 'heater'];
-    const [ws, setWs] = useState(null);
+    const allowedDevices = ['fan', 'light', 'ac', 'heater','television','fridge'];
 
     const isGuest = window.location.pathname.includes('/guest');
 
     useEffect(() => {
+        // Fetch devices on component mount
         fetchDevices(setDevices, setDeviceStates, 'bedroom');
+        const socket = initializeWebSocket();
+        // Initialize WebSocket
+        
 
-        const socket = new WebSocket('ws://localhost:5001');
-        setWs(socket);
-        socket.onmessage = (event) => {
-            const { device, status, room } = JSON.parse(event.data);
-            if (room === 'bedroom' && deviceStates.hasOwnProperty(device)) {
-                setDeviceStates((prevState) => ({
-                    ...prevState,
+        // WebSocket message handling..............
+        // socket.onmessage = (event) => {
+        //     const { device, status, room } = JSON.parse(event.data);
+
+        //     // Update device state if the message corresponds to the 'bedroom'
+        //     if (room === 'bedroom' && devices.some((d) => d.name === device)) {
+        //         setDeviceStates((prevState) => ({
+        //             ...prevState,
+        //             [device]: status === 'on',
+        //         }));
+        //     }
+        // };
+        subscribeToMessages(({ device, status, room }) => {
+            if (room === 'bedroom') {
+                setDeviceStates((prevStates) => ({
+                    ...prevStates,
                     [device]: status === 'on',
                 }));
             }
-        };
+        });
 
-        socket.onerror = (error) => console.error("WebSocket error:", error);
+        // Handle WebSocket errors
+       
 
-        socket.onclose = () => setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000);
+        // Reconnect WebSocket on close
+      
 
-        return () => socket.close();
+        // Cleanup on unmount
     }, []);
 
     return (
@@ -88,7 +104,7 @@ function Bedroom() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                    onClick={() => toggleDevice(device, ws, deviceStates, setDeviceStates, 'bedroom')}
+                                    onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'bedroom')}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",

@@ -1,5 +1,5 @@
 import React from 'react';
-import ac from '../assets/ac.svg';
+import ac from '../assets/ac.jpg';
 
 const ACControl = ({ isOn, toggleAC, temperature, setTemperature, speed, changeSpeed }) => {
   const increaseTemperature = () => setTemperature((prevTemp) => Math.min(prevTemp + 1, 30));

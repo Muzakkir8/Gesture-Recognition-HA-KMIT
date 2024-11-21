@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDevices, toggleDevice, addDevice, removeDevice } from './deviceUtils';
+import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
 
 function Kitchen() {
     const [devices, setDevices] = useState([]);
@@ -12,25 +13,29 @@ function Kitchen() {
 
     useEffect(() => {
         fetchDevices(setDevices, setDeviceStates, 'kitchen');
+        const socket = initializeWebSocket();
 
-        const socket = new WebSocket('ws://localhost:5001');
-        setWs(socket);
-        socket.onmessage = (event) => {
-            const { device, status, room } = JSON.parse(event.data);
-            if (room === 'kitchen' && deviceStates.hasOwnProperty(device)) {
-                setDeviceStates((prevState) => ({
-                    ...prevState,
+        // socket.onmessage = (event) => {
+        //     const { device, status, room } = JSON.parse(event.data);
+        //     if (room === 'outdoor' && deviceStates.hasOwnProperty(device)) {
+        //         setDeviceStates((prevState) => ({
+        //             ...prevState,
+        //             [device]: status === 'on',
+        //         }));
+        //     }
+        // };
+        subscribeToMessages(({ device, status, room }) => {
+            if (room === 'outdoor') {
+                setDeviceStates((prevStates) => ({
+                    ...prevStates,
                     [device]: status === 'on',
                 }));
             }
-        };
+        });
+     
 
-        socket.onerror = (error) => console.error("WebSocket error:", error);
-
-        socket.onclose = () => setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000);
-
-        return () => socket.close();
-    }, []);
+       
+    }, [devices]);
 
     return (
         <div className="p-6 min-h-screen">

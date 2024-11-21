@@ -1,69 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 
-const RemoteControl = () => {
-  const [carStatus, setCarStatus] = useState('Stopped');
+// Register chart components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-  const handleControl = (command) => {
-    setCarStatus(command);
-    console.log(`Car is now: ${command}`);
-    // Here, you could send the command to the actual RC car through WebSockets, HTTP request, or Bluetooth.
+const DeviceUsageBarGraph = () => {
+  const [usageData, setUsageData] = useState([]);
+  const [totalBill, setTotalBill] = useState(0);
+
+  // Fetch device usage data
+  useEffect(() => {
+    fetch("http://localhost:8080/api/devices/calculateUsage")
+      .then((response) => response.json())
+      .then((data) => {
+        setUsageData(data.usageData);
+        setTotalBill(data.totalBill);
+      })
+      .catch((error) => console.error("Error fetching device usage data:", error));
+  }, []);
+
+  // Prepare data for the bar chart
+  const chartData = {
+    labels: usageData.map((device) => device.deviceName), // X-axis: Device names
+    datasets: [
+      {
+        label: "Time Connected (hours)", // Y-axis label
+        data: usageData.map((device) => parseFloat(device.duration)), // Y-axis: Usage duration
+        backgroundColor: "rgba(75, 192, 192, 0.5)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Device Usage Time",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Time Connected (hours)",
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Devices",
+        },
+      },
+    },
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800 dark:text-white">RC Car Remote Control</h1>
-
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        <button
-          onClick={() => handleControl('Moving Forward')}
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded col-start-2"
-        >
-          Forward
-        </button>
-
-        <button
-          onClick={() => handleControl('Turning Left')}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Left
-        </button>
-        
-        <button
-          onClick={() => handleControl('Turning Right')}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Right
-        </button>
-
-        <button
-          onClick={() => handleControl('Moving Backward')}
-          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded col-start-2"
-        >
-          Backward
-        </button>
-      </div>
-
-      <div className="flex gap-4">
-        <button
-          onClick={() => handleControl('Stopped')}
-          className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded"
-        >
-          Stop
-        </button>
-
-        <button
-          onClick={() => handleControl('Started')}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Start
-        </button>
-      </div>
-
-      <div className="mt-8 text-xl font-semibold text-gray-800 dark:text-white">
-        Car Status: {carStatus}
+    <div style={{ width: "80%", margin: "0 auto" }}>
+      <h2>Device Usage</h2>
+      <Bar data={chartData} options={chartOptions} />
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <h3>Total Bill: ₹{totalBill}</h3>
       </div>
     </div>
   );
 };
 
-export default RemoteControl;
+export default DeviceUsageBarGraph;

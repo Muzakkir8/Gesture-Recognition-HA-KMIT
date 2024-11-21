@@ -19,7 +19,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [isSignup, setIsSignup] = useState(false); 
+  const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -105,7 +105,7 @@ const Navbar = () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username); // Ensure username comes from the response
       localStorage.setItem('email', formData.email);
-      setUsername(data.username); 
+      setUsername(data.username);
       setEmail(formData.email);
       toast.success('Logged in successfully!');
       setTimeout(() => {
@@ -166,6 +166,11 @@ const Navbar = () => {
               <h2>Settings</h2>
             </li>
           </NavLink>
+          <NavLink to="/bill" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>
+            <li>
+              <h2>Bill</h2>
+            </li>
+          </NavLink>
           <li onClick={handleLogout} className="logout">
             <i><img src={logout} alt="Logout Icon" /></i>
             <h2>Log out</h2>
@@ -178,8 +183,8 @@ const Navbar = () => {
             <h2 className='dark:text-slate-400 text-slate-400 -ml-1'>{username || 'User Name'} <br />{email || 'email@example.com'}</h2>
           </div>
         </div>
-        </div>
-      
+      </div>
+
     </>
   );
 };

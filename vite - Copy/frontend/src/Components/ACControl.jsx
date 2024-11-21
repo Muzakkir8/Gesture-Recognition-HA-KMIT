@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
-import ac from '../assets/ac.jpg';
-=======
 import ac from '../assets/ac.svg';
->>>>>>> e1d9101d7557c4f1754f060125bc71dda1cd5a11
 
 const ACControl = ({ isOn, toggleAC, temperature, setTemperature, speed, changeSpeed }) => {
   const increaseTemperature = () => setTemperature((prevTemp) => Math.min(prevTemp + 1, 30));
@@ -17,6 +13,7 @@ const ACControl = ({ isOn, toggleAC, temperature, setTemperature, speed, changeS
         </span>
         Air Conditioner
       </h2>
+
 
       {/* Temperature Display */}
       <div className="text-3xl font-bold mb-4 text-blue-600 opacity-90">{temperature}°C</div>

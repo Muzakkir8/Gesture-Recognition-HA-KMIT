@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Device = require('../models/device');
-
+const DeviceUsage = require('../models/deviceUsage'); // Import the schema
 // GET all devices for a specific room
 router.get('/:room', async (req, res) => {
     const { room } = req.params;
@@ -63,5 +63,59 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: 'Error removing device', error: error.message });
     }
 });
+
+
+
+
+// Toggle Device Endpoin
+
+router.post('/toggleDevice', async (req, res) => {
+    const { deviceName, room, status } = req.body;
+
+    try {
+        // Update the device status
+        const updatedDevice = await Device.findOneAndUpdate(
+            { name: deviceName, room },
+            { status, lastUpdated: new Date() },
+            { new: true }
+        );
+
+        if (!updatedDevice) {
+            return res.status(404).json({ message: 'Device not found.' });
+        }
+
+        if (status === 'ON') {
+            // Create a new usage log for devices turned ON
+            const newUsage = new DeviceUsage({
+                deviceName,
+                room,
+                startTime: new Date(),
+                status: 'ON',
+            });
+            await newUsage.save();
+        } else if (status === 'OFF') {
+            // Update the last ON log with endTime
+            const lastUsage = await DeviceUsage.findOne({
+                deviceName,
+                room,
+                status: 'ON',
+                endTime: null,
+            }).sort({ startTime: -1 });
+
+            if (lastUsage) {
+                lastUsage.endTime = new Date();
+                lastUsage.status = 'OFF';
+                await lastUsage.save();
+            }
+        }
+
+        return res.status(200).json({ message: `Device ${status}`, device: updatedDevice });
+    } catch (error) {
+        console.error('Error in toggleDevice:', error.message);
+        return res.status(500).json({ message: 'An error occurred.', error: error.message });
+    }
+});
+
+
 
 module.exports = router;

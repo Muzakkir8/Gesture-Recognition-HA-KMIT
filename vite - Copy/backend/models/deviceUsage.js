@@ -1,23 +1,11 @@
 const mongoose = require('mongoose');
 
-// Schema for Device Usage
 const deviceUsageSchema = new mongoose.Schema({
-    deviceId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Device',
-        required: true,
-    },
-    action: {
-        type: String,
-        enum: ['on', 'off'],
-        required: true,
-    },
-    timestamp: {
-        type: Date,
-        default: Date.now,
-    }
+  deviceName: { type: String, required: true }, // e.g., Fan, AC
+  room: { type: String, required: true },      // e.g., Bedroom, Kitchen
+  startTime: { type: Date, required: true },   // When the device was turned ON
+  endTime: { type: Date },                     // When the device was turned OFF
+  status: { type: String, required: true },    // ON or OFF
 });
 
-const DeviceUsage = mongoose.model('DeviceUsage', deviceUsageSchema);
-
-module.exports = DeviceUsage;
+module.exports = mongoose.model('DeviceUsage', deviceUsageSchema);

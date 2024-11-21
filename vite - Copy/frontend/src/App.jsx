@@ -13,6 +13,7 @@ import Reports from './Components/Reports.jsx';
 import Guest from './Components/guest.jsx';
 import Guest_Login from './Components/guest_login.jsx';
 import Help from './Components/Help.jsx';
+import BillPage from './Components/BillPage';
 
 
 function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated, setUsername }) {
@@ -54,6 +55,7 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 <Route path="/guest_login" element={<Guest_Login />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/guest" element={<Guest />}/>
+                <Route path="/bill" element={<BillPage />} />
             </Routes>
         </>
     );

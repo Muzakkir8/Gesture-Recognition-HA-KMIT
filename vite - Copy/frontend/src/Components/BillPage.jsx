@@ -1,49 +1,74 @@
-import React, { useState, useEffect } from 'react';
-function BillPage() {
-    const [roomUsage, setRoomUsage] = useState({}); // State to store room usage data
-    const [totalBill, setTotalBill] = useState(null); // State for total bill (optional)
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const fetchBill = async () => {
+
+
+import React, { useState } from 'react';
+import './BillPage.css';
+
+const BillPage = () => {
+    const [totalUsage, setTotalUsage] = useState(null);
+    const [bill, setBill] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const ratePerHour = 5; // Rate per hour in your currency
+
+    const fetchUsageData = async () => {
+        setLoading(true);
+        setError('');
+        setTotalUsage(null);
+        setBill(null);
+    
         try {
-          const response = await fetch('http://localhost:8080/api/devices/bill');
-          if (response.ok) {
+            const response = await fetch('http://localhost:8080/api/devices/calculateUsage');
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+               
+                setError(errorData.message || 'Failed to fetch usage data.');
+                return;
+            }
+    
             const data = await response.json();
-            setRoomUsage(data.roomUsage || {});
-            setTotalBill(data.totalBill); // Optional: Set totalBill if present
-          } else {
-            console.error('Failed to fetch bill data');
-          }
-        } catch (error) {
-          console.error('Error fetching bill data:', error);
+           
+    
+            // Use the correct key to access totalDuration
+            const usage = parseFloat(data.totalDuration) || 0; // Adjust key based on backend
+            const calculatedBill = usage * ratePerHour;
+    
+            setTotalUsage(usage.toFixed(2)); // Display with 2 decimal places
+            setBill(calculatedBill.toFixed(2)); // Display with 2 decimal places
+        } catch (err) {
+            console.error('Fetch Error:', err.message);
+            setError('An error occurred while fetching the usage data.');
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
-      };
-  
-      fetchBill();
-    }, []);
-  
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-  
+    };
+    
+    
+
     return (
-      <div className="p-6 min-h-screen">
-        <h2>Electricity Bill Calculation</h2>
-        {Object.entries(roomUsage).map(([room, usage]) => (
-          <div key={room} className="mb-4">
-            <strong>{room} Usage:</strong> {usage ? usage.toFixed(2) : 'N/A'} hours
-          </div>
-        ))}
-        {totalBill && ( // Optional: Display total bill if available
-          <div className="mb-4">
-            <strong>Total Bill:</strong> ${totalBill.toFixed(2)}
-          </div>
-        )}
-      </div>
+        <div className="bill-page">
+            <h1>Electricity Usage & Bill Calculator</h1>
+            <div className="form">
+                <button onClick={fetchUsageData} disabled={loading}>
+                    {loading ? 'Calculating...' : 'Calculate Total Bill'}
+                </button>
+            </div>
+
+            {error && <p className="error">{error}</p>}
+
+            {!loading && !error && totalUsage && bill && (
+                <div className="result-container">
+                    <p>
+                        <strong>Total Usage:</strong> {totalUsage} hours
+                    </p>
+                    <p>
+                        <strong>Total Electricity Bill:</strong> ${bill}
+                    </p>
+                </div>
+            )}
+        </div>
     );
-  }
+};
 
 export default BillPage;

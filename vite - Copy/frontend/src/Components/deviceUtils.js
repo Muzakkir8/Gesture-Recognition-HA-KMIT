@@ -7,7 +7,7 @@ export const fetchDevices = async (setDevices, setDeviceStates, room) => {
 
             const initialStates = {};
             data.forEach((device) => {
-                initialStates[device.name] = device.status === 'on';
+                initialStates[device.name] = device.status === 'ON'; // Match backend status
             });
             setDeviceStates(initialStates);
         } else {
@@ -18,35 +18,42 @@ export const fetchDevices = async (setDevices, setDeviceStates, room) => {
     }
 };
 
+
 export const toggleDevice = async (device, ws, deviceStates, setDeviceStates, room) => {
     try {
+        const currentStatus = deviceStates[device.name];
+        const newStatus = currentStatus ? 'OFF' : 'ON'; // Backend expects 'ON' or 'OFF'
+
+        setDeviceStates((prevState) => ({
+            ...prevState,
+            [device.name]: !prevState[device.name],
+        }));
+
         if (ws && ws.readyState === WebSocket.OPEN) {
-            const currentStatus = deviceStates[device.name];
-            const newStatus = currentStatus ? 'off' : 'on';
-
-            setDeviceStates((prevState) => ({
-                ...prevState,
-                [device.name]: !prevState[device.name],
-            }));
-
+            // Send WebSocket message
             const message = {
                 device: device.name,
                 status: newStatus,
                 room,
             };
             ws.send(JSON.stringify(message));
-
-            const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus }),
-            });
-
-            if (!response.ok) {
-                console.error('Failed to toggle device');
-            }
         } else {
-            console.error('WebSocket is not open');
+            console.warn('WebSocket is not open. Proceeding with backend request.');
+        }
+
+        // Log the toggle action with the backend
+        const response = await fetch(`http://localhost:8080/api/devices/toggleDevice`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                deviceName: device.name,
+                room,
+                status: newStatus,
+            }),
+        });
+
+        if (!response.ok) {
+            console.error('Failed to log toggle action in the backend');
         }
     } catch (error) {
         console.error('Error toggling device:', error);

@@ -93,7 +93,7 @@ function Outdoor() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                    onClick={() => toggleDevice(device, ws, deviceStates, setDeviceStates, 'outdoor')}
+                                    onClick={() => toggleDevice(device,deviceStates, setDeviceStates, 'outdoor')}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",

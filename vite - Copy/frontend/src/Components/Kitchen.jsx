@@ -93,7 +93,7 @@ function Kitchen() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                    onClick={() => toggleDevice(device, ws, deviceStates, setDeviceStates, 'kitchen')}
+                                    onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'kitchen')}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",

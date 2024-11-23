@@ -94,7 +94,7 @@ function LivingRoom() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                    onClick={() => toggleDevice(device, ws, deviceStates, setDeviceStates, 'livingroom')}
+                                    onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'livingroom')}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",

@@ -9,24 +9,45 @@ const DeviceUsageBarGraph = () => {
   const [usageData, setUsageData] = useState([]);
   const [totalBill, setTotalBill] = useState(0);
 
-  // Fetch device usage data
+  // Fetch device usage data and aggregate it
   useEffect(() => {
     fetch("http://localhost:8080/api/devices/calculateUsage")
-      .then((response) => response.json())
-      .then((data) => {
-        setUsageData(data.usageData);
-        setTotalBill(data.totalBill);
-      })
-      .catch((error) => console.error("Error fetching device usage data:", error));
-  }, []);
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("API Response:", data); // Debug log
+            setUsageData(data.usageData);
+            setTotalBill(data.totalBill);
+        })
+        .catch((error) => console.error("Error fetching device usage data:", error));
+}, []);
+
+  // Function to aggregate device usage
+  const aggregateUsage = (usageData) => {
+    const aggregated = {};
+
+    usageData.forEach((device) => {
+      const key = `${device.deviceName}-${device.deviceRoomName}`; // Unique key for device + room
+      if (!aggregated[key]) {
+        aggregated[key] = {
+          deviceName: device.deviceName,
+          deviceRoomName: device.deviceRoomName,
+          duration: 0, // Initialize with 0
+        };
+      }
+      aggregated[key].duration += parseFloat(device.duration); // Add duration for each toggle
+    });
+
+    // Convert aggregated data back to an array
+    return Object.values(aggregated);
+  };
 
   // Prepare data for the bar chart
   const chartData = {
-    labels: usageData.map((device) => device.deviceName), // X-axis: Device names
+    labels: usageData.map((device) => `${device.deviceName} (${device.deviceRoomName})`), // X-axis: Device + Room
     datasets: [
       {
         label: "Time Connected (hours)", // Y-axis label
-        data: usageData.map((device) => parseFloat(device.duration)), // Y-axis: Usage duration
+        data: usageData.map((device) => device.duration), // Y-axis: Aggregated Usage duration
         backgroundColor: "rgba(75, 192, 192, 0.5)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -56,7 +77,7 @@ const DeviceUsageBarGraph = () => {
       x: {
         title: {
           display: true,
-          text: "Devices",
+          text: "Devices (Room)",
         },
       },
     },

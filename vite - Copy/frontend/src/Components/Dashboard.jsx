@@ -9,6 +9,8 @@ import Temp from '../Components/temp.jsx';
 import FanControl from './Fan_Control.jsx';
 import LightControl from './LightControl.jsx';
 import './Dashboard.css';
+import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
+
 
 const Dashboard = () => {
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
@@ -41,33 +43,24 @@ const Dashboard = () => {
     };
     setAcStatus(initialAcStatus);
 
-    const socket = new WebSocket('ws://localhost:5001');
-    setWs(socket);
+    const socket = initializeWebSocket();
 
-    socket.onmessage = (event) => {
-      const { device, status, room } = JSON.parse(event.data);
+    subscribeToMessages(({ device, status, room }) => {
       const formattedRoom = Object.keys(roomMapping).find(
-        (key) => roomMapping[key] === room
+          (key) => roomMapping[key] === room
       );
+
       if (device === 'ac' && formattedRoom) {
-        setAcStatus((prevStatus) => ({
-          ...prevStatus,
-          [formattedRoom]: status === 'on',
-        }));
-        localStorage.setItem(`${formattedRoom}AcStatus`, status); // Update localStorage
+          setAcStatus((prevStatus) => ({
+              ...prevStatus,
+              [formattedRoom]: status === 'on',
+            
+          }));
+
+          // Update localStorage with the new AC status
+          localStorage.setItem(`${formattedRoom}AcStatus`, status);
       }
-    };
-
-    socket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    socket.onclose = () => {
-      console.log('WebSocket connection closed');
-      setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000);
-    };
-
-    return () => socket.close();
+  });
   }, []);
 
   const toggleAC = () => {
@@ -78,13 +71,10 @@ const Dashboard = () => {
     }));
     localStorage.setItem(`${selectedRoom}AcStatus`, newStatus ? 'on' : 'off'); // Save to localStorage
 
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(
-        JSON.stringify({ device: 'ac', status: newStatus ? 'on' : 'off', room: roomMapping[selectedRoom] })
-      );
-    } else {
-      console.log("WebSocket is not open.");
-    }
+    
+        sendMessage({ device: 'ac', status: newStatus ? 'on' : 'off', room: roomMapping[selectedRoom] });
+  
+  
   };
 
   const renderRoom = () => {

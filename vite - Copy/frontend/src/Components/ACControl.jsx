@@ -10,9 +10,7 @@ const ACControl = ({
   setInitialTemperature,
   selectedRoom,
 }) => {
-  useEffect(() => {
-    console.log(`AC Control loaded for ${selectedRoom}`);
-  }, [selectedRoom]);
+ 
 
   return (
     <div className="ml-20 mt-2 p-3 h-[305px] bg-white dark:bg-slate-800 rounded-[43px] text-center w-[40vw] lg:w-[25vw]">

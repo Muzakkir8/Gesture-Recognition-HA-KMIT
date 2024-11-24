@@ -1,134 +1,109 @@
-import React, { useState } from "react";
-import './search.css'; // Make sure the path is correct
+import React, { useState, useEffect } from 'react';
+import ACControl from '../Components/ACControl.jsx';
+import { sendMessage } from './websocketUtils';
 
-const items = [
-    { id: 1, name: "Temperature Sensor" },
-    { id: 2, name: "Humidity Sensor" },
-    { id: 3, name: "Pressure Sensor" },
-    { id: 4, name: "Light Sensor" },
-    { id: 5, name: "Gas Sensor" },
-    { id: 6, name: "Capacitive Sensor" },
-    { id: 7, name: "Lighting" },
-    { id: 8, name: "Fan" },
-];
+const Dashboard = () => {
+  const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
+  const [acStatus, setAcStatus] = useState({
+    LivingRoom: false,
+    Bedroom: false,
+    Kitchen: false,
+  });
+  const [temperature, setTemperature] = useState({
+    LivingRoom: 20,
+    Bedroom: 22,
+    Kitchen: 24,
+  });
 
-const SearchWithSuggestions = () => {
-    const [searchQuery, setSearchQuery] = useState("");
-    const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-    const [finalSearchQuery, setFinalSearchQuery] = useState("");
-    const [notFound, setNotFound] = useState(false); // New state for not found message
+  const roomMapping = {
+    LivingRoom: 'livingroom',
+    Bedroom: 'bedroom',
+    Kitchen: 'kitchen',
+  };
 
-    // Handle search input onChange (show suggestions)
-    const handleInputChange = (event) => {
-        const query = event.target.value;
-        setSearchQuery(query);
-        setNotFound(false);
+  useEffect(() => {
+    const storedTemps = JSON.parse(localStorage.getItem('roomTemperatures'));
+    if (storedTemps) {
+      setTemperature(storedTemps);
+    }
+  }, []);
 
-        // Filter suggestions based on input
-        if (query.length > 0) {
-            const suggestions = items.filter((item) =>
-                item.name.toLowerCase().includes(query.toLowerCase())
-            );
-            setFilteredSuggestions(suggestions);
-        } else {
-            setFilteredSuggestions([]); // Clear suggestions when input is empty
-        }
+  useEffect(() => {
+    const initialAcStatus = {
+      LivingRoom: localStorage.getItem('LivingRoomAcStatus') === 'on',
+      Bedroom: localStorage.getItem('BedroomAcStatus') === 'on',
+      Kitchen: localStorage.getItem('KitchenAcStatus') === 'on',
     };
+    setAcStatus(initialAcStatus);
+  }, []);
 
-    // Handle search button click
-    const handleSearch = (event) => {
-        event.preventDefault(); // Prevent default form submission
-        setFinalSearchQuery(searchQuery);
-        setFilteredSuggestions([]); // Clear suggestions on search
-
-        // Check if the search query exists in items
-        const foundItem = items.find((item) => item.name.toLowerCase() === searchQuery.toLowerCase());
-        setNotFound(!foundItem); // Update notFound state based on search result
-    };
-
-    return (
-        <>
-            <div className="search-container">Add Manually</div>
-            <form 
-                className="search-form lg:ml-8 "
-                onSubmit={handleSearch}
-            >
-                <div className="relative-container">
-                    <div className="icon-container">
-                        <svg
-                            className="icon"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                            />
-                        </svg>
-                    </div>
-                    <input 
-                        type="search"
-                        value={searchQuery}
-                        onChange={handleInputChange}
-                        className="search-input"
-                        placeholder="Search Devices, Sensors..."
-                        required
-                    />
-                    <button
-                        type="submit" 
-                        className="search-button"
-                    >
-                        <svg
-                            className="icon"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                            />
-                        </svg>
-                    </button>
-                </div>
-
-                {/* Show suggestions while typing */}
-                {filteredSuggestions.length > 0 && (
-                    <ul className="suggestions-list">
-                        {filteredSuggestions.map((item) => (
-                            <li
-                                key={item.id}
-                                className="suggestion-item"
-                                onClick={() => {
-                                    setSearchQuery(item.name); // Set the search input to the selected suggestion
-                                    setFilteredSuggestions([]); // Hide suggestions
-                                    setNotFound(false); // Reset not found state
-                                }}
-                            >
-                                {item.name}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-
-                {notFound && (
-                    <p className="not-found-message">
-                        <strong>{finalSearchQuery}</strong> Not found
-                    </p>
-                )}
-            </form>
-            <div className="divider"><hr /></div>
-        </>
+  const toggleAC = () => {
+    const newStatus = !acStatus[selectedRoom];
+    setAcStatus((prevStatus) => ({
+      ...prevStatus,
+      [selectedRoom]: newStatus,
+    }));
+    localStorage.setItem(
+      `${selectedRoom}AcStatus`,
+      newStatus ? 'on' : 'off'
     );
+    sendMessage({
+      device: 'ac',
+      status: newStatus ? 'on' : 'off',
+      room: roomMapping[selectedRoom],
+    });
+  };
+
+  const increaseTemperature = () => {
+    setTemperature((prevTemp) => {
+      const newTemp = Math.min(prevTemp[selectedRoom] + 1, 30);
+      const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
+      localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
+      return updatedTemps;
+    });
+  };
+
+  const decreaseTemperature = () => {
+    setTemperature((prevTemp) => {
+      const newTemp = Math.max(prevTemp[selectedRoom] - 1, 16);
+      const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
+      localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
+      return updatedTemps;
+    });
+  };
+
+  const setInitialTemperature = () => {
+    const userInput = prompt(
+      `Enter initial temperature for ${selectedRoom} (16-30°C):`
+    );
+    const newTemp = parseInt(userInput, 10);
+    if (newTemp >= 16 && newTemp <= 30) {
+      setTemperature((prevTemp) => {
+        const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
+        localStorage.setItem(
+          'roomTemperatures',
+          JSON.stringify(updatedTemps)
+        );
+        return updatedTemps;
+      });
+    } else {
+      alert('Invalid temperature. Please enter a value between 16 and 30.');
+    }
+  };
+
+  return (
+    <div>
+      <ACControl
+        isOn={acStatus[selectedRoom]}
+        toggleAC={toggleAC}
+        temperature={temperature[selectedRoom]}
+        increaseTemperature={increaseTemperature}
+        decreaseTemperature={decreaseTemperature}
+        setInitialTemperature={setInitialTemperature}
+        selectedRoom={selectedRoom}
+      />
+    </div>
+  );
 };
 
-export default SearchWithSuggestions;
+export default Dashboard;

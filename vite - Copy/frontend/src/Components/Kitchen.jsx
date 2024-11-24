@@ -25,7 +25,7 @@ function Kitchen() {
         //     }
         // };
         subscribeToMessages(({ device, status, room }) => {
-            if (room === 'outdoor') {
+            if (room === 'kitchen') {
                 setDeviceStates((prevStates) => ({
                     ...prevStates,
                     [device]: status === 'on',

@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
 // Register chart components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -14,6 +22,7 @@ const DeviceUsageBarGraph = () => {
     fetch("http://localhost:8080/api/devices/calculateUsage")
       .then((response) => response.json())
       .then((data) => {
+        console.log("API Response:", data); // Debug log
         setUsageData(data.usageData);
         setTotalBill(data.totalBill);
       })
@@ -22,7 +31,7 @@ const DeviceUsageBarGraph = () => {
 
   // Prepare data for the bar chart
   const chartData = {
-    labels: usageData.map((device) => device.deviceName), // X-axis: Device names
+    labels: usageData.map((device) => device.deviceRoomName), // X-axis: Device + Room
     datasets: [
       {
         label: "Time Connected (hours)", // Y-axis label
@@ -56,7 +65,12 @@ const DeviceUsageBarGraph = () => {
       x: {
         title: {
           display: true,
-          text: "Devices",
+          text: "Devices (Room)",
+        },
+        ticks: {
+          autoSkip: false, // Show all labels
+          maxRotation: 45, // Rotate labels for better visibility
+          minRotation: 0,
         },
       },
     },

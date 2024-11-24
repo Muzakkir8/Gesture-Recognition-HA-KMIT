@@ -10,6 +10,7 @@ import settings from '../assets/settings.svg';
 import devises from '../assets/devises.svg';
 import log from '../assets/log.svg';
 import logout from '../assets/logout.svg';
+import bill from '../assets/bill.svg';
 import bar from '../assets/bar-chart.png';
 import elec from '../assets/electricity.png';
 import { ToastContainer, toast } from 'react-toastify';
@@ -168,7 +169,11 @@ const Navbar = () => {
               <h2>Settings</h2>
             </li>
           </NavLink>
-          <NavLink to="/bill" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>
+          <NavLink
+            to="/bill"
+            onClick={handleNavLinkClick}
+            className={({ isActive }) => (isActive ? 'nav-active' : '')}
+          >
             <li>
             <i className='max-w-none'><img src={elec} className="invert " alt="Icon" />
             </i>

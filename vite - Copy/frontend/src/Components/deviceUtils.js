@@ -52,11 +52,22 @@ export const toggleDevice = async (device, deviceStates, setDeviceStates, room) 
 
         if (!response.ok) {
             console.error("Failed to toggle device");
+            // Revert the UI state if the backend update fails
+            setDeviceStates((prevState) => ({
+                ...prevState,
+                [device.name]: currentStatus,
+            }));
         }
     } catch (error) {
         console.error("Error toggling device:", error);
+        // Revert the UI state in case of error
+        setDeviceStates((prevState) => ({
+            ...prevState,
+            [device.name]: currentStatus,
+        }));
     }
 };
+
 
 // Add a new device to the room
 export const addDevice = async (newDevice, allowedDevices, devices, setDevices, setDeviceStates, setNewDevice, isGuest, room) => {

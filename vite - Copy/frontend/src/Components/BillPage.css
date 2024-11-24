@@ -1,17 +1,50 @@
+/* Bill page container with centered content */
 .bill-page {
     font-family: Arial, sans-serif;
-    padding: 20px;
+    padding: 40px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes up full height */
+    box-sizing: border-box;
+}
+.bill-page h1 {
+    font-size: 36px; /* Increased font size */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
 }
 
+
+/* Form container */
+.form {
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px;
+}
+
+/* Button styling */
+/* Button styling */
 .form button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #4caf50;
+    background: linear-gradient(135deg, #1e2a68, #0f1f4e); /* Gradient background */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition for scale effect */
+    width: 100%; /* Full width button */
+    margin-top: 15px;
+}
+
+.form button:hover {
+    background: linear-gradient(135deg, #142063, #0b1a44); /* Darker gradient on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
 }
 
 .form button:disabled {
@@ -19,23 +52,36 @@
     cursor: not-allowed;
 }
 
+/* Remove background around "Calculate Total Bill" button */
+
+
+/* Result container */
 .result-container {
-    margin-top: 20px;
-}
-
-.error {
-    color: red;
+    margin-top: 30px;
+    font-size: 18px;
     font-weight: bold;
+    color: #333;
 }
 
+/* Error message */
+.error {
+    color: #f44336;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Logs container */
 .logs-container {
-    margin-top: 20px;
+    margin-top: 30px;
+    width: 100%;
+    max-width: 500px;
     text-align: left;
 }
 
 .logs-container h2 {
-    font-size: 18px;
+    font-size: 22px;
     margin-bottom: 10px;
+    color: #333;
 }
 
 .logs-container ul {
@@ -45,8 +91,18 @@
 
 .logs-container li {
     background: #f9f9f9;
-    margin: 5px 0;
-    padding: 10px;
+    margin: 8px 0;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+}
+
+.logs-container li:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.logs-container li:nth-child(odd) {
+    background-color: #ffffff;
 }

@@ -60,7 +60,7 @@ const Signup = () => {
 
   return (
     <div className="body fixed top-0 dark:bg-slate-950 bg-slate-200 h-screen w-screen flex justify-center items-center">
-      <div className="container lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed">
+      <div className="container bg-transparent lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed">
         <ToastContainer
           position="top-center"
           autoClose={2000}
@@ -70,7 +70,7 @@ const Signup = () => {
           draggable={false}
           className="toast-container"
         />
-        <div className="header bg-purple-600 rounded-2xl lg:w-[500px]">
+        <div className="headers  rounded-2xl lg:w-[500px]">
           <div className="text text-violet-100 dark:text-white">Sign Up</div>
           <div className="underline rounded-lg"></div>
         </div>

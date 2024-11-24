@@ -50,7 +50,7 @@ const Login = ({ setUsername, setIsAuthenticated }) => {
 
     return (
         <div className="body fixed top-0 dark:bg-slate-900 bg-slate-200 h-screen w-screen flex justify-center items-center">
-            <div className='container lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed'>
+            <div className='container bg-transparent lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed'>
                 <ToastContainer
                     position="top-center"  // This will place the toast at the top center
                     autoClose={2000}       // Set auto-close to 2 seconds
@@ -61,7 +61,7 @@ const Login = ({ setUsername, setIsAuthenticated }) => {
                     className="toast-container" // Custom class for additional styles
                 />
 
-                <div className="header bg-purple-600 rounded-2xl lg:w-[500px]">
+                <div className="headers  rounded-2xl lg:w-[500px]">
                     <div className="text text-violet-100 dark:text-white">Login</div>
                     <div className="underline"></div>
                 </div>

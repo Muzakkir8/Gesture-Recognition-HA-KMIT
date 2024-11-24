@@ -93,8 +93,7 @@ function Kitchen() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                   onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'kitchen')}
-
+                                    onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'kitchen')}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",
@@ -110,18 +109,20 @@ function Kitchen() {
                                     }}
                                 >
                                     <span
-                                        style={{
-                                            position: "absolute",
-                                            left: deviceStates[device.name] ? "10px" : "34px",
-                                            color: deviceStates[device.name] ? "white" : "#4b82f1",
-                                            fontSize: "0.75rem",
-                                            fontWeight: "bold",
-                                            textTransform: "uppercase",
-                                            transition: "left 0.3s, color 0.3s",
-                                        }}
-                                    >
-                                        {deviceStates[device.name] ? "ON" : "OFF"}
-                                    </span>
+    style={{
+        position: "absolute",
+
+        left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
+        marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF
+        color: deviceStates[device.name] ? "white" : "#4b82f1",
+        fontSize: "0.75rem",
+        fontWeight: "bold",
+        textTransform: "uppercase",
+        transition: "left 0.3s, color 0.3s, margin 0.3s",
+    }}
+>
+    {deviceStates[device.name] ? "ON" : "OFF"}
+</span>
                                     <div
                                         style={{
                                             height: "33px",

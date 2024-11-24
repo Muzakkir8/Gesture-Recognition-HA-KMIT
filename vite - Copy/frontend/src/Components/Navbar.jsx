@@ -10,6 +10,7 @@ import settings from '../assets/settings.svg';
 import devises from '../assets/devises.svg';
 import log from '../assets/log.svg';
 import logout from '../assets/logout.svg';
+import bill from '../assets/bill.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './Dashboard';
@@ -166,8 +167,15 @@ const Navbar = () => {
               <h2>Settings</h2>
             </li>
           </NavLink>
-          <NavLink to="/bill" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>
+          <NavLink
+            to="/bill"
+            onClick={handleNavLinkClick}
+            className={({ isActive }) => (isActive ? 'nav-active' : '')}
+          >
             <li>
+              <i>
+                <img src={bill} alt="Bill Icon" />
+              </i>
               <h2>Bill</h2>
             </li>
           </NavLink>

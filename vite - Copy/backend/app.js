@@ -20,49 +20,43 @@ app.use(express.json({ extended: false }));
 
 app.get('/api/devices/calculateUsage', async (req, res) => {
     try {
-        const usages = await DeviceUsage.find();
+        const usages = await DeviceUsage.find(); // Fetch usage records from the database
 
         if (!usages.length) {
             return res.status(404).json({ message: 'No device usage records found' });
         }
 
-        // Aggregate usage data by device name and room
+        // Aggregate usage data by device and room
         const aggregatedData = usages.reduce((acc, usage) => {
-            console.log("Processing Usage Record:", usage); // Debug log
             const startTime = new Date(usage.startTime);
             const endTime = usage.endTime ? new Date(usage.endTime) : new Date();
             const durationInMs = endTime - startTime;
-            const durationInHours = durationInMs / (1000 * 60 * 60);
-            const duration = durationInHours < 0.01 ? 0.01 : durationInHours;
-        
+            const durationInHours = durationInMs / (1000 * 60 * 60); // Convert to hours
+            const duration = durationInHours < 0.01 ? 0.01 : durationInHours; // Minimum duration
+
+            // Ensure valid device name and room
             const deviceName = usage.deviceName || "Unknown Device";
             const room = usage.room || "Unknown Room";
-            const key = `${deviceName} (${room})`;
-        
-            if (acc[key]) {
-                acc[key] += duration;
-            } else {
-                acc[key] = duration;
-            }
-        
+            const key = `${deviceName} (${room})`; // Key for grouping
+
+            acc[key] = (acc[key] || 0) + duration; // Aggregate duration
             return acc;
         }, {});
-        
 
-        // Convert aggregated data into an array format
+        // Convert aggregated data into an array format for the frontend
         const usageData = Object.keys(aggregatedData).map((key) => ({
-            deviceRoomName: key, // e.g., "AC (Living Room)"
-            duration: aggregatedData[key].toFixed(2),
+            deviceRoomName: key, // e.g., "Fan (Living Room)"
+            duration: aggregatedData[key].toFixed(2), // Total time in hours
         }));
 
-        // Calculate total duration and bill
-        const totalDuration = usageData.reduce((total, usage) => total + parseFloat(usage.duration), 0).toFixed(2);
+        // Calculate total bill
+        const totalDuration = usageData.reduce((total, usage) => total + parseFloat(usage.duration), 0);
         const ratePerHour = 5; // Example rate per hour
-        const totalBill = (parseFloat(totalDuration) * ratePerHour).toFixed(2);
+        const totalBill = (totalDuration * ratePerHour).toFixed(2);
 
         return res.status(200).json({
             usageData,
-            totalDuration,
+            totalDuration: totalDuration.toFixed(2),
             totalBill,
         });
     } catch (error) {

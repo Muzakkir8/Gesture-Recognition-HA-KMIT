@@ -1,18 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react';
 
 function Room({ onSelectedRoom }) {
+  // Use state to track the selected room
+  const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
+
+  // Handle room selection
+  const handleRoomSelect = (room) => {
+    setSelectedRoom(room);
+    onSelectedRoom(room); // Pass the selected room to the parent
+  };
+
   return (
     <div className='mx-auto lg:relative text-md text-slate-400 dark:text-white mt-4 '>
-
       <nav className='flex gap-3'>
-        <button className='bg-[#0f1f4e] rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium text-white lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium' onClick={() => onSelectedRoom('LivingRoom')}>Living Room</button>
-        <button className='bg-[#0f1f4e] rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium text-white lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium' onClick={() => onSelectedRoom('Kitchen')}>Kitchen</button>
-        <button className='bg-[#0f1f4e] rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium text-white lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium' onClick={() => onSelectedRoom('Bedroom')}>Bedroom</button>
-        <button className='bg-[#0f1f4e] rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium text-white lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium' onClick={() => onSelectedRoom('Outdoor')}>Outdoor</button>
+        {/* Living Room Button */}
+        <button
+          className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
+            selectedRoom === 'LivingRoom'
+              ? 'bg-[#0f1f4e] text-white'
+              : 'bg-[#e9efff] text-[#0f1f4e]'
+          } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
+          onClick={() => handleRoomSelect('LivingRoom')}
+        >
+          Living Room
+        </button>
 
+        {/* Kitchen Button */}
+        <button
+          className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
+            selectedRoom === 'Kitchen'
+              ? 'bg-[#0f1f4e] text-white'
+              : 'bg-[#e9efff] text-[#0f1f4e]'
+          } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
+          onClick={() => handleRoomSelect('Kitchen')}
+        >
+          Kitchen
+        </button>
+
+        {/* Bedroom Button */}
+        <button
+          className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
+            selectedRoom === 'Bedroom'
+              ? 'bg-[#0f1f4e] text-white'
+              : 'bg-[#e9efff] text-[#0f1f4e]'
+          } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
+          onClick={() => handleRoomSelect('Bedroom')}
+        >
+          Bedroom
+        </button>
+
+        {/* Outdoor Button */}
+        <button
+          className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
+            selectedRoom === 'Outdoor'
+              ? 'bg-[#0f1f4e] text-white'
+              : 'bg-[#e9efff] text-[#0f1f4e]'
+          } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
+          onClick={() => handleRoomSelect('Outdoor')}
+        >
+          Outdoor
+        </button>
       </nav>
     </div>
-  )
+  );
 }
 
-export default Room
+export default Room;

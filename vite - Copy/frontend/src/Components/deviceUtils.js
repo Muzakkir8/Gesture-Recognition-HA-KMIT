@@ -40,7 +40,7 @@ export const toggleDevice = async (device, deviceStates, setDeviceStates, room) 
             status: newStatus,
             room,
         };
-        sendMessage(JSON.stringify(message));
+        sendMessage(message);
 
         // Update the device state in the backend
         const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {

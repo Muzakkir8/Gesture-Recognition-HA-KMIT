@@ -6,18 +6,7 @@ const Temp = () => {
   const [temperature, setTemperature] = useState("24");
 
   useEffect(() => {
-    const socket = new WebSocket('ws://localhost:5001');
-    socket.onopen = () => console.log('Connected to WebSocket server');
-    socket.onmessage = (event) => {
-      const { device, status, room } = JSON.parse(event.data);
-      if (device === 'fan' && room === 'bedroom') {
-        setTemperature(status);
-      }
-    };
-    socket.onerror = (error) => console.error('WebSocket error:', error);
-    socket.onclose = () => console.log('Disconnected from WebSocket server');
-
-    return () => socket.close();
+ 
   }, []);
 
   return (

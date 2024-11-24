@@ -34,7 +34,8 @@ export const toggleDevice = async (device, deviceStates, setDeviceStates, room) 
             [device.name]: !prevState[device.name],
         }));
 
-        // Prepare WebSocket message
+        // Prepare WebSocket message ;
+     
         const message = {
             device: device.name,
             status: newStatus,

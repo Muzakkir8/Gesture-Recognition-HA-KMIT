@@ -7,7 +7,7 @@ function Bedroom() {
     const [devices, setDevices] = useState([]);
     const [deviceStates, setDeviceStates] = useState({});
     const [newDevice, setNewDevice] = useState('');
-    const allowedDevices = ['fan', 'light', 'ac', 'heater','television','fridge'];
+    const allowedDevices = ['fan', 'light', 'ac', 'heater', 'television', 'fridge'];
 
     const isGuest = window.location.pathname.includes('/guest');
 
@@ -16,7 +16,7 @@ function Bedroom() {
         fetchDevices(setDevices, setDeviceStates, 'bedroom');
         const socket = initializeWebSocket();
         // Initialize WebSocket
-        
+
 
         // WebSocket message handling..............
         // socket.onmessage = (event) => {
@@ -40,10 +40,10 @@ function Bedroom() {
         });
 
         // Handle WebSocket errors
-       
+
 
         // Reconnect WebSocket on close
-      
+
 
         // Cleanup on unmount
     }, []);
@@ -119,21 +119,21 @@ function Bedroom() {
                                         marginRight: "8px",
                                     }}
                                 >
-                               <span
-    style={{
-        position: "absolute",
+                                    <span
+                                        style={{
+                                            position: "absolute",
 
-        left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
-        marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF
-        color: deviceStates[device.name] ? "white" : "#4b82f1",
-        fontSize: "0.75rem",
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        transition: "left 0.3s, color 0.3s, margin 0.3s",
-    }}
->
-    {deviceStates[device.name] ? "ON" : "OFF"}
-</span>
+                                            left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
+                                            marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF
+                                            color: deviceStates[device.name] ? "white" : "#4b82f1",
+                                            fontSize: "0.75rem",
+                                            fontWeight: "bold",
+                                            textTransform: "uppercase",
+                                            transition: "left 0.3s, color 0.3s, margin 0.3s",
+                                        }}
+                                    >
+                                        {deviceStates[device.name] ? "ON" : "OFF"}
+                                    </span>
 
                                     <div
                                         style={{

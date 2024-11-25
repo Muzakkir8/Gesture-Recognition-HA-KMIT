@@ -84,27 +84,27 @@ router.post('/toggleDevice', async (req, res) => {
             return res.status(404).json({ message: 'Device not found.' });
         }
 
-        if (status === 'ON') {
+        if (status === 'on') {
             // Create a new usage log for devices turned ON
             const newUsage = new DeviceUsage({
                 deviceName,
                 room,
                 startTime: new Date(),
-                status: 'ON',
+                status: 'on',
             });
             await newUsage.save();
-        } else if (status === 'OFF') {
+        } else if (status === 'off') {
             // Update the last ON log with endTime
             const lastUsage = await DeviceUsage.findOne({
                 deviceName,
                 room,
-                status: 'ON',
+                status: 'on',
                 endTime: null,
             }).sort({ startTime: -1 });
 
             if (lastUsage) {
                 lastUsage.endTime = new Date();
-                lastUsage.status = 'OFF';
+                lastUsage.status = 'off';
                 await lastUsage.save();
             }
         }

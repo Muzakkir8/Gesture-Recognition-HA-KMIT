@@ -2,33 +2,31 @@ const mongoose = require('mongoose');
 
 const connectUserDB = async () => {
     try {
-        const mongoUserURI = process.env.MONGO_USER_URI || 'mongodb+srv://zeeshan:Zeeshan123%402023@cluster0.knc0r.mongodb.net/User?retryWrites=true&w=majority&appName=Cluster0';
-        
-        // Check if a connection to the main instance of mongoose already exists
+        const mongoUserURI = process.env.MONGO_USER_URI || 'mongodb://localhost:27017/User';
+
         if (mongoose.connection.readyState === 0) {
+            // Connect if not already connected
             await mongoose.connect(mongoUserURI, {
-                
-                serverSelectionTimeoutMS: 5000,
-                socketTimeoutMS: 45000,
+
             });
             console.log('UserDB connected');
         } else {
             console.log('UserDB already connected');
         }
+        return mongoose.connection; // Return the connection instance for further use
     } catch (err) {
         console.error('UserDB connection error:', err.message);
+        throw err; // Throw the error for handling at a higher level
     }
 };
 
 const connectDevicesDB = async () => {
     try {
-        const mongoDeviceURI = process.env.MONGO_DEVICE_URI || 'mongodb+srv://zeeshan:Zeeshan123%402023@cluster0.knc0r.mongodb.net/Devices?retryWrites=true&w=majority&appName=Cluster0';
+        const mongoDeviceURI = process.env.MONGO_DEVICE_URI || 'mongodb://localhost:27017/Device';
 
-        // Create a separate connection specifically for the devices database
+        // Create a new connection for the devices database
         const devicesConnection = mongoose.createConnection(mongoDeviceURI, {
-           
-            serverSelectionTimeoutMS: 5000, 
-            socketTimeoutMS: 45000,
+
         });
 
         devicesConnection.on('connected', () => {
@@ -39,9 +37,10 @@ const connectDevicesDB = async () => {
             console.error('DevicesDB connection error:', err.message);
         });
 
-        return devicesConnection; // Return the separate connection instance
+        return devicesConnection; // Return the connection instance
     } catch (err) {
         console.error('DevicesDB connection error:', err.message);
+        throw err; // Throw the error for handling at a higher level
     }
 };
 

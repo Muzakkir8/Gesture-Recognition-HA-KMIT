@@ -19,6 +19,7 @@ router.post('/', async (req, res) => {
     const { name, status, room } = req.body;
     try {
         const existingDevice = await Device.findOne({ name, room });
+
         if (existingDevice) {
             return res.status(400).json({ message: 'Device already exists in this room' });
         }
@@ -36,7 +37,7 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    
+
 
     try {
         const updatedDevice = await Device.findByIdAndUpdate(

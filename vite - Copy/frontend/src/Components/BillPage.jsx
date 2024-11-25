@@ -63,7 +63,7 @@ const BillPage = () => {
                         <strong>Total Usage:</strong> {totalUsage} hours
                     </p>
                     <p>
-                        <strong>Total Electricity Bill:</strong> ${bill}
+                        <strong>Total Electricity Bill:</strong>₹{bill}
                     </p>
                 </div>
             )}

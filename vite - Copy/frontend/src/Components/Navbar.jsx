@@ -10,6 +10,9 @@ import settings from '../assets/settings.svg';
 import devises from '../assets/devises.svg';
 import log from '../assets/log.svg';
 import logout from '../assets/logout.svg';
+import bill from '../assets/bill.svg';
+import bar from '../assets/bar-chart.png';
+import elec from '../assets/electricity.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './Dashboard';
@@ -156,8 +159,8 @@ const Navbar = () => {
           </NavLink>
           <NavLink to="/reports" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>
             <li>
-              <i><img src={reports} alt="Reports Icon" /></i>
-              <h2>Reports</h2>
+              <i><img src={bar} className='invert' alt="Reports Icon" /></i>
+              <h2>Device Usage</h2>
             </li>
           </NavLink>
           <NavLink to="/settings" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>
@@ -166,9 +169,16 @@ const Navbar = () => {
               <h2>Settings</h2>
             </li>
           </NavLink>
-          <NavLink to="/bill" onClick={handleNavLinkClick} className={({ isActive }) => (isActive ? 'nav-active' : '')}>
+          <NavLink
+            to="/bill"
+            onClick={handleNavLinkClick}
+            className={({ isActive }) => (isActive ? 'nav-active' : '')}
+          >
             <li>
-              <h2>Bill</h2>
+            <i className='max-w-none'><img src={elec} className="invert " alt="Icon" />
+            </i>
+
+              <h2>Electricity Bill</h2>
             </li>
           </NavLink>
           <li onClick={handleLogout} className="logout">
@@ -176,7 +186,7 @@ const Navbar = () => {
             <h2>Log out</h2>
           </li>
         </ul>
-        <hr className="border-t-2 border-azure -ml-1 mr-14 text-white my-24" />
+        <hr className="border-t-2 border-azure -ml-1 mr-[35px] text-white my-14" />
         <div className="log overflow-hidden">
           <img src={log} alt="Log Icon" className="us " />
           <div>

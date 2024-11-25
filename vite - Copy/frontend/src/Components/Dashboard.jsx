@@ -9,6 +9,7 @@ import Temp from '../Components/temp.jsx';
 import FanControl from './Fan_Control.jsx';
 import LightControl from './LightControl.jsx';
 import './Dashboard.css';
+import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
 
 const Dashboard = () => {
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
@@ -19,8 +20,12 @@ const Dashboard = () => {
     Bedroom: false,
     Kitchen: false,
   });
+  const [temperature, setTemperature] = useState({
+    LivingRoom: 16,
+    Bedroom: 20,
+    Kitchen: 18,
+  });
 
-  // Mapping of room names for consistency
   const roomMapping = {
     LivingRoom: 'livingroom',
     Bedroom: 'bedroom',
@@ -33,7 +38,6 @@ const Dashboard = () => {
       setUserName(storedUserName);
     }
 
-    // Load initial AC status for each room from localStorage
     const initialAcStatus = {
       LivingRoom: localStorage.getItem('LivingRoomAcStatus') === 'on',
       Bedroom: localStorage.getItem('BedroomAcStatus') === 'on',
@@ -41,11 +45,8 @@ const Dashboard = () => {
     };
     setAcStatus(initialAcStatus);
 
-    const socket = new WebSocket('ws://localhost:5001');
-    setWs(socket);
-
-    socket.onmessage = (event) => {
-      const { device, status, room } = JSON.parse(event.data);
+    const socket = initializeWebSocket();
+    subscribeToMessages(({ device, status, room }) => {
       const formattedRoom = Object.keys(roomMapping).find(
         (key) => roomMapping[key] === room
       );
@@ -54,20 +55,15 @@ const Dashboard = () => {
           ...prevStatus,
           [formattedRoom]: status === 'on',
         }));
-        localStorage.setItem(`${formattedRoom}AcStatus`, status); // Update localStorage
+        localStorage.setItem(`${formattedRoom}AcStatus`, status);
       }
-    };
-
-    socket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    socket.onclose = () => {
-      console.log('WebSocket connection closed');
-      setTimeout(() => setWs(new WebSocket('ws://localhost:5001')), 5000);
-    };
-
-    return () => socket.close();
+    });
+  }, []);
+  useEffect(() => {
+    const storedTemps = JSON.parse(localStorage.getItem('roomTemperatures'));
+    if (storedTemps) {
+      setTemperature(storedTemps);
+    }
   }, []);
 
   const toggleAC = () => {
@@ -76,15 +72,33 @@ const Dashboard = () => {
       ...prevStatus,
       [selectedRoom]: newStatus,
     }));
-    localStorage.setItem(`${selectedRoom}AcStatus`, newStatus ? 'on' : 'off'); // Save to localStorage
+    localStorage.setItem(`${selectedRoom}AcStatus`, newStatus ? 'on' : 'off');
+    sendMessage({ device: 'ac', status: newStatus ? 'on' : 'off', room: roomMapping[selectedRoom] });
+  };
 
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(
-        JSON.stringify({ device: 'ac', status: newStatus ? 'on' : 'off', room: roomMapping[selectedRoom] })
-      );
-    } else {
-      console.log("WebSocket is not open.");
-    }
+  
+  
+
+  const increaseTemperature = () => {
+    setTemperature((prevTemp) => {
+      const newTemp = Math.min(prevTemp[selectedRoom] + 1, 30);
+      const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
+      localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
+      sendMessage({ device: 'ac', status:'+', room: roomMapping[selectedRoom] });
+
+      return updatedTemps;
+    });
+  };
+
+  const decreaseTemperature = () => {
+    setTemperature((prevTemp) => {
+      const newTemp = Math.max(prevTemp[selectedRoom] - 1, 16);
+      const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
+      localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
+      sendMessage({ device: 'ac', status:'-', room: roomMapping[selectedRoom] });
+
+      return updatedTemps;
+    });
   };
 
   const renderRoom = () => {
@@ -101,18 +115,35 @@ const Dashboard = () => {
         return <LivingRoom ws={ws} isAcOn={acStatus.LivingRoom} toggleAC={toggleAC} />;
     }
   };
+  const setInitialTemperature = () => {
+    const userInput = prompt(
+      `Enter initial temperature for ${selectedRoom} (16-30°C):`
+    );
+    const newTemp = parseInt(userInput, 10);
+    if (newTemp >= 16 && newTemp <= 30) {
+      setTemperature((prevTemp) => {
+        const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
+        localStorage.setItem(
+          'roomTemperatures',
+          JSON.stringify(updatedTemps)
+        );
+        return updatedTemps;
+      });
+    } else {
+      alert('Invalid temperature. Please enter a value between 16 and 30.');
+    }
+  };
 
   return (
     <div className="flex max-h-screen dark:bg-slate-900">
       <style>
         {`
-          /* Hide scrollbar but keep scrolling */
           .hide-scrollbar {
             overflow-y: auto;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
           }
           .hide-scrollbar::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
           }
         `}
       </style>
@@ -128,34 +159,37 @@ const Dashboard = () => {
         </div>
         <div className="deviceControl">
           <div className="mt-6">
-            <ACControl isOn={acStatus[selectedRoom]} toggleAC={toggleAC} />
+            <ACControl
+              isOn={acStatus[selectedRoom]}
+              toggleAC={toggleAC}
+              temperature={temperature[selectedRoom]}
+              increaseTemperature={increaseTemperature}
+              decreaseTemperature={decreaseTemperature}
+              setInitialTemperature={setInitialTemperature}
+              selectedRoom={selectedRoom}
+            />
           </div>
           <div className="LightFanControl">
             <FanControl />
-            <LightControl/>
-          </div>
-            
-        </div>
-
-
-        </div>
-
-        <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
-          <Room onSelectedRoom={setSelectedRoom} />
-
-          <div
-            className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-4 hide-scrollbar"
-            style={{ maxHeight: '55vh' }} // Updated maxHeight to limit scroll area
-          >
-            {renderRoom()}
-          </div>
-
-          <div className="w-full mx-auto flex justify-center mt-3"> {/* Updated width for Temp widget */}
-            <Temp />
+            <LightControl />
           </div>
         </div>
       </div>
-      );
-}
 
-      export default Dashboard;
+      <div className="flex flex-col w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
+        <Room onSelectedRoom={setSelectedRoom} />
+        <div
+          className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg p-4 hide-scrollbar"
+          style={{ maxHeight: '55vh' }}
+        >
+          {renderRoom()}
+        </div>
+        <div className="w-full mx-auto flex justify-center mt-3">
+          <Temp />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

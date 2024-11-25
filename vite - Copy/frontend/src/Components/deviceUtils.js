@@ -34,13 +34,14 @@ export const toggleDevice = async (device, deviceStates, setDeviceStates, room) 
             [device.name]: !prevState[device.name],
         }));
 
-        // Prepare WebSocket message
+        // Prepare WebSocket message ;
+     
         const message = {
             device: device.name,
             status: newStatus,
             room,
         };
-        sendMessage(JSON.stringify(message));
+        sendMessage(message);
 
         // Update the device state in the backend
         const response = await fetch(`http://localhost:8080/api/devices/${device._id}`, {
@@ -51,11 +52,22 @@ export const toggleDevice = async (device, deviceStates, setDeviceStates, room) 
 
         if (!response.ok) {
             console.error("Failed to toggle device");
+            // Revert the UI state if the backend update fails
+            setDeviceStates((prevState) => ({
+                ...prevState,
+                [device.name]: currentStatus,
+            }));
         }
     } catch (error) {
         console.error("Error toggling device:", error);
+        // Revert the UI state in case of error
+        setDeviceStates((prevState) => ({
+            ...prevState,
+            [device.name]: currentStatus,
+        }));
     }
 };
+
 
 // Add a new device to the room
 export const addDevice = async (newDevice, allowedDevices, devices, setDevices, setDeviceStates, setNewDevice, isGuest, room) => {

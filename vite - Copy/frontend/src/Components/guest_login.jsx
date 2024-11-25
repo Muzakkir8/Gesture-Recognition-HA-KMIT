@@ -23,17 +23,35 @@ const Guest_Login = ({ }) => {
             toast.error('Please enter an email!');
             return;
         }
-
-        // Directly set guest-related details
-        toast.success('Guest verified successfully!');
-     
+    
        
-        setTimeout(() => navigate('/guest'), 1000);
+    
+        try {
+            const response = await fetch('http://localhost:8080/api/auth/guest_login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                toast.success(data.message || 'Guest verified successfully!');
+                setTimeout(() => navigate('/guest'), 1000);
+            } else {
+                toast.error(data.message || 'Verification failed.');
+            }
+        } catch (error) {
+            console.error('Error verifying guest email:', error);
+            toast.error('Something went wrong.');
+        }
     };
-
+    
     return (
         <div className="body fixed top-0 dark:bg-slate-900 bg-slate-200 h-screen w-screen flex justify-center items-center">
-            <div className="container lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed">
+            <div className="container bg-transparent lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed">
                 <ToastContainer
                     position="top-center" // Toast at the top center
                     autoClose={2000} // Auto-close in 2 seconds
@@ -44,7 +62,7 @@ const Guest_Login = ({ }) => {
                     className="toast-container"
                 />
 
-                <div className="header bg-purple-600 rounded-2xl lg:w-[500px]">
+                <div className="headers  rounded-2xl lg:w-[500px]">
                     <div className="text text-violet-100 dark:text-white">Login As Guest</div>
                     <div className="underline"></div>
                 </div>

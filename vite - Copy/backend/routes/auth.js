@@ -63,19 +63,27 @@ router.post('/login', async (req, res) => {
 });
 
 // Guest Email Verification Route
-router.post('/guest', async (req, res) => {
+router.post('/guest_login', async (req, res) => {
     const { email } = req.body;
 
     try {
-        let user = await User.findOne({ email });
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required' });
+        }
+
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: 'Email not found' });
         }
-        return res.status(200).json({});
+
+        return res.status(200).json({ message: 'Email verified successfully' });
     } catch (err) {
-        console.error('Guest email verification error:', err.message);
-        res.status(500).send('Server error');
+        console.error('Guest email verification error:', err);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+
+
 
 module.exports = router;

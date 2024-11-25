@@ -35,8 +35,8 @@ function LivingRoom() {
         });
 
 
-       
-    }, [devices]);
+
+    }, []);
 
     return (
         <div className="p-6 min-h-screen">
@@ -94,7 +94,8 @@ function LivingRoom() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                    onClick={() => toggleDevice(device, ws, deviceStates, setDeviceStates, 'livingroom')}
+                                   onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'livingroom')}
+
                                     style={{
                                         display: "flex",
                                         alignItems: "center",
@@ -112,12 +113,14 @@ function LivingRoom() {
                                     <span
                                         style={{
                                             position: "absolute",
-                                            left: deviceStates[device.name] ? "10px" : "34px",
+
+                                            left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
+                                            marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF
                                             color: deviceStates[device.name] ? "white" : "#4b82f1",
                                             fontSize: "0.75rem",
                                             fontWeight: "bold",
                                             textTransform: "uppercase",
-                                            transition: "left 0.3s, color 0.3s",
+                                            transition: "left 0.3s, color 0.3s, margin 0.3s",
                                         }}
                                     >
                                         {deviceStates[device.name] ? "ON" : "OFF"}

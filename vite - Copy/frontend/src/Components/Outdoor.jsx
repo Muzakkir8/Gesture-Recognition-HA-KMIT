@@ -35,7 +35,7 @@ function Outdoor() {
         });
 
        
-    }, [devices]);
+    }, []);
 
     return (
         <div className="p-6 min-h-screen">

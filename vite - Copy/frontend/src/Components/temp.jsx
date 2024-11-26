@@ -11,8 +11,8 @@ const Temp = () => {
 
   return (
     <StyledWrapper>
-      <div className="card p-3 border-none shadow-sm lg:fixed lg:-bottom-5 relative">
-    <div className='relative'>  <img src={cloud} className='opacity-100 w-28  ml-[220px] -mt-[20px] -mb-[82px]' /></div>  
+      <div className="card rounded-t-[45px] p-3 border-none shadow-sm lg:fixed lg:-bottom-5 relative">
+    <div className='relative'>  <img src={cloud} className='opacity-100 w-28  ml-[220px] -mt-[20px] -mb-[100px]' /></div>  
 
         <div className="cloud">
           <img src="https://cdn-icons-png.flaticon.com/512/2100/2100130.png" className="icon" alt="Cloud Icon" />
@@ -40,6 +40,7 @@ const StyledWrapper = styled.div`
 background: linear-gradient(to right, rgb(154 194 255), #0047ffc9);
     // border-radius: 16px; /* Increased border-radius for softer look */
     width: 350px;
+
     height: 150px;
     position: relative;
     // padding: 25px;

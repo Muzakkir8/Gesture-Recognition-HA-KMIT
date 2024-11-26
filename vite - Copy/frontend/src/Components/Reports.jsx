@@ -78,7 +78,7 @@ const DeviceUsageBarGraph = () => {
 
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
-      <h2>Device Usage</h2>
+      <h2 className=" dark:text-pink-300">Device Usage</h2>
       <Bar data={chartData} options={chartOptions} />
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <h3>Total Bill: ₹{totalBill}</h3>

@@ -1,109 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import ACControl from '../Components/ACControl.jsx';
-import { sendMessage } from './websocketUtils';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import cloud from '../assets/sun.png';
+import './temp.css';
 
-const Dashboard = () => {
-  const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
-  const [acStatus, setAcStatus] = useState({
-    LivingRoom: false,
-    Bedroom: false,
-    Kitchen: false,
-  });
-  const [temperature, setTemperature] = useState({
-    LivingRoom: 20,
-    Bedroom: 22,
-    Kitchen: 24,
-  });
 
-  const roomMapping = {
-    LivingRoom: 'livingroom',
-    Bedroom: 'bedroom',
-    Kitchen: 'kitchen',
-  };
+const Temp = () => {
+  const [temperature, setTemperature] = useState("24");
 
   useEffect(() => {
-    const storedTemps = JSON.parse(localStorage.getItem('roomTemperatures'));
-    if (storedTemps) {
-      setTemperature(storedTemps);
-    }
+ 
   }, []);
-
-  useEffect(() => {
-    const initialAcStatus = {
-      LivingRoom: localStorage.getItem('LivingRoomAcStatus') === 'on',
-      Bedroom: localStorage.getItem('BedroomAcStatus') === 'on',
-      Kitchen: localStorage.getItem('KitchenAcStatus') === 'on',
-    };
-    setAcStatus(initialAcStatus);
-  }, []);
-
-  const toggleAC = () => {
-    const newStatus = !acStatus[selectedRoom];
-    setAcStatus((prevStatus) => ({
-      ...prevStatus,
-      [selectedRoom]: newStatus,
-    }));
-    localStorage.setItem(
-      `${selectedRoom}AcStatus`,
-      newStatus ? 'on' : 'off'
-    );
-    sendMessage({
-      device: 'ac',
-      status: newStatus ? 'on' : 'off',
-      room: roomMapping[selectedRoom],
-    });
-  };
-
-  const increaseTemperature = () => {
-    setTemperature((prevTemp) => {
-      const newTemp = Math.min(prevTemp[selectedRoom] + 1, 30);
-      const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
-      localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      return updatedTemps;
-    });
-  };
-
-  const decreaseTemperature = () => {
-    setTemperature((prevTemp) => {
-      const newTemp = Math.max(prevTemp[selectedRoom] - 1, 16);
-      const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
-      localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      return updatedTemps;
-    });
-  };
-
-  const setInitialTemperature = () => {
-    const userInput = prompt(
-      `Enter initial temperature for ${selectedRoom} (16-30°C):`
-    );
-    const newTemp = parseInt(userInput, 10);
-    if (newTemp >= 16 && newTemp <= 30) {
-      setTemperature((prevTemp) => {
-        const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
-        localStorage.setItem(
-          'roomTemperatures',
-          JSON.stringify(updatedTemps)
-        );
-        return updatedTemps;
-      });
-    } else {
-      alert('Invalid temperature. Please enter a value between 16 and 30.');
-    }
-  };
 
   return (
-    <div>
-      <ACControl
-        isOn={acStatus[selectedRoom]}
-        toggleAC={toggleAC}
-        temperature={temperature[selectedRoom]}
-        increaseTemperature={increaseTemperature}
-        decreaseTemperature={decreaseTemperature}
-        setInitialTemperature={setInitialTemperature}
-        selectedRoom={selectedRoom}
-      />
-    </div>
+    <div className="container text-white w-96 mt-4 mb-0">
+    <div className="background">
+      <div className="Circle1"></div>
+      <div className="Circle2"></div>
+      <div className="Circle3"></div>
+      <div className="content">
+        <h1 className="Condition"><i className="material-icons sun">wb_sunny</i> Sunny</h1>
+        <h1 className="Temp">72<span id="F">&#8457;</span></h1>
+        <h1 className="Time">09:35</h1>
+        <h1 className="Location"><i className="material-icons locationIcon">place</i> Raleigh, NC</h1>
+      </div>
+      </div>
+      </div>
+    
   );
 };
 
-export default Dashboard;
+
+
+export default Temp11;

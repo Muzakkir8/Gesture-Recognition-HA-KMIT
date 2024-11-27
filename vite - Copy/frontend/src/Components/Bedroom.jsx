@@ -58,7 +58,7 @@ function Bedroom() {
                         value={newDevice}
                         onChange={(e) => setNewDevice(e.target.value)}
                         placeholder="Add new device"
-                        className="border p-2 rounded mr-2 bg-black text-white"
+                        className="border p-2 rounded mr-2 bg-[#0f1f4e] text-white"
                     />
                     <button
                         onClick={() =>
@@ -73,7 +73,7 @@ function Bedroom() {
                                 'bedroom'
                             )
                         }
-                        className="bg-blue-500 text-white py-1 px-4 rounded"
+                        className="bg-blue-500 text-white py-2 px-4 rounded"
                     >
                         Add Device
                     </button>

@@ -63,11 +63,10 @@ const ACControl = ({
       {/* AC Toggle Button */}
       <button
         onClick={toggleAC}
-        className={`w-44 py-2 rounded-full font-bold transition ${
-          isOn
-            ? 'bg-blue-500 text-white hover:bg-blue-600'
-            : 'bg-slate-200 text-gray-500 hover:bg-slate-300'
-        }`}
+        className={`w-44 py-2 rounded-full font-bold transition ${isOn
+          ? 'bg-blue-500 text-white hover:bg-blue-600'
+          : 'bg-slate-200 text-gray-500 hover:bg-slate-300'
+          }`}
       >
         {isOn ? 'Turn Off' : 'Turn On'}
       </button>

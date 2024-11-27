@@ -34,7 +34,7 @@ function Outdoor() {
             }
         });
 
-       
+
     }, [devices]);
 
     return (
@@ -47,7 +47,7 @@ function Outdoor() {
                         value={newDevice}
                         onChange={(e) => setNewDevice(e.target.value)}
                         placeholder="Add new device"
-                        className="border p-2 rounded mr-2 bg-black text-white"
+                        className="border p-2 rounded mr-2 bg-[#0f1f4e] text-white"
                     />
                     <button
                         onClick={() =>
@@ -62,7 +62,7 @@ function Outdoor() {
                                 'outdoor'
                             )
                         }
-                        className="bg-blue-500 text-white py-1 px-4 rounded"
+                        className="bg-blue-500 text-white py-2 px-4 rounded"
                     >
                         Add Device
                     </button>
@@ -93,7 +93,7 @@ function Outdoor() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                    onClick={() => toggleDevice(device,deviceStates, setDeviceStates, 'outdoor')}
+                                    onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'outdoor')}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",
@@ -108,21 +108,21 @@ function Outdoor() {
                                         marginRight: "8px",
                                     }}
                                 >
-                                   <span
-    style={{
-        position: "absolute",
+                                    <span
+                                        style={{
+                                            position: "absolute",
 
-        left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
-        marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF
-        color: deviceStates[device.name] ? "white" : "#4b82f1",
-        fontSize: "0.75rem",
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        transition: "left 0.3s, color 0.3s, margin 0.3s",
-    }}
->
-    {deviceStates[device.name] ? "ON" : "OFF"}
-</span>
+                                            left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
+                                            marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF
+                                            color: deviceStates[device.name] ? "white" : "#4b82f1",
+                                            fontSize: "0.75rem",
+                                            fontWeight: "bold",
+                                            textTransform: "uppercase",
+                                            transition: "left 0.3s, color 0.3s, margin 0.3s",
+                                        }}
+                                    >
+                                        {deviceStates[device.name] ? "ON" : "OFF"}
+                                    </span>
                                     <div
                                         style={{
                                             height: "33px",

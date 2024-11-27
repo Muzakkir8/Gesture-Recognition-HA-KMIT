@@ -48,7 +48,7 @@ function LivingRoom() {
                         value={newDevice}
                         onChange={(e) => setNewDevice(e.target.value)}
                         placeholder="Add new device"
-                        className="border p-2 rounded mr-2 bg-black text-white"
+                        className="border p-2 rounded mr-2 bg-[#e9efff] text-white"
                     />
                     <button
                         onClick={() =>
@@ -63,7 +63,7 @@ function LivingRoom() {
                                 'livingroom'
                             )
                         }
-                        className="bg-blue-500 text-white py-1 px-4 rounded"
+                        className="bg-blue-500 text-white py-2 px-4 rounded"
                     >
                         Add Device
                     </button>
@@ -94,7 +94,7 @@ function LivingRoom() {
                             </div>
                             <div style={{ display: "flex", alignItems: "center" }}>
                                 <div
-                                   onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'livingroom')}
+                                    onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'livingroom')}
 
                                     style={{
                                         display: "flex",

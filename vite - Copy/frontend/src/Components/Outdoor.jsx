@@ -47,7 +47,7 @@ function Outdoor() {
                         value={newDevice}
                         onChange={(e) => setNewDevice(e.target.value)}
                         placeholder="Add new device"
-                        className="border p-2 rounded mr-2 bg-[#0f1f4e] text-white"
+                        className="border p-2 rounded mr-2 bg-[#e9efff] text-black"
                     />
                     <button
                         onClick={() =>

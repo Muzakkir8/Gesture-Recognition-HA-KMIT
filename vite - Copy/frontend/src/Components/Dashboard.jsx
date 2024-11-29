@@ -76,15 +76,15 @@ const Dashboard = () => {
     sendMessage({ device: 'ac', status: newStatus ? 'on' : 'off', room: roomMapping[selectedRoom] });
   };
 
-  
-  
+
+
 
   const increaseTemperature = () => {
     setTemperature((prevTemp) => {
       const newTemp = Math.min(prevTemp[selectedRoom] + 1, 30);
       const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
       localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      sendMessage({ device: 'ac', status:'+', room: roomMapping[selectedRoom] });
+      sendMessage({ device: 'ac', status: '+', room: roomMapping[selectedRoom] });
 
       return updatedTemps;
     });
@@ -95,7 +95,7 @@ const Dashboard = () => {
       const newTemp = Math.max(prevTemp[selectedRoom] - 1, 16);
       const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
       localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      sendMessage({ device: 'ac', status:'-', room: roomMapping[selectedRoom] });
+      sendMessage({ device: 'ac', status: '-', room: roomMapping[selectedRoom] });
 
       return updatedTemps;
     });

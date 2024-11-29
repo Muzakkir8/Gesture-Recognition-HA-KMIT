@@ -20,12 +20,12 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
     const location = useLocation();
 
     // Define paths where the Navbar should be hidden
-    const hideNavbarPaths = ['/', '/login', '/signup','/help','/guest','/guest_login'];
+    const hideNavbarPaths = ['/', '/login', '/signup', '/help', '/guest', '/guest_login'];
     const showNavbar = !hideNavbarPaths.includes(location.pathname);
 
     return (
         <>
-         <div className="lg:bg-[#e9efff] header mt-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] sticky top-0 z-99 dark:border-b-[1px] dark:border-slate-600 dark:bg-slate-800">
+            {/* <div className="lg:bg-[#e9efff] header mt-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] sticky top-0 z-99 dark:border-b-[1px] dark:border-slate-600 dark:bg-slate-800">
 
 
                 <button
@@ -34,7 +34,9 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 >
                     Dark Mode
                 </button>
-            </div>
+            </div> */}
+
+
             {/* Only show Navbar if the current path is not in the hideNavbarPaths */}
             {showNavbar && <Navbar />}
             <Routes>
@@ -42,19 +44,19 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 {/* <Route path="/Help" element={<Help />} /> */}
                 <Route path="/devices" element={<Device />} />
                 <Route path="/reports" element={<Reports />} />
-                <Route 
-                    path="/login" 
-                    element={<Login setIsAuthenticated={setIsAuthenticated} setUsername={setUsername} />} 
+                <Route
+                    path="/login"
+                    element={<Login setIsAuthenticated={setIsAuthenticated} setUsername={setUsername} />}
                 />
-                <Route 
-                    path="/signup" 
-                    element={<Signup setIsAuthenticated={setIsAuthenticated} />} 
+                <Route
+                    path="/signup"
+                    element={<Signup setIsAuthenticated={setIsAuthenticated} />}
                 />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/guest_login" element={<Guest_Login />} />
                 <Route path="/help" element={<Help />} />
-                <Route path="/guest" element={<Guest />}/>
+                <Route path="/guest" element={<Guest />} />
                 <Route path="/bill" element={<BillPage />} />
             </Routes>
         </>

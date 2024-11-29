@@ -1,42 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginSignup.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import email_icon from '../assets/email.png';
+import LeftPanelImage from '../assets/download.png'; // Transparent background image
 
-const Guest_Login = ({ }) => {
-    const [email, setEmail] = useState('');
+const Guest_Login = () => {
+    const [email, setEmail] = useState(''); // useState for email
     const navigate = useNavigate();
-    const location = useLocation(); // Access current route path
 
-  
-
+    // Handle email input change
     const handleChange = (e) => {
-        setEmail(e.target.value);
+        setEmail(e.target.value); // Update email state
+    };
+    const handleHomeClick = () => {
+        navigate('/'); // Redirect to the home page ("/")
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!email) {
             toast.error('Please enter an email!');
             return;
         }
-    
-       
-    
+
         try {
-            const response = await fetch('http://localhost:8080/api/auth/guest_login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            });
-    
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/auth/guest_login`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }), // Send email in the body
+                }
+            );
+
             const data = await response.json();
-    
+
             if (response.ok) {
                 toast.success(data.message || 'Guest verified successfully!');
                 setTimeout(() => navigate('/guest'), 1000);
@@ -45,45 +49,63 @@ const Guest_Login = ({ }) => {
             }
         } catch (error) {
             console.error('Error verifying guest email:', error);
-            toast.error('Something went wrong.');
+            toast.error('Something went wrong. Please try again.');
         }
     };
-    
-    return (
-        <div className="body fixed top-0 dark:bg-slate-900 bg-slate-200 h-screen w-screen flex justify-center items-center">
-            <div className="container bg-transparent lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed">
-                <ToastContainer
-                    position="top-center" // Toast at the top center
-                    autoClose={2000} // Auto-close in 2 seconds
-                    hideProgressBar // No progress bar
-                    closeOnClick
-                    pauseOnHover
-                    draggable={false}
-                    className="toast-container"
-                />
 
-                <div className="headers  rounded-2xl lg:w-[500px]">
-                    <div className="text text-violet-100 dark:text-white">Login As Guest</div>
-                    <div className="underline"></div>
+    return (
+        <div className="bod">
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar
+                closeOnClick
+                pauseOnHover
+                draggable={false}
+                className="toast-container"
+            />
+            <div className="header">
+                <div className="left-header">
+                    <h1>G-160</h1>
                 </div>
-                <form className='dark:bg-slate-400' onSubmit={handleSubmit}>
-                    <div className="inputs">
-                        <div className="input">
+                <div className="right-header">
+                    <button className="home-btn" onClick={handleHomeClick}>
+                        <h1>Home</h1>
+                    </button>
+                </div>
+            </div>
+
+
+            <div className="signup-container">
+                {/* Left Panel */}
+                <div className="left-panel">
+                    <img
+                        src={LeftPanelImage}
+                        alt="Innovative Decision Concept"
+                        className="left-image"
+                    />
+                </div>
+
+                {/* Right Panel */}
+                <div className="right-panel">
+                    <h2 className="right-title">Login as Guest</h2>
+                    <form className="signup-form" onSubmit={handleSubmit}>
+                        <div className="form-input">
                             <img src={email_icon} alt="email icon" />
                             <input
                                 type="email"
-                                placeholder="Email ID"
+                                placeholder="Enter your email"
                                 name="email"
-                                value={email}
+                                value={email} // Bind email state here
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                    </div>
-                    <div className="submit-form">
-                        <button type="submit" className="submit">Login</button>
-                    </div>
-                </form>
+
+                        <button type="submit" className="signup-button">Login</button>
+
+                    </form>
+                </div>
             </div>
         </div>
     );

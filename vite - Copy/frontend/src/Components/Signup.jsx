@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import person_icon from '../assets/person.png';
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
+import LeftPanelImage from '../assets/download.png'; // Transparent background image
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,11 +14,10 @@ const Signup = () => {
     email: '',
     password: '',
   });
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('');
   const [error, setError] = useState(''); // Error state
   const navigate = useNavigate();
 
+  // Handle input field changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -25,7 +25,11 @@ const Signup = () => {
     });
     setError(''); // Clear error on typing
   };
+  const handleHomeClick = () => {
+    navigate('/'); // Redirect to the home page ("/")
+  };
 
+  // Handle form submission
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -35,48 +39,64 @@ const Signup = () => {
         { headers: { 'Content-Type': 'application/json' } }
       );
 
+      // Save data in local storage
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', formData.name);
       localStorage.setItem('email', formData.email);
 
-      setUsername(formData.name);
-      setIsAuthenticated(true);
-
       toast.success('Signed up successfully!');
 
+      // Redirect to dashboard after success
       setTimeout(() => {
         navigate('/dashboard');
       }, 1000);
     } catch (error) {
-      const errorMessage = error.response?.data?.msg || 'Error signing up. Please try again.';
+      const errorMessage =
+        error.response?.data?.msg || 'Error signing up. Please try again.';
       setError(errorMessage); // Set error message
 
       toast.error(errorMessage);
-      
-      // Clear error after 3 seconds
-      setTimeout(() => setError(''), 3000);
     }
   };
 
   return (
-    <div className="body fixed top-0 dark:bg-slate-950 bg-slate-200 h-screen w-screen flex justify-center items-center">
-      <div className="container bg-transparent lg:w-[700px] lg:mt-36 h-[600px] dark:bg-slate-900 lg:-top-16 fixed">
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar
-          closeOnClick
-          pauseOnHover
-          draggable={false}
-          className="toast-container"
-        />
-        <div className="headers  rounded-2xl lg:w-[500px]">
-          <div className="text text-violet-100 dark:text-white">Sign Up</div>
-          <div className="underline rounded-lg"></div>
+    <div className="bod">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        draggable={false}
+        className="toast-container"
+      />
+      <div className="header">
+        <div className="left-header">
+          <h1>G-160</h1>
         </div>
-        <form className='dark:bg-slate-400' onSubmit={handleSignupSubmit}>
-          <div className="inputs">
-            <div className="input">
+        <div className="right-header">
+          <button className="home-btn" onClick={handleHomeClick}>
+            <h1>Home</h1>
+          </button>
+        </div>
+      </div>
+
+      <div className="signup-container">
+        {/* Left Panel */}
+        <div className="left-panel">
+          <img
+            src={LeftPanelImage}
+            alt="Innovative Decision Concept"
+            className="left-image"
+          />
+        </div>
+
+        {/* Right Panel */}
+        <div className="right-panel">
+          <h1 className="right-title">Sign Up</h1>
+          <form className="signup-form" onSubmit={handleSignupSubmit}>
+            {/* Name Input */}
+            <div className="form-input">
               <img src={person_icon} alt="person icon" />
               <input
                 type="text"
@@ -87,34 +107,39 @@ const Signup = () => {
                 required
               />
             </div>
-            <div className="input">
+
+            {/* Email Input */}
+            <div className="form-input">
               <img src={email_icon} alt="email icon" />
               <input
                 type="email"
-                placeholder="Email ID"
+                placeholder="Enter your email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className="input">
+
+            {/* Password Input */}
+            <div className="form-input">
               <img src={password_icon} alt="password icon" />
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Enter your password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
             </div>
-          </div>
-          {error && <div className="error-message text-red-500">{error}</div>}
-          <div className="submit-form">
-            <button type="submit" className="submit">Sign Up</button>
-          </div>
-        </form>
+
+            {/* Submit Button */}
+            <button type="submit" className="signup-button">
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDevices, toggleDevice, addDevice, removeDevice } from './deviceUtils';
-import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
-import './Dashboard.css';
+import { initializeWebSocket, subscribeToMessages } from './websocketUtils';
+import fan from '../assets/fan-tan.png'
+import light from '../assets/idea.png'
+import heater from '../assets/heater.png'
+import ac from '../assets/air-conditioner.png'
+
 function LivingRoom() {
     const [devices, setDevices] = useState([]);
     const [deviceStates, setDeviceStates] = useState({});
     const [newDevice, setNewDevice] = useState('');
     const allowedDevices = ['fan', 'light', 'ac', 'heater'];
-    const [ws, setWs] = useState(null);
+
+    const deviceImages = {
+        fan: fan,
+        light: light,
+        ac: ac,
+        heater: heater,
+    };
+
 
     const isGuest = window.location.pathname.includes('/guest');
 
@@ -16,15 +27,6 @@ function LivingRoom() {
 
         const socket = initializeWebSocket();
 
-        // socket.onmessage = (event) => {
-        //     const { device, status, room } = JSON.parse(event.data);
-        //     if (room === 'livingroom' && deviceStates.hasOwnProperty(device)) {
-        //         setDeviceStates((prevState) => ({
-        //             ...prevState,
-        //             [device]: status === 'on',
-        //         }));
-        //     }
-        // };
         subscribeToMessages(({ device, status, room }) => {
             if (room === 'livingroom') {
                 setDeviceStates((prevStates) => ({
@@ -33,9 +35,6 @@ function LivingRoom() {
                 }));
             }
         });
-
-
-
     }, []);
 
     return (
@@ -48,7 +47,7 @@ function LivingRoom() {
                         value={newDevice}
                         onChange={(e) => setNewDevice(e.target.value)}
                         placeholder="Add new device"
-                        className="border p-2 rounded mr-2 bg-black text-white"
+                        className="border p-2 rounded mr-2 bg-[#e9efff] text-black"
                     />
                     <button
                         onClick={() =>
@@ -63,7 +62,7 @@ function LivingRoom() {
                                 'livingroom'
                             )
                         }
-                        className="bg-blue-500 text-white py-1 px-4 rounded"
+                        className="bg-blue-500 text-white py-2 px-4 rounded"
                     >
                         Add Device
                     </button>
@@ -75,66 +74,73 @@ function LivingRoom() {
                         <div
                             key={device._id}
                             style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                backgroundColor: deviceStates[device.name] ? "#527ff4" : "#d0d7e0",
-                                padding: "12px 15px",
-                                borderRadius: "12px",
-                                width: "95%",
-                                height: "65px",
-                                marginBottom: "16px",
-                                transition: "background-color 0.3s ease",
-                                
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                backgroundColor: deviceStates[device.name] ? '#527ff4' : '#d0d7e0',
+                                padding: '12px 15px',
+                                borderRadius: '12px',
+                                width: '95%',
+                                height: '65px',
+                                marginBottom: '16px',
+                                transition: 'background-color 0.3s ease',
                             }}
                         >
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <h3 style={{ margin: "0", fontSize: "1.2rem", color: "white" }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <img className='  w-5 opacity-40 mr-5 bg-white rounded-[14px] p-[5px]'
+                                    src={deviceImages[device.name] || 'path-to-default-image.png'}
+                                    alt={`${device.name} icon`}
+                                    style={{
+                                        width: '30px',
+                                        height: '30px',
+                                        marginRight: '10px',
+                                        borderRadius: '50%',
+                                
+                                
+                                    }}
+                                />
+                                <h3 style={{ margin: '0', fontSize: '1.2rem', color: 'white' }}>
                                     {device.name.charAt(0).toUpperCase() + device.name.slice(1)}
                                 </h3>
                             </div>
-                            <div style={{ display: "flex", alignItems: "center" }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div
-                                   onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'livingroom')}
-
+                                    onClick={() => toggleDevice(device, deviceStates, setDeviceStates, 'livingroom')}
                                     style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        backgroundColor: deviceStates[device.name] ? "#3863ee" : "#b0bec5",
-                                        padding: "5px",
-                                        borderRadius: "8px",
-                                        cursor: "pointer",
-                                        transition: "background-color 0.3s ease",
-                                        width: "70px",
-                                        height: "38px",
-                                        position: "relative",
-                                        marginRight: "8px",
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        backgroundColor: deviceStates[device.name] ? '#3863ee' : '#b0bec5',
+                                        padding: '5px',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        transition: 'background-color 0.3s ease',
+                                        width: '70px',
+                                        height: '38px',
+                                        position: 'relative',
+                                        marginRight: '8px',
                                     }}
                                 >
                                     <span
                                         style={{
-                                            position: "absolute",
-                                        
-
-                                            left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
-                                            marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF
-                                            color: deviceStates[device.name] ? "white" : "#4b82f1",
-                                            fontSize: "0.75rem",
-                                            fontWeight: "bold",
-                                            textTransform: "uppercase",
-                                            transition: "left 0.3s, color 0.3s, margin 0.3s",
+                                            position: 'absolute',
+                                            left: deviceStates[device.name] ? '10px' : '38px',
+                                            color: deviceStates[device.name] ? 'white' : '#4b82f1',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 'bold',
+                                            textTransform: 'uppercase',
+                                            transition: 'left 0.3s, color 0.3s',
                                         }}
                                     >
-                                        {deviceStates[device.name] ? "ON" : "OFF"}
+                                        {deviceStates[device.name] ? 'ON' : 'OFF'}
                                     </span>
                                     <div
                                         style={{
-                                            height: "33px",
-                                            width: "28px",
-                                            backgroundColor: "white",
-                                            borderRadius: "6px",
-                                            transition: "transform 0.3s ease",
-                                            transform: deviceStates[device.name] ? "translateX(38px)" : "translateX(0)",
+                                            height: '33px',
+                                            width: '28px',
+                                            backgroundColor: 'white',
+                                            borderRadius: '6px',
+                                            transition: 'transform 0.3s ease',
+                                            transform: deviceStates[device.name] ? 'translateX(38px)' : 'translateX(0)',
                                         }}
                                     ></div>
                                 </div>
@@ -142,11 +148,11 @@ function LivingRoom() {
                                     <button
                                         onClick={() => removeDevice(device, setDevices, setDeviceStates, isGuest)}
                                         style={{
-                                            fontSize: "1.2rem",
-                                            color: "#f44336",
-                                            border: "none",
-                                            background: "none",
-                                            cursor: "pointer",
+                                            fontSize: '1.2rem',
+                                            color: '#f44336',
+                                            border: 'none',
+                                            background: 'none',
+                                            cursor: 'pointer',
                                         }}
                                     >
                                         x

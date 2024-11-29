@@ -126,7 +126,7 @@ const Navbar = () => {
         {!isOpen && (
           <div className="hamburger" onClick={toggleSidebar}>
             <div className="ham">
-              <svg className="dark:fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="indigo">
+              <svg className="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
                 <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" />
               </svg>
             </div>

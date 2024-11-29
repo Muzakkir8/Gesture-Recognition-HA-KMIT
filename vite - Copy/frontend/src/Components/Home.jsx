@@ -153,7 +153,7 @@ const Home = ({ isAuthenticated }) => {
                         <li><Link to="/help">Help?</Link></li>
                         <li><Link to="/login">Login</Link></li>
                         <li><Link to="/signup">SignUp</Link></li>
-                        <li><Link to="/guest">Login As Guest</Link></li>
+                        <li><Link to="/guest_login">Login As Guest</Link></li>
                     </ul>
                 </div>
 

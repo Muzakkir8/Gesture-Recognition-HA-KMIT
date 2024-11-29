@@ -10,7 +10,7 @@ const FanControl = () => {
     if (speed > 1) setSpeed(speed - 1);
   };
   return (
-    <div className="control-container rounded-[40px] w-[380px] h-[135px]">
+    <div className="control-container rounded-[35px] w-[380px] h-[135px]">
       <div className="fan_icon"></div>
       <div className="leftC">
         

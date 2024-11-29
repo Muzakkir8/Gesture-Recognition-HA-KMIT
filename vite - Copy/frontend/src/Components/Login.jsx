@@ -40,7 +40,7 @@ const Login = ({ setUsername, setIsAuthenticated }) => {
             toast.success('Logged in successfully!');
             setTimeout(() => {
                 navigate('/dashboard');
-            }, 2000);
+            }, 1000);
         } catch (error) {
             console.error(error);
             const errorMessage = error.response?.data?.message || 'Error logging in. Please try again.';

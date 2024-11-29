@@ -7,11 +7,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensure it takes up full height */
+    min-height: 100vh;
+    /* Ensure it takes up full height */
     box-sizing: border-box;
 }
+
 .bill-page h1 {
-    font-size: 36px; /* Increased font size */
+    font-size: 36px;
+    /* Increased font size */
     font-weight: bold;
     color: #333;
     margin-bottom: 20px;
@@ -33,18 +36,23 @@
     padding: 12px 25px;
     font-size: 16px;
     cursor: pointer;
-    background: linear-gradient(135deg, #1e2a68, #0f1f4e); /* Gradient background */
+    background: linear-gradient(135deg, #1e2a68, #0f1f4e);
+    /* Gradient background */
     color: white;
     border: none;
     border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition for scale effect */
-    width: 100%; /* Full width button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Added transform transition for scale effect */
+    width: 100%;
+    /* Full width button */
     margin-top: 15px;
 }
 
 .form button:hover {
-    background: linear-gradient(135deg, #142063, #0b1a44); /* Darker gradient on hover */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    background: linear-gradient(135deg, #142063, #0b1a44);
+    /* Darker gradient on hover */
+    transform: scale(1.05);
+    /* Slightly enlarge the button on hover */
 }
 
 .form button:disabled {
@@ -105,4 +113,40 @@
 
 .logs-container li:nth-child(odd) {
     background-color: #ffffff;
+}
+
+.bill-page .clear-btn {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.bill-page .clear-btn:disabled {
+    background-color: #ffcccc;
+    cursor: not-allowed;
+}
+
+.bill-page .success {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.result-container .clear-btn {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.result-container .clear-btn:disabled {
+    background-color: #ffcccc;
+    cursor: not-allowed;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDevices, toggleDevice, addDevice, removeDevice } from './deviceUtils';
 import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
-
+import './Dashboard.css';
 function LivingRoom() {
     const [devices, setDevices] = useState([]);
     const [deviceStates, setDeviceStates] = useState({});
@@ -39,7 +39,7 @@ function LivingRoom() {
     }, []);
 
     return (
-        <div className="p-6 min-h-screen">
+        <div className="lg:px-6 h-screen ">
             <h2 className="text-2xl font-bold mb-4">Living Room</h2>
             {!isGuest && (
                 <div className="mb-4">
@@ -69,7 +69,7 @@ function LivingRoom() {
                     </button>
                 </div>
             )}
-            <div className="grid grid-cols-1 gap-2 w-full max-w-lg">
+            <div className=" grid grid-cols-1 gap-2 lg:w-full max-w-lg">
                 {devices.length > 0 ? (
                     devices.map((device) => (
                         <div
@@ -85,6 +85,7 @@ function LivingRoom() {
                                 height: "65px",
                                 marginBottom: "16px",
                                 transition: "background-color 0.3s ease",
+                                
                             }}
                         >
                             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -113,6 +114,7 @@ function LivingRoom() {
                                     <span
                                         style={{
                                             position: "absolute",
+                                        
 
                                             left: deviceStates[device.name] ? "10px" : "38px", // Current left value for ON and OFF
                                             marginLeft: !deviceStates[device.name] ? "2px" : "0", // Adjust margin only for OFF

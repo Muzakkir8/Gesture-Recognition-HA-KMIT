@@ -10,11 +10,11 @@ const LightControl = () => {
     if (brightness > 0) setBrightness(brightness - 50);
   };
  return (
-    <div className="control-container rounded-[40px] w-[380px] h-[135px]">
+    <div className=" control-container rounded-[40px] w-[380px] h-[135px]">
       <div className="light_icon"></div>
       <div className="leftC">
       <div className="control-title">Light Brightness</div>
-      <div className="control-value text-[35px]">{brightness}%  {brightness === 50 && <span className="text-gray-500 text-[20px] ml-2">(Dim)</span>}
+      <div className="control-value text-[35px] font-semibold">{brightness}%  {brightness === 50 && <span className="text-gray-500 text-[20px] ml-2">(Dim)</span>}
       {brightness === 100 && <span className="text-yellow-400 text-[20px] ml-2">(Bright)</span>}</div>
       </div>
       <div className="control-buttons bg-[#DCE5FD] h-[105px] w-[50px] rounded-2xl text-blue-500  text-xl">

@@ -66,6 +66,17 @@ app.get('/api/devices/calculateUsage', async (req, res) => {
 });
 
 
+app.delete('/api/devices/clearUsage', async (req, res) => {
+    try {
+        await DeviceUsage.deleteMany({}); // Adjust based on your database schema
+        res.status(200).send({ message: 'All usage data cleared successfully.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Failed to clear usage data.' });
+    }
+});
+
+
 
 
 app.use('/api/auth', require('./routes/auth'));

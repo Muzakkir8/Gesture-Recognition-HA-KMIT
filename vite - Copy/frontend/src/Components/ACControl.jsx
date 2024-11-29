@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import ac from '../assets/ac.jpg';
+import './ACControl.css'
 
 const ACControl = ({
   isOn,
@@ -13,7 +14,7 @@ const ACControl = ({
  
 
   return (
-    <div className="ml-20 mt-2 p-3 h-[305px] bg-white dark:bg-slate-800 rounded-[43px] text-center w-[40vw] lg:w-[25vw]">
+    <div className="as ml-20 mt-2 p-3 h-[305px] dark:bg-slate-800 rounded-[43px] text-center w-[40vw] lg:w-[25vw]">
       <h2 className="text-lg flex justify-center font-semibold text-gray-800 dark:text-white mb-3">
         <span className="ac">
           <img

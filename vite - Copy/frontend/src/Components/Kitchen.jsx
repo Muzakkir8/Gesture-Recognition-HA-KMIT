@@ -38,7 +38,7 @@ function Kitchen() {
     }, [devices]);
 
     return (
-        <div className="p-6 min-h-screen">
+        <div className="lg:px-6 min-h-screen">
             <h2 className="text-2xl font-bold mb-4">Kitchen</h2>
             {!isGuest && (
                 <div className="mb-4">

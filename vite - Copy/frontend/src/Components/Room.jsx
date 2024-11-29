@@ -11,7 +11,7 @@ function Room({ onSelectedRoom }) {
   };
 
   return (
-    <div className='mx-auto lg:relative text-md text-slate-400 dark:text-white mt-4 '>
+    <div className='mx-auto lg:relative text-md text-slate-400 dark:text-white mt-4 mb-3'>
       <nav className='flex gap-3'>
         {/* Living Room Button */}
         <button

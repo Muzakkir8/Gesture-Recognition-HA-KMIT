@@ -75,6 +75,7 @@ const WeeklyUsageChart = () => {
                             x: {
                                 grid: {
                                     display: false,
+
                                 },
                             },
                             y: {

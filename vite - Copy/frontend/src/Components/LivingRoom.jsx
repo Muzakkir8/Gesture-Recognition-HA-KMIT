@@ -41,7 +41,7 @@ function LivingRoom() {
     }, []);
 
     return (
-        <div className="room lg:px-6  items-center h-screen sm:-mt-6">
+        <div className="room lg:px-6  items-center h-screen sm:-mt-6 sm:-ml-2">
             <h2 className="text-2xl font-bold mb-4 sm:!mb-4 sm:text-[22px]">Living Room</h2>
             {!isGuest && (
                 <div className="mb-4 flex">

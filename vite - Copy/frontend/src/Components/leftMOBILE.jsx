@@ -14,7 +14,7 @@ import './Dashboard.css';
 import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
 import Left from './leftMOBILE.jsx';
 
-const Dashboard = () => {
+const LeftMOBILE = () => {
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
   const [userName, setUserName] = useState('');
   const [ws, setWs] = useState(null);
@@ -28,6 +28,9 @@ const Dashboard = () => {
     Bedroom: 20,
     Kitchen: 18,
   });
+
+  const isAcOn = acStatus[selectedRoom] ?? false;
+  const roomTemperature = temperature[selectedRoom] ?? 16;
 
   const roomMapping = {
     LivingRoom: 'livingroom',
@@ -118,17 +121,14 @@ const Dashboard = () => {
   };
 
   const setInitialTemperature = () => {
-    const userInput = prompt(
-      `Enter initial temperature for ${selectedRoom} (16-30°C):`
-    );
+    const userInput = prompt(`
+      Enter initial temperature for ${selectedRoom} (16-30°C):
+    `);
     const newTemp = parseInt(userInput, 10);
     if (newTemp >= 16 && newTemp <= 30) {
       setTemperature((prevTemp) => {
         const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
-        localStorage.setItem(
-          'roomTemperatures',
-          JSON.stringify(updatedTemps)
-        );
+        localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
         return updatedTemps;
       });
     } else {
@@ -137,48 +137,32 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex max-h-screen dark:bg-slate-900">
-      <style>
-        {`
-          .hide-scrollbar {
-            overflow-y: auto;
-            scrollbar-width: none;
-          }
-          .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-          }
-        `}
-      </style>
-      <LeftSection
-        userName={userName}
-        selectedRoom={selectedRoom}
-        acStatus={acStatus}
-        toggleAC={toggleAC}
-        temperature={temperature}
-        increaseTemperature={increaseTemperature}
-        decreaseTemperature={decreaseTemperature}
-        setInitialTemperature={setInitialTemperature}
-      />
-      <div className="w-[100%] flex flex-col sm lg:w-[32vw] bg-white dark:bg-slate-800 h-[100%] lg:h-screen fixed lg:relative p-3 ml-auto">
-        <div className="lg:hidden mt-12 dark:mt-0 z-0">
-          <h1 className="text-[24px] ml-3 font-light text-gray-800 mt-3">
-            Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
-          </h1>
-          <Temp />
-        </div>
+    <div className="mt-[45px] dark:mt-0">
+      <div className="bg-white z-10 w-full fixed pl-5">
+        <p className="text-gray-600 opacity-90 text-[20px] mx-5">
+          {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
+        </p>
         <Room onSelectedRoom={setSelectedRoom} />
-        <div
-          className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg sm:p-2 p-4 hide-scrollbar"
-          style={{ maxHeight: '80vh' }}
-        >
-          {renderRoom()}
+      </div>
+      <div className="deviceContrl flex flex-col gap-4 min-h-screen">
+        <div className="-ml-[58px] mt-36">
+          <ACControl
+            isOn={isAcOn}
+            toggleAC={toggleAC}
+            temperature={roomTemperature}
+            increaseTemperature={increaseTemperature}
+            decreaseTemperature={decreaseTemperature}
+            setInitialTemperature={setInitialTemperature}
+            selectedRoom={selectedRoom}
+          />
         </div>
-        <div className="sm-block hidden lg:w-full lg:mx-auto lg:flex lg:justify-center lg:mt-3">
-          <Temp />
+        <div className="LightFanControl ml-3 flex flex-col gap-2">
+          <FanControl />
+          <LightControl />
         </div>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default LeftMOBILE;

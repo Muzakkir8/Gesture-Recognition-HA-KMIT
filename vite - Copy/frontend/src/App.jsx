@@ -14,6 +14,8 @@ import Guest from './Components/guest.jsx';
 import Guest_Login from './Components/guest_login.jsx';
 import Help from './Components/Help.jsx';
 import BillPage from './Components/BillPage';
+import Bottom from './Components/bottom.jsx';
+import Left from './Components/leftMOBILE.jsx';
 
 
 function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated, setUsername }) {
@@ -25,7 +27,7 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
 
     return (
         <>
-            {/* <div className="lg:bg-[#e9efff] header mt-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] sticky top-0 z-99 dark:border-b-[1px] dark:border-slate-600 dark:bg-slate-800">
+     <div className="bg-[#355dff69] lg:hidden header mt-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] fixed top-0 z-2 ">
 
 
                 <button
@@ -34,11 +36,13 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 >
                     Dark Mode
                 </button>
-            </div> */}
+            </div> 
 
 
             {/* Only show Navbar if the current path is not in the hideNavbarPaths */}
-            {showNavbar && <Navbar />}
+            {showNavbar && <Navbar /> }
+            {showNavbar &&   <div className=" w-screen lg:hidden">
+                <Bottom/></div>}
             <Routes>
                 <Route path="/" element={<Home />} />
                 {/* <Route path="/Help" element={<Help />} /> */}
@@ -58,6 +62,8 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 <Route path="/help" element={<Help />} />
                 <Route path="/guest" element={<Guest />} />
                 <Route path="/bill" element={<BillPage />} />
+                <Route path="/control" element={<Left/>} />
+
             </Routes>
         </>
     );

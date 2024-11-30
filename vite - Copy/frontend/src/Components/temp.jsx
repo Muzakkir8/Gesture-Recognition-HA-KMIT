@@ -23,13 +23,13 @@ const Temp = () => {
   }, []);
 
   return (
-    <div className="container bg-[#90b2ff] text-white w-96 mt-4 mb-4">
+    <div className="container bg-[#90b2ff] text-white w-[90vw] lg:w-96 mt-4 mb-4 sm:w-[80%]">
     <div className="background">
       <div className="Circle1"></div>
       <div className="Circle2"></div>
       <div className="Circle3"></div>
       <div className="content">
-        <h1 className="Condition"><i className="material-icons sun"></i><li className='flex gap-2 mb-3'><img className='size-5 invert opacity-80' src={wifi} alt="" /><img className='size-5 invert opacity-90 ' src={sensor} alt="" /> </li> <i><img className='w-40 -mt-8 ' src={ai} alt="" /></i></h1>
+        <h1 className="Condition"><i className="material-icons sun"></i><li className='flex gap-2 mb-3'><img className='size-5 invert opacity-80' src={wifi} alt="" /><img className='size-5 invert opacity-90 ' src={sensor} alt="" /> </li> <i><img className='w-40 cloud2 -mt-8 ' src={ai} alt="" /></i></h1>
         <h1 className="Temp mb-2 ml-[165px]">{`${temperature}°`}<span className='font-serif'>C</span></h1>
         <h1 className="Time ">{time}</h1>
         <h1 className="Location"><i className="material-icons locationIcon"></i>Last updated</h1>

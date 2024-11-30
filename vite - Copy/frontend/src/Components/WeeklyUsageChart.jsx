@@ -50,7 +50,7 @@ const WeeklyUsageChart = () => {
 
     return (
         <div className="flex justify-center items-center ml-[5.6rem] ">
-            <div className="bg-[#f8faff] rounded-lg p-2 rounded-[30px] " style={{ width: '890px', height: '255px' }}>
+            <div className="bg-[#f8faff]  p-2 rounded-[30px] " style={{ width: '890px', height: '255px' }}>
                 <Bar
                     data={chartData}
                     width={600}

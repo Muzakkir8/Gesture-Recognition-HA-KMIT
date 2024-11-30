@@ -14,7 +14,6 @@ import './Dashboard.css';
 import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
 import Left from './leftMOBILE.jsx';
 
-// Declare state before using it
 const LeftMOBILE = () => {
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
   const [userName, setUserName] = useState('');
@@ -30,7 +29,7 @@ const LeftMOBILE = () => {
     Kitchen: 18,
   });
 
-  const isAcOn = acStatus[selectedRoom] ?? false; // Default to false if undefined
+  const isAcOn = acStatus[selectedRoom] ?? false;
   const roomTemperature = temperature[selectedRoom] ?? 16;
 
   const roomMapping = {
@@ -122,17 +121,14 @@ const LeftMOBILE = () => {
   };
 
   const setInitialTemperature = () => {
-    const userInput = prompt(
-      `Enter initial temperature for ${selectedRoom} (16-30°C):`
-    );
+    const userInput = prompt(`
+      Enter initial temperature for ${selectedRoom} (16-30°C):
+    `);
     const newTemp = parseInt(userInput, 10);
     if (newTemp >= 16 && newTemp <= 30) {
       setTemperature((prevTemp) => {
         const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
-        localStorage.setItem(
-          'roomTemperatures',
-          JSON.stringify(updatedTemps)
-        );
+        localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
         return updatedTemps;
       });
     } else {
@@ -142,11 +138,12 @@ const LeftMOBILE = () => {
 
   return (
     <div className="mt-[45px] dark:mt-0 ">
-      
-    
-      <div className=" bg-white z-10 w-full fixed pl-5">  <p className="text-gray-600  opacity-90 text-[20px] mx-5">
+      <div className="bg-white z-10 w-full fixed pl-5">
+        <p className="text-gray-600 opacity-90 text-[20px] mx-5">
           {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
-        </p>  <Room onSelectedRoom={setSelectedRoom} /></div>
+        </p>
+        <Room onSelectedRoom={setSelectedRoom} />
+      </div>
       <div className="deviceContrl flex flex-col gap-4 min-h-screen">
         <div className="-ml-[58px] mt-36">
           <ACControl
@@ -164,34 +161,6 @@ const LeftMOBILE = () => {
           <LightControl />
         </div>
       </div>
-{/* <div className="">
-      <div className="lg:hidden "> <h1 className="text-[24px] ml-3 font-light text-gray-800 mt-3 ">
-            Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Controls
-          </h1>
-      </div>
-        <Room onSelectedRoom={setSelectedRoom} /></div>
-      <div className="mx-auto mt-4">
-        <p className="text-gray-600 opacity-60 text-[14px]">
-          {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
-        </p>
-      </div>
-      <div className="deviceControl flex flex-row">
-        <div className="mt-6 text-sm">
-          <ACControl
-            isOn={isAcOn}
-            toggleAC={toggleAC}
-            temperature={roomTemperature}
-            increaseTemperature={increaseTemperature}
-            decreaseTemperature={decreaseTemperature}
-            setInitialTemperature={setInitialTemperature}
-            selectedRoom={selectedRoom}
-          />
-        </div>
-        <div className="LightFanControl">
-          <FanControl />
-          <LightControl />
-        </div>
-      </div> */}
     </div>
   );
 };

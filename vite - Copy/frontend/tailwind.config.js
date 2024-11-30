@@ -11,8 +11,10 @@ export default {
         'custom-blue': '#081229', // Add your custom color
       },
       screens: {
-        'sm': {'max': '400px'},      // Mobile: Up to 767px
-           // Large screens starting at 769px
+        'sm': { 'max': '400px' },      // Mobile: Up to 767px
+        // Large screens starting at 769px
+        'tb': { 'max': '700px' },      // Mobile: Up to 767px
+
       },
     },
   },

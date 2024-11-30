@@ -66,6 +66,50 @@ app.get('/api/devices/calculateUsage', async (req, res) => {
 });
 
 
+const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+app.get('/api/devices/weeklyUsage', async (req, res) => {
+    try {
+        const usages = await DeviceUsage.find(); // Fetch usage records from the database
+        const dailyUsage = Array(7).fill(0); // Initialize daily usage for 7 days
+
+        usages.forEach((usage) => {
+            const startTime = new Date(usage.startTime);
+            const endTime = usage.endTime ? new Date(usage.endTime) : new Date();
+
+            // Calculate the duration in hours
+            const durationInMs = endTime - startTime;
+            const durationInHours = Math.max(durationInMs / (1000 * 60 * 60), 0.01); // Minimum duration of 0.01 hours
+
+            const startDay = startTime.getDay();
+            const endDay = endTime.getDay();
+
+            // If usage spans multiple days, distribute hours proportionally
+            if (startDay !== endDay) {
+                let remainingDuration = durationInHours;
+                for (let i = startDay; i !== (endDay + 1) % 7; i = (i + 1) % 7) {
+                    dailyUsage[i] += remainingDuration / (endDay - startDay + 1);
+                    remainingDuration -= remainingDuration / (endDay - startDay + 1);
+                }
+            } else {
+                dailyUsage[startDay] += durationInHours; // Same-day usage
+            }
+        });
+
+        // Format data for the frontend
+        const DAYS_OF_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const weeklyUsage = dailyUsage.map((usage, index) => ({
+            day: DAYS_OF_WEEK[index],
+            usage: usage.toFixed(2), // Round to 2 decimal places
+        }));
+
+        return res.status(200).json(weeklyUsage);
+    } catch (error) {
+        console.error('Error calculating weekly usage:', error);
+        return res.status(500).json({ message: 'Error calculating weekly usage', error: error.message });
+    }
+});
+
 app.delete('/api/devices/clearUsage', async (req, res) => {
     try {
         await DeviceUsage.deleteMany({}); // Adjust based on your database schema

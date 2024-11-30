@@ -14,7 +14,7 @@ const ACControl = ({
  
 
   return (
-    <div className="as ml-20 mt-2 p-3 h-[305px] dark:bg-slate-800 rounded-[43px] text-center w-[90vw] lg:w-[25vw]">
+    <div className="as ml-20 mt-2 p-3 h-[305px] dark:bg-slate-800 rounded-[43px] text-center w-[90vw] lg:w-[25vw] sm:size-[300px]">
       <h2 className="text-lg flex justify-center font-semibold text-gray-800 dark:text-white mb-3">
         <span className="ac">
           <img

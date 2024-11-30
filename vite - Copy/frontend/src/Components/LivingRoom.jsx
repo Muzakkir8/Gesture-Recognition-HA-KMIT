@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { fetchDevices, toggleDevice, addDevice, removeDevice } from './deviceUtils';
 import { initializeWebSocket, subscribeToMessages } from './websocketUtils';
 import fan from '../assets/fan-tan.png'
+import tv from 'C:/Users/AKIF/OneDrive/Desktop/prject/git-G160/vite - Copy/frontend/src/assets/televison.png'
 import light from '../assets/idea.png'
 import heater from '../assets/heater.png'
 import ac from '../assets/air-conditioner.png'
+
 import './rooms.css'
 
 function LivingRoom() {
@@ -18,6 +20,7 @@ function LivingRoom() {
         light: light,
         ac: ac,
         heater: heater,
+        televison: tv,
     };
 
 

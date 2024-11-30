@@ -15,6 +15,11 @@
   margin-left: 3vw;
 
 }
+@media (min-width: 768px) {
+  .md\:w-\[25vw\] {
+      width: 88vw;
+  }
+}
 .fan_icon{
   background-image: url('src/assets/fan_icon.png');
   background-repeat: no-repeat;

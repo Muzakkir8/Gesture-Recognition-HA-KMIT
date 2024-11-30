@@ -11,11 +11,11 @@ function Room({ onSelectedRoom }) {
   };
 
   return (
-    <div className='mx-auto lg:relative text-md text-slate-400 dark:text-white mt-4 mb-3'>
-      <nav className='flex gap-3'>
+    <div className='mx-auto lg:relative text-md text-slate-400 dark:text-white mt-4 sm:!mt-2 mb-3'>
+      <nav className='flex gap-3 sm:w-[100vw] sm:text-[15px]'>
         {/* Living Room Button */}
         <button
-          className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
+          className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium  ${
             selectedRoom === 'LivingRoom'
               ? 'bg-[#0f1f4e] text-white'
               : 'bg-[#e9efff] text-[#0f1f4e]'

@@ -10,7 +10,7 @@ const LightControl = () => {
     if (brightness > 0) setBrightness(brightness - 50);
   };
  return (
-    <div className=" control-container rounded-[40px] w-[380px] h-[135px] md:w-[25vw]">
+    <div className=" control-container rounded-[40px] w-[380px] h-[135px] sm:w-[320px] ">
       <div className="light_icon"></div>
       <div className="leftC">
       <div className="control-title">Light Brightness</div>

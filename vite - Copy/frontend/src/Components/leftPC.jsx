@@ -17,7 +17,7 @@ const LeftSection = ({
   const roomTemperature = temperature[selectedRoom] ?? 16; // Default to 16 if undefined
 
   return (
-    <div className="left flex flex-col w-full lg:w-[65vw] min-h-screen p-4 sm:block  md:block">
+    <div className="left flex flex-col w-full lg:w-[65vw] min-h-screen p-4  sm:block tb:block md1-block overflow-hidden ">
       <div className="w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[800px]">
         <h1 className="text-[24px] font-thin text-gray-800">
           Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard

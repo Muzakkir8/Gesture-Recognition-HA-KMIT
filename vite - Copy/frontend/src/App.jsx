@@ -16,8 +16,7 @@ import Help from './Components/Help.jsx';
 import BillPage from './Components/BillPage';
 import Bottom from './Components/bottom.jsx';
 import Left from './Components/leftMOBILE.jsx';
-
-
+import SettingsPage from './Components/settings.jsx';
 function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated, setUsername }) {
     const location = useLocation();
 
@@ -63,6 +62,7 @@ function AppContent({ darkMode, setDarkMode, isAuthenticated, setIsAuthenticated
                 <Route path="/guest" element={<Guest />} />
                 <Route path="/bill" element={<BillPage />} />
                 <Route path="/control" element={<Left/>} />
+                <Route path="/settings" element={<SettingsPage/>} />
 
             </Routes>
         </>

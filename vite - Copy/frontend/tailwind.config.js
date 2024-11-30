@@ -13,7 +13,9 @@ export default {
       screens: {
         'sm': { 'max': '400px' },      // Mobile: Up to 767px
         // Large screens starting at 769px
-        // 'md': { 'max': '1024px' }
+        'tb': { 'max': '700px' }, 
+        // Mobile: Up to 767px
+
       },
     },
   },

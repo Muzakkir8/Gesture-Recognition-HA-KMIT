@@ -159,17 +159,17 @@ const Dashboard = () => {
         decreaseTemperature={decreaseTemperature}
         setInitialTemperature={setInitialTemperature}
       />
-      <div className="w-[100%] flex flex-col sm lg:w-[32vw] bg-white dark:bg-slate-800 h-[100%] lg:h-screen fixed lg:relative p-3 ml-auto">
-        <div className="lg:hidden mt-12 dark:mt-0 z-0">
-          <h1 className="text-[24px] ml-3 font-light text-gray-800 mt-3">
+      <div className="w-[100%] flex flex-col sm:w-screen lg:w-[32vw] bg-white dark:bg-slate-800 h-[100%] lg:h-screen fixed lg:relative p-3 ml-auto  ">
+        <div className="lg:hidden mt-12 dark:mt-0 z-0 ">
+          <h1 className="text-[24px] ml-3 font-light text-gray-800 mt-3 sm:text-[19px]">
             Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
           </h1>
           <Temp />
         </div>
         <Room onSelectedRoom={setSelectedRoom} />
         <div
-          className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg sm:p-2 p-4 hide-scrollbar"
-          style={{ maxHeight: '80vh' }}
+          className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg sm:p-2 p-4 hide-scrollbar sm:max-h-0"
+          style={{ maxHeight: '100vh' }}
         >
           {renderRoom()}
         </div>

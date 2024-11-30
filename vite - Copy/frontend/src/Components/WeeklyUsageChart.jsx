@@ -18,7 +18,7 @@ const WeeklyUsageChart = () => {
                     'rgba(153, 102, 255)', // Violet
                     'rgba(255, 159, 64)', // Orange
                 ],
-                barThickness: 15, // Adjust bar width
+                barThickness: 10, // Adjust bar width
             },
         ],
     });
@@ -75,6 +75,7 @@ const WeeklyUsageChart = () => {
                             x: {
                                 grid: {
                                     display: false,
+
                                 },
                             },
                             y: {

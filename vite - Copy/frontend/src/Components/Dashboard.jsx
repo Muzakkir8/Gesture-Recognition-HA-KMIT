@@ -9,6 +9,8 @@ import Temp from '../Components/temp.jsx';
 import FanControl from './Fan_Control.jsx';
 import LightControl from './LightControl.jsx';
 import './Dashboard.css';
+import WeeklyUsageChart from './WeeklyUsageChart';
+
 import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
 
 const Dashboard = () => {
@@ -147,9 +149,9 @@ const Dashboard = () => {
           }
         `}
       </style>
-      
 
-      <div className="flex flex-col w-full lg:w-[65vw] min-h-screen p-4 sm:block hidden">
+
+      <div className="flex flex-col w-full lg:w-[65vw] min-h-screen p-4 sm:block ">
         <div className="w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[800px]">
           <h1 className="text-[24px] text-gray-800">
             Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
@@ -158,7 +160,7 @@ const Dashboard = () => {
             {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
           </p>
         </div>
-        <div className="deviceControl">
+        <div className="deviceControl ml-[30px]">
           <div className="mt-6">
             <ACControl
               isOn={acStatus[selectedRoom]}
@@ -175,14 +177,17 @@ const Dashboard = () => {
             <LightControl />
           </div>
         </div>
+        <div className=''>
+          <WeeklyUsageChart />
+        </div>
       </div>
 
       <div className="w flex flex-col lg:w-[32vw] bg-white dark:bg-slate-800 min-h-screen p-3 ml-auto">
         <div className="header lg:hidden"></div>
-      <div className="lg:hidden mt-16 z-0"> <h1 className="text-[24px] ml-3 font-light text-gray-800 mt-3 ">
-            Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
-          </h1><Temp />
-      </div>
+        <div className="lg:hidden ml-10 mt-16 z-0 "> <h1 className="text-[24px] ml- font-light text-gray-800 mt-3 ">
+          Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
+        </h1>
+        </div>
         <Room onSelectedRoom={setSelectedRoom} />
         <div
           className="flex-grow dark:border-[1px] dark:border-slate-600 dark:bg-slate-800 w-full mx-auto rounded-lg sm:p-2 p-4 hide-scrollbar"
@@ -190,7 +195,7 @@ const Dashboard = () => {
         >
           {renderRoom()}
         </div>
-        <div className="sm-block hidden lg:w-full lg:mx-auto lg:flex lg:justify-center lg:mt-3">
+        <div className="sm-block  lg:w-full lg:mx-auto lg:flex lg:justify-center lg:mt-3">
           <Temp />
         </div>
       </div>

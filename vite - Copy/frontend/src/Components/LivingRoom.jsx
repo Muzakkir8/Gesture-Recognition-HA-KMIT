@@ -88,7 +88,7 @@ function LivingRoom() {
                         >
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <img className='  w-5 opacity-40 mr-5 bg-white rounded-[14px] p-[5px]'
-                                    src={deviceImages[device.name] || 'path-to-default-image.png'}
+                                    src={deviceImages[device.name] }
                                     alt={`${device.name} icon`}
                                     style={{
                                         width: '30px',

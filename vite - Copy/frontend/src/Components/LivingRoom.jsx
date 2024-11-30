@@ -5,6 +5,7 @@ import fan from '../assets/fan-tan.png'
 import light from '../assets/idea.png'
 import heater from '../assets/heater.png'
 import ac from '../assets/air-conditioner.png'
+import './rooms.css'
 
 function LivingRoom() {
     const [devices, setDevices] = useState([]);
@@ -38,10 +39,10 @@ function LivingRoom() {
     }, []);
 
     return (
-        <div className="lg:px-6 h-screen ">
+        <div className="room lg:px-6  items-center h-screen">
             <h2 className="text-2xl font-bold mb-4">Living Room</h2>
             {!isGuest && (
-                <div className="mb-4">
+                <div className="mb-4 flex">
                     <input
                         type="text"
                         value={newDevice}
@@ -62,9 +63,17 @@ function LivingRoom() {
                                 'livingroom'
                             )
                         }
-                        className="bg-blue-500 text-white py-2 px-4 rounded"
+                        className="bg-blue-500 text-white py-2 px-7 rounded"
                     >
-                        Add Device
+                     <div className=" flex gap-x-2 ">    <svg className='size-6 invert' width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+    <circle opacity="0.5" cx="12" cy="12" r="10" stroke="#1C274C" strokeWidth="1.5" />
+    <path
+      d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15"
+      stroke="#1C274C"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg> Device</div>
                     </button>
                 </div>
             )}
@@ -87,18 +96,18 @@ function LivingRoom() {
                             }}
                         >
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <img className='  w-5 opacity-40 mr-5 bg-white rounded-[14px] p-[5px]'
+                                <div className='bg-[#ffffff43] rounded-[20000px]  mr-4 p-[5px] -pr-5'>
+                                <img className='  w-5 invert '
                                     src={deviceImages[device.name] || 'path-to-default-image.png'}
                                     alt={`${device.name} icon`}
                                     style={{
-                                        width: '30px',
-                                        height: '30px',
-                                        marginRight: '10px',
+                                        width: '20px',
+                                        height: '20px',
                                         borderRadius: '50%',
                                 
                                 
                                     }}
-                                />
+                                /></div>
                                 <h3 style={{ margin: '0', fontSize: '1.2rem', color: 'white' }}>
                                     {device.name.charAt(0).toUpperCase() + device.name.slice(1)}
                                 </h3>

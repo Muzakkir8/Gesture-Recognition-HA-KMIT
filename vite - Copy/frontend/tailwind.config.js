@@ -6,17 +6,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    screens: {
-      'sm': '576px',
-      'md': '960px',
-      'lg': '1440px',
+    extend: {
+      colors: {
+        'custom-blue': '#081229', // Add your custom color
+      },
+      screens: {
+        'sm': {'max': '400px'},      // Mobile: Up to 767px
+           // Large screens starting at 769px
+      },
     },
-    extend: {colors: {
-      'custom-blue': '#081229',
-      // Add your custom color
-    },},
   },
-  
   plugins: [],
-  
 }

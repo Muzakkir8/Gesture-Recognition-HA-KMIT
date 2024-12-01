@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import axios from 'axios';
-
+import './utility.css';
 const WeeklyUsageChart = () => {
     const [chartData, setChartData] = useState({
         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -28,9 +28,13 @@ const WeeklyUsageChart = () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/devices/weeklyUsage');
                 console.log(response.data); // Debugging: Check response structure
-                const data = response.data;
 
-                const updatedData = data.map((item) => parseFloat(item.usage)); // Convert usage to numbers
+                // Ensure the data is numeric and handle negative values
+                const updatedData = response.data.map((item) => {
+                    const usageValue = parseFloat(item.usage);
+                    return isNaN(usageValue) || usageValue < 0 ? 0 : usageValue; // Handle negative or invalid values
+                });
+
                 setChartData((prev) => ({
                     ...prev,
                     datasets: [
@@ -50,7 +54,7 @@ const WeeklyUsageChart = () => {
 
     return (
         <div className="flex justify-center items-center ml-[5.6rem] ">
-            <div className="bg-[#f8faff]  p-2 rounded-[30px] " style={{ width: '890px', height: '255px' }}>
+            <div className="bg-[#f8faff] dark:bg-transparent dark:border-[1px] dark:border-[#ffffff3f]  p-2 rounded-[30px] " style={{ width: '890px', height: '255px' }}>
                 <Bar
                     data={chartData}
                     width={600}

@@ -17,16 +17,16 @@ const LeftSection = ({
   const roomTemperature = temperature[selectedRoom] ?? 16; // Default to 16 if undefined
 
   return (
-    <div className="left flex flex-col w-full lg:w-[65vw] min-h-screen p-4  sm:block tb:block md1-block overflow-hidden ">
+    <div className="left flex flex-col w-full lg:w-[65vw] min-h-screen p-4  sm:block tb:block md1-block overflow-hidden">
       <div className="w-full max-w-[90vw] mx-auto mt-4 lg:max-w-[800px]">
-        <h1 className="text-[24px] font-thin text-gray-800">
+        <h1 className="text-[24px] dark:text-slate-400 font-thin text-gray-800">
           Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
         </h1>
-        <p className="text-gray-600 opacity-60 text-[14px]">
+        <p className="text-gray-600 dark:text-indigo-300 opacity-60 text-[14px] font-normal">
           {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
         </p>
       </div>
-      <div className="deviceControl ">
+      <div className="deviceControl">
         <div className="mt-6 text-sm">
           <ACControl
             isOn={isAcOn}

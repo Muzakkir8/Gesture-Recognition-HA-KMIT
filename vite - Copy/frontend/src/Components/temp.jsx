@@ -23,7 +23,7 @@ const Temp = () => {
   }, []);
 
   return (
-    <div className="container bg-[#90b2ff] text-white w-[90vw] lg:w-96 mt-4 mb-4 sm:w-[90%] sm:h-28 ">
+    <div className="container darktemp bg-[#90b2ff] text-white w-[90vw] lg:w-96 mt-4 mb-4 sm:w-[90%] sm:h-28 ">
     <div className="background">
       <div className="Circle1"></div>
       <div className="Circle2"></div>

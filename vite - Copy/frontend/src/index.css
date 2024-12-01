@@ -4,3 +4,28 @@
 body{
     background:#e9efff;
 }
+.dark body {
+    
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #081229, #1b1e38);
+    color: #fff;
+
+   
+  }
+
+  /* Subtle white glow overlay */
+
+  @media screen and (min-width: 1225px) {
+   /* Subtle white glow overlay */
+  .dark body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -200px;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.077) 0%, rgba(0, 0, 0, 0.438) 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  }

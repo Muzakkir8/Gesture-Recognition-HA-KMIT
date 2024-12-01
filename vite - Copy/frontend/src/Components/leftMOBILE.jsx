@@ -137,10 +137,10 @@ const LeftMOBILE = () => {
   };
 
   return (
-    <div className="mt-[45px] dark:mt-0 ">
-      <div className="bg-white z-10 w-full fixed pl-5">
-        <p className="text-gray-600 opacity-90 text-[20px] mx-5">
-          {selectedRoom && `You are viewing: ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
+    <div className="mt-[55px] min-h-full ">
+      <div className="bg-white z-10 w-full fixed pl-5  dark:!bg-transparent ">
+        <p className="text-gray-600 opacity-90 text-[20px] text-center dark:text-white ">
+          {selectedRoom && `Controls - ${selectedRoom.replace(/([A-Z])/g, ' $1').trim()}`}
         </p>
         <Room onSelectedRoom={setSelectedRoom} />
       </div>

@@ -82,3 +82,9 @@ cursor: pointer;
 .button:hover {
   background: #0056b3;
 }
+.dark .cardx {
+  background-color: rgba(68, 74, 144, 0.136);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}

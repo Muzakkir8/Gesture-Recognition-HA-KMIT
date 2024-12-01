@@ -4,11 +4,11 @@ import axios from 'axios';
 
 const WeeklyUsageChart = () => {
     const [chartData, setChartData] = useState({
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         datasets: [
             {
                 label: 'Usage (kWh)',
-                data: [0, 0, 0, 0, 0, 0, 0], // Default zero values
+                data: [0, 0, 0, 0, 0, 0, 0], // Initial placeholder data
                 backgroundColor: [
                     'rgba(128, 0, 128)', // Purple
                     'rgba(75, 192, 192)', // Teal
@@ -18,7 +18,8 @@ const WeeklyUsageChart = () => {
                     'rgba(153, 102, 255)', // Violet
                     'rgba(255, 159, 64)', // Orange
                 ],
-                barThickness: 10, // Adjust bar width
+                borderWidth: 1,
+                barThickness: 15, // Adjust bar width
             },
         ],
     });
@@ -27,16 +28,19 @@ const WeeklyUsageChart = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/devices/weeklyUsage');
-                console.log(response.data); // Debugging: Check response structure
                 const data = response.data;
 
-                const updatedData = data.map((item) => parseFloat(item.usage)); // Convert usage to numbers
+                // Extract usage data and labels dynamically from response
+                const updatedData = data.map((item) => parseFloat(item.usage)); // Convert usage to numeric values
+                const updatedLabels = data.map((item) => item.day); // Extract days of the week
+
                 setChartData((prev) => ({
                     ...prev,
+                    labels: updatedLabels, // Update labels dynamically
                     datasets: [
                         {
                             ...prev.datasets[0],
-                            data: updatedData,
+                            data: updatedData, // Update data dynamically
                         },
                     ],
                 }));
@@ -49,44 +53,39 @@ const WeeklyUsageChart = () => {
     }, []);
 
     return (
-        <div className="flex justify-center items-center ml-[5.6rem] ">
-            <div className="bg-[#f8faff]  p-2 rounded-[30px] " style={{ width: '890px', height: '255px' }}>
+        <div className="flex justify-center items-center ml-[5.2rem]">
+            <div
+                className="bg-[#f8faff] p-2 rounded-[30px]"
+                style={{ width: '890px', height: '255px' }}
+            >
                 <Bar
                     data={chartData}
-                    width={600}
-                    height={250}
                     options={{
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
                             tooltip: {
                                 callbacks: {
-                                    label: (context) => {
-                                        const value = context.raw;
-                                        return `${value.toFixed(2)} kWh`; // Works because value is now numeric
-                                    },
+                                    label: (context) => `${context.raw.toFixed(2)} kWh`,
                                 },
-                                backgroundColor: 'rgba(0,0,0,0.7)',
+                                backgroundColor: 'rgba(0, 0, 0, 0.7)',
                                 titleColor: '#fff',
                                 bodyColor: '#fff',
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top',
                             },
                         },
                         scales: {
                             x: {
-                                grid: {
-                                    display: false,
-
-                                },
+                                grid: { display: false }, // Hide grid lines on X-axis
+                                title: { display: true, text: 'Days of the Week' },
                             },
                             y: {
                                 beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'kWh',
-                                },
-                                grid: {
-                                    color: 'rgba(0, 0, 0, 0.05)', // Reduced opacity
-                                },
+                                title: { display: true, text: 'Usage (kWh)' },
+                                grid: { color: 'rgba(0, 0, 0, 0.1)' },
                             },
                         },
                     }}

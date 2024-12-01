@@ -20,7 +20,7 @@ function LivingRoom() {
         light: light,
         ac: ac,
         heater: heater,
-        Television: tv,
+        television: tv,
     };
 
 

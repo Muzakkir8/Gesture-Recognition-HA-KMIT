@@ -8,7 +8,7 @@ createRoot(document.getElementById('root')).render(
 <>
 
      {/* Wrap App with BrowserRouter */}
-     <div className="transition-all duration-250 ease-linear  dark:bg-slate-900 ">
+     <div className="transition-all duration-250 ease-linear ">
       <App />
     </div>
     </>

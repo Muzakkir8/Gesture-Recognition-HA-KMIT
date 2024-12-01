@@ -1,0 +1,18 @@
+.dark .cardw {
+    background-color: rgba(68, 74, 144, 0.136);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  .dark .glas {
+    background: rgba(255, 255, 255, 0.1); /* Transparent white */
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    color: #fff; /* Adjust text color for contrast */
+  }
+

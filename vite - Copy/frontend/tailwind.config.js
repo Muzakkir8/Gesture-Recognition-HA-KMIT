@@ -11,16 +11,20 @@ export default {
         'custom-blue': '#081229',
       },
       screens: {
-        tb: { max: '768px' }, // Custom small breakpoint
-        sm: { max: '400px' }, // Ultra-small devices
-        
+        'sm': { 'max': '400px' },      // Mobile: Up to 767px
+        // Large screens starting at 769px
+        'tb': { 'max': '768px' },
+        // Mobile: Up to 767px
+        'r': { 'min': '699px', 'max': '668' },
+
+
       },
     },
     screens: {
       sm: '640px',
       md: '768px',
       lg: '1024px',
-      
+
     },
   },
   plugins: [],

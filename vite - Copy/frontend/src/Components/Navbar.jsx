@@ -15,7 +15,6 @@ import bar from '../assets/bar-chart.png';
 import elec from '../assets/electricity.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Dashboard from './Dashboard';
 
 
 
@@ -123,7 +122,7 @@ const Navbar = () => {
   return (
     <>
       <ToastContainer />
-      <div className={`side-nav dark:bg-slate-800 hover:dark:border-r-[1px] hover:dark:border-slate-600 ${isOpen ? 'open' : 'close1'}`} ref={sidebarRef}>
+      <div className={`side-nav navdark  ${isOpen ? 'open' : 'close1'}`} ref={sidebarRef}>
         {!isOpen && (
           <div className="hamburger" onClick={toggleSidebar}>
             <div className="ham">

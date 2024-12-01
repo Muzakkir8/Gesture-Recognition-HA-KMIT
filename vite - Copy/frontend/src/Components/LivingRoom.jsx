@@ -8,6 +8,8 @@ import heater from '../assets/heater.png'
 import ac from '../assets/air-conditioner.png'
 import tv from '../assets/tv.png'
 import './rooms.css'
+import './utility.css'
+
 
 function LivingRoom() {
     const [devices, setDevices] = useState([]);
@@ -66,7 +68,7 @@ function LivingRoom() {
                                 'livingroom'
                             )
                         }
-                        className="bg-blue-500 text-white py-2 px-7 rounded sm:p-[10px]"
+                        className="bg-blue-500 dark:bg-opacity-15 text-white py-2 px-7 rounded sm:p-[10px]"
                     >
                         <div className=" flex gap-x-2 sm:gap-x-1">    <svg className='size-6 invert' width="800px" height="800px" viewBox="0 0 24 24" fill="none">
                             <circle opacity="0.5" cx="12" cy="12" r="10" stroke="#1C274C" strokeWidth="1.5" />
@@ -80,7 +82,7 @@ function LivingRoom() {
                     </button>
                 </div>
             )}
-            <div className=" grid grid-cols-1 gap-2 lg:w-full max-w-lg sm:max-w-[700px]">
+            <div className="grid grid-cols-1 gap-2 lg:w-full max-w-lg sm:max-w-[700px]">
                 {devices.length > 0 ? (
                     devices.map((device) => (
                         <div
@@ -90,6 +92,7 @@ function LivingRoom() {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                                 backgroundColor: deviceStates[device.name] ? '#527ff4' : '#d0d7e0',
+                        
                                 padding: '12px 15px',
                                 borderRadius: '12px',
                                 width: '95%',

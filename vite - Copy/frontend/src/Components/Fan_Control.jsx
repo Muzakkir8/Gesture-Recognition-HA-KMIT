@@ -10,11 +10,11 @@ const FanControl = () => {
     if (speed > 1) setSpeed(speed - 1);
   };
   return (
-    <div className="control-container rounded-[35px] w-[380px] h-[135px] sm:w-[320px]">
+    <div className="control-container rounded-[35px] w-[380px] h-[135px] sm:w-[320px] cardx">
       <div className="fan_icon"></div>
       <div className="leftC">
         
-        <div className="control-title">Fan Speed</div>
+        <div className="control-title dark:text-slate-400">Fan Speed</div>
         <div className="control-value">{speed}</div>
       </div>
       <div className="control-buttons bg-[#DCE5FD] h-[105px] w-[50px] rounded-2xl text-blue-500  text-xl">

@@ -7,17 +7,10 @@ html, body {
 
 
 .header{
-    background-color:#B39DFF;
     top: 0;
     position: sticky;
     height: 48px;
    z-index: 2;
    margin-top: 0;
 }
-.dark .header{
-    background-color:#334155;
-    top: 0;
-    position: sticky;
-    height: 48px;
-   
-}
+

@@ -16,9 +16,9 @@ function Room({ onSelectedRoom }) {
         {/* Living Room Button */}
         <button
           className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium  ${
-            selectedRoom === 'LivingRoom'
-              ? 'bg-[#0f1f4e] text-white'
-              : 'bg-[#e9efff] text-[#0f1f4e]'
+            selectedRoom === 'LivingRoom' 
+              ? 'bg-[#0f1f4e] text-white  dark:bg-[#304793]'
+              : 'bg-[#e9efff] text-[#0f1f4e] dark:bg-[#e9efff1b] dark:text-white'
           } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
           onClick={() => handleRoomSelect('LivingRoom')}
         >
@@ -29,8 +29,8 @@ function Room({ onSelectedRoom }) {
         <button
           className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
             selectedRoom === 'Kitchen'
-              ? 'bg-[#0f1f4e] text-white'
-              : 'bg-[#e9efff] text-[#0f1f4e]'
+              ? 'bg-[#0f1f4e] text-white dark:bg-[#304793]'
+              : 'bg-[#e9efff] text-[#0f1f4e] dark:bg-[#e9efff1b] dark:text-white'
           } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
           onClick={() => handleRoomSelect('Kitchen')}
         >
@@ -41,8 +41,8 @@ function Room({ onSelectedRoom }) {
         <button
           className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
             selectedRoom === 'Bedroom'
-              ? 'bg-[#0f1f4e] text-white'
-              : 'bg-[#e9efff] text-[#0f1f4e]'
+              ? 'bg-[#0f1f4e] text-white dark:bg-[#304793]'
+              : 'bg-[#e9efff] text-[#0f1f4e] dark:bg-[#e9efff1b] dark:text-white'
           } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
           onClick={() => handleRoomSelect('Bedroom')}
         >
@@ -53,8 +53,8 @@ function Room({ onSelectedRoom }) {
         <button
           className={`rounded-full py-[5px] px-[6px] lg:px-[10px] font-medium ${
             selectedRoom === 'Outdoor'
-              ? 'bg-[#0f1f4e] text-white'
-              : 'bg-[#e9efff] text-[#0f1f4e]'
+              ? 'bg-[#0f1f4e] text-white dark:bg-[#304793]'
+              : 'bg-[#e9efff] text-[#0f1f4e] dark:bg-[#e9efff1b] dark:text-white'
           } lg:hover:bg-[#0F1B4C] focus:bg-[#0F1B4C] hover:text-white focus:text-white lg:focus:font-medium`}
           onClick={() => handleRoomSelect('Outdoor')}
         >

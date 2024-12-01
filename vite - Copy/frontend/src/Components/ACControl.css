@@ -1,7 +1,6 @@
 .as{
 background: rgba(255, 255, 255, 0.7);
   border:3px rgba(255, 255, 255, 0.405) solid;
-  backdrop-filter: blur(2px);
 }
 .dark .cardx {
   background-color: rgba(68, 74, 144, 0.136);

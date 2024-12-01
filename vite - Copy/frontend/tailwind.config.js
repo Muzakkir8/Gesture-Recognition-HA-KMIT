@@ -15,6 +15,8 @@ export default {
         // Large screens starting at 769px
         'tb': { 'max': '700px' }, 
         // Mobile: Up to 767px
+        'r': { 'min': '699px','max':'668' }, 
+
 
       },
     },

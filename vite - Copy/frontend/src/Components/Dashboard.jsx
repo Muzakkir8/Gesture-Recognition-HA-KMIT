@@ -85,7 +85,14 @@ const Dashboard = () => {
       const newTemp = Math.min(prevTemp[selectedRoom] + 1, 30);
       const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
       localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      sendMessage({ device: 'ac', status: '+', room: roomMapping[selectedRoom] });
+
+      // Send updated temperature along with the AC's current status
+      sendMessage({
+        device: 'ac',
+        status: acStatus[selectedRoom] ? 'on' : 'off',
+        temperature: '+',
+        room: roomMapping[selectedRoom],
+      });
 
       return updatedTemps;
     });
@@ -96,7 +103,14 @@ const Dashboard = () => {
       const newTemp = Math.max(prevTemp[selectedRoom] - 1, 16);
       const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
       localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      sendMessage({ device: 'ac', status: '-', room: roomMapping[selectedRoom] });
+
+      // Send updated temperature along with the AC's current status
+      sendMessage({
+        device: 'ac',
+        status: acStatus[selectedRoom] ? 'on' : 'off',
+        temperature: '-',
+        room: roomMapping[selectedRoom],
+      });
 
       return updatedTemps;
     });
@@ -158,7 +172,7 @@ const Dashboard = () => {
         increaseTemperature={increaseTemperature}
         decreaseTemperature={decreaseTemperature}
         setInitialTemperature={setInitialTemperature}
-      /> 
+      />
       <div className="radial w-[100%] dark:!bg-[#0e193c] flex flex-col sm:w-screen lg:w-[32vw] bg-white h-[100%] lg:h-screen fixed lg:relative p-3 ml-auto  ">
         <div className="lg:hidden mt-12  z-0">
           <h1 className="text-[24px] ml-3 font-light dark:!text-slate-400 text-gray-800 mt-3 sm:text-[19px]">
@@ -173,11 +187,7 @@ const Dashboard = () => {
         >
           {renderRoom()}
         </div>
-<<<<<<< HEAD
         <div className="sm:hidden md:hidden tb:hidden lg:w-full lg:mx-auto lg:flex lg:justify-center lg:mt-3">
-=======
-        <div className="r:block hidden sm:hidden md:hidden tb:hidden lg:w-full lg:mx-auto lg:flex lg:justify-center lg:mt-3">
->>>>>>> 325258b3aed51a0fe25836dd361cfbbd5a194a96
           <Temp />
         </div>
       </div>

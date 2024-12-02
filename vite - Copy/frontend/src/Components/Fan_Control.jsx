@@ -13,7 +13,7 @@ const FanControl = () => {
     <div className="control-container rounded-[35px] w-[380px] h-[135px] sm:w-[320px] cardx">
       <div className="fan_icon"></div>
       <div className="leftC">
-        
+
         <div className="control-title dark:text-slate-400">Fan Speed</div>
         <div className="control-value">{speed}</div>
       </div>

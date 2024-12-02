@@ -173,11 +173,7 @@ const Dashboard = () => {
         >
           {renderRoom()}
         </div>
-<<<<<<< HEAD
         <div className="sm:hidden md:hidden tb:hidden lg:w-full lg:mx-auto lg:flex lg:justify-center lg:mt-3">
-=======
-        <div className="r:block hidden sm:hidden md:hidden tb:hidden lg:w-full lg:mx-auto lg:flex lg:justify-center lg:mt-3">
->>>>>>> 325258b3aed51a0fe25836dd361cfbbd5a194a96
           <Temp />
         </div>
       </div>

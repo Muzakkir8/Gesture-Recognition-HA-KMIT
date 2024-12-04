@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Bottom from '../Components/bottom.jsx';
 import Room from '../Components/Room.jsx';
 import Bedroom from '../Components/Bedroom.jsx';
 import LivingRoom from '../Components/LivingRoom.jsx';
 import Kitchen from '../Components/Kitchen.jsx';
 import Outdoor from '../Components/Outdoor.jsx';
-import ACControl from '../Components/ACControl.jsx';
 import Temp from '../Components/temp.jsx';
-import FanControl from './Fan_Control.jsx';
-import LightControl from './LightControl.jsx';
 import LeftSection from './leftPC.jsx';
 import './Dashboard.css';
 import { initializeWebSocket, subscribeToMessages, sendMessage } from './websocketUtils';
-import Left from './leftMOBILE.jsx';
+
 
 const Guest = () => {
   const [selectedRoom, setSelectedRoom] = useState('LivingRoom');
@@ -85,7 +81,14 @@ const Guest = () => {
       const newTemp = Math.min(prevTemp[selectedRoom] + 1, 30);
       const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
       localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      sendMessage({ device: 'ac', status: '+', room: roomMapping[selectedRoom] });
+
+      // Send updated temperature along with the AC's current status
+      sendMessage({
+        device: 'ac',
+        status: acStatus[selectedRoom] ? 'on' : 'off',
+        temperature: '+',
+        room: roomMapping[selectedRoom],
+      });
 
       return updatedTemps;
     });
@@ -96,11 +99,106 @@ const Guest = () => {
       const newTemp = Math.max(prevTemp[selectedRoom] - 1, 16);
       const updatedTemps = { ...prevTemp, [selectedRoom]: newTemp };
       localStorage.setItem('roomTemperatures', JSON.stringify(updatedTemps));
-      sendMessage({ device: 'ac', status: '-', room: roomMapping[selectedRoom] });
+
+    
+      sendMessage({
+        device: 'ac',
+        status: acStatus[selectedRoom] ? 'on' : 'off',
+        temperature: '-',
+        room: roomMapping[selectedRoom],
+      });
 
       return updatedTemps;
     });
   };
+
+  const [fanStatus, setFanStatus] = useState({
+    LivingRoom: false,
+    Bedroom: false,
+    Kitchen: false,
+  });
+  const [fanSpeed, setFanSpeed] = useState({
+    LivingRoom: 1,
+    Bedroom: 1,
+    Kitchen: 1,
+  });
+
+  useEffect(() => {
+    const initialFanStatus = {
+      LivingRoom: localStorage.getItem('LivingRoomFanStatus') === 'on',
+      Bedroom: localStorage.getItem('BedroomFanStatus') === 'on',
+      Kitchen: localStorage.getItem('KitchenFanStatus') === 'on',
+    };
+    setFanStatus(initialFanStatus);
+
+    const storedFanSpeeds = JSON.parse(localStorage.getItem('roomFanSpeeds'));
+    if (storedFanSpeeds) {
+      setFanSpeed(storedFanSpeeds);
+    }
+
+    const socket = initializeWebSocket();
+    subscribeToMessages(({ device, status, speed, room }) => {
+      const formattedRoom = Object.keys(roomMapping).find(
+        (key) => roomMapping[key] === room
+      );
+      if (device === 'fan' && formattedRoom) {
+        setFanStatus((prevStatus) => ({
+          ...prevStatus,
+          [formattedRoom]: status === 'on',
+        }));
+        localStorage.setItem(`${formattedRoom}FanStatus`, status);
+
+        if (speed) {
+          setFanSpeed((prevSpeed) => {
+            const updatedSpeeds = { ...prevSpeed, [formattedRoom]: speed };
+            
+            localStorage.setItem('roomFanSpeeds', JSON.stringify(updatedSpeeds));
+            return updatedSpeeds;
+          });
+        }
+      }
+    });
+  }, []);
+
+
+  const increaseFanSpeed = () => {
+    setFanSpeed((prevSpeed) => {
+      const newSpeed = Math.min(prevSpeed[selectedRoom] + 1, 5); // Max speed is 5
+      const updatedSpeeds = { ...prevSpeed, [selectedRoom]: newSpeed };
+      localStorage.setItem('roomFanSpeeds', JSON.stringify(updatedSpeeds));
+
+      // Send updated speed along with the fan's current status
+      sendMessage({
+        device: 'fan',
+        status: fanStatus[selectedRoom] ? 'on' : 'off',
+        speed: newSpeed,
+        room: roomMapping[selectedRoom],
+      });
+
+      return updatedSpeeds;
+    });
+  };
+
+  const decreaseFanSpeed = () => {
+    setFanSpeed((prevSpeed) => {
+      const newSpeed = Math.max(prevSpeed[selectedRoom] - 1, 1); // Min speed is 1
+      const updatedSpeeds = { ...prevSpeed, [selectedRoom]: newSpeed };
+      localStorage.setItem('roomFanSpeeds', JSON.stringify(updatedSpeeds));
+
+      // Send updated speed along with the fan's current status
+      sendMessage({
+        device: 'fan',
+        status: fanStatus[selectedRoom] ? 'on' : 'off',
+        speed: newSpeed,
+        room: roomMapping[selectedRoom],
+      });
+
+      return updatedSpeeds;
+    });
+  };
+
+
+
 
   const renderRoom = () => {
     switch (selectedRoom) {
@@ -136,6 +234,7 @@ const Guest = () => {
     }
   };
 
+
   return (
     <div className="flex max-h-screen">
       <style>
@@ -158,11 +257,14 @@ const Guest = () => {
         increaseTemperature={increaseTemperature}
         decreaseTemperature={decreaseTemperature}
         setInitialTemperature={setInitialTemperature}
+        increaseFanSpeed={increaseFanSpeed}
+        decreaseFanSpeed={decreaseFanSpeed}
+        fanSpeed={fanSpeed}
       />
       <div className="radial w-[100%] dark:!bg-[#0e193c] flex flex-col sm:w-screen lg:w-[32vw] bg-white h-[100%] lg:h-screen fixed lg:relative p-3 ml-auto  ">
         <div className="lg:hidden mt-12  z-0">
           <h1 className="text-[24px] ml-3 font-light dark:!text-slate-400 text-gray-800 mt-3 sm:text-[19px]">
-            Hey, <span className="font-bold">{userName || 'User'} 👋🏻</span> Welcome to Dashboard
+            Hey, <span className="font-bold"> Guest 👋🏻</span> Welcome to Dashboard
           </h1>
           <Temp />
         </div>

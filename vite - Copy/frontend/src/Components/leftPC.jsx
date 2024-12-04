@@ -19,6 +19,12 @@ const LeftSection = ({
   increaseTemperature,
   decreaseTemperature,
   setInitialTemperature,
+  increaseFanSpeed,
+  decreaseFanSpeed,
+  fanSpeed,
+  increaseLightBrightness,
+  decreaseLightBrightness,
+  lightBrightness
 }) => {
   const isAcOn = acStatus[selectedRoom] ?? false; // Default to false if undefined
   const roomTemperature = temperature[selectedRoom] ?? 16; // Default to 16 if undefined
@@ -49,8 +55,17 @@ const LeftSection = ({
           />
         </div>
         <div className="LightFanControl">
-          <FanControl />
-          <LightControl />
+          <FanControl
+            increaseFanSpeed={increaseFanSpeed}
+            decreaseFanSpeed={decreaseFanSpeed}
+            fanSpeed={fanSpeed}
+            selectedRoom={selectedRoom}
+          />
+          <LightControl 
+           increaseLightBrightness={increaseLightBrightness}
+           decreaseLightBrightness={decreaseLightBrightness}
+           lightBrightness={lightBrightness}
+           selectedRoom={selectedRoom}/>
         </div>
 
       </div>

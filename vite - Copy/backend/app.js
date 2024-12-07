@@ -77,21 +77,27 @@ app.get('/api/devices/weeklyUsage', async (req, res) => {
             const startTime = new Date(usage.startTime);
             const endTime = usage.endTime ? new Date(usage.endTime) : new Date();
 
+            // Ensure valid times
+            if (isNaN(startTime) || isNaN(endTime)) {
+                console.warn(`Invalid times: ${usage.startTime} -> ${usage.endTime}`);
+                return; // Skip invalid data
+            }
+
             // Ensure endTime >= startTime
             if (endTime < startTime) {
-                console.warn(`Invalid times: ${startTime} -> ${endTime}`);
+                console.warn(`startTime is after endTime: ${startTime} -> ${endTime}`);
                 return; // Skip invalid data
             }
 
             const durationInMs = endTime - startTime;
-            const durationInHours = Math.max(durationInMs / (1000 * 60 * 60), 0.01);
+            const durationInHours = Math.max(durationInMs / (1000 * 60 * 60), 0.01); // Avoid zero usage
 
             let currentDay = startTime.getDay();
             let remainingDuration = durationInHours;
 
             while (remainingDuration > 0) {
                 const startOfNextDay = new Date(startTime);
-                startOfNextDay.setHours(24, 0, 0, 0); // Move to the next day at midnight
+                startOfNextDay.setHours(24, 0, 0, 0); // Move to midnight of the next day
 
                 const timeLeftToday = Math.min(
                     remainingDuration,
@@ -101,7 +107,7 @@ app.get('/api/devices/weeklyUsage', async (req, res) => {
                 dailyUsage[currentDay] += timeLeftToday;
                 remainingDuration -= timeLeftToday;
 
-                startTime.setHours(24, 0, 0, 0); // Move to the next day
+                startTime.setHours(24, 0, 0, 0); // Advance startTime to next day
                 currentDay = (currentDay + 1) % 7; // Wrap around to Sunday if needed
             }
         });
